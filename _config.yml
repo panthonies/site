@@ -4,7 +4,7 @@ blog_theme: light # Or use dark
 name: Anthony Pan
 paginate: 25
 url: "localhost:4000"
-baseurl: "/blog/"
+baseurl: "/site"
 
 
 # Optional settings
@@ -18,7 +18,6 @@ scrollappear_enabled: false # Change to false to disable
 tag_nav_enabled: false # Change to true if you wish to show an additional 'tag-list' navigation below the header
 theme_toggle: false # Change to true if you wish to show an icon in the navigation for dynamic theme toggling
 social:
-  blog: Testing
   dribbble:  # Add your Dribbble handle
   facebook: # Add your Facebook handle
   flickr: # Add your Flickr handle

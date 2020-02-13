@@ -4,30 +4,30 @@
     <title>Anthony Pan</title>
     <description></description>
     <link>http://localhost:4000</link>
-    <atom:link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:4000/site/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>Introducing chalk</title>
         <description>Chalk is a high quality, completely customizable, performant and 100% free blog template for Jekyll.</description>
         <pubDate>Sat, 23 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/introducing-chalk</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/introducing-chalk</guid>
+        <link>http://localhost:4000/site/posts/introducing-chalk</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/introducing-chalk</guid>
       </item>
     
       <item>
         <title>How to configure Chalk</title>
         <description>Learn more about the config file for Chalk and how to set it up properly.</description>
         <pubDate>Fri, 22 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/configuring-chalk</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/configuring-chalk</guid>
+        <link>http://localhost:4000/site/posts/configuring-chalk</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/configuring-chalk</guid>
       </item>
     
       <item>
         <title>Chalk sample post with all elements</title>
         <description>Have a look at all the predesigned elements you can use in Chalk.</description>
         <pubDate>Thu, 21 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/chalk-sample-post-with-all-elements</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/chalk-sample-post-with-all-elements</guid>
+        <link>http://localhost:4000/site/posts/chalk-sample-post-with-all-elements</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/chalk-sample-post-with-all-elements</guid>
       </item>
     
   </channel>
