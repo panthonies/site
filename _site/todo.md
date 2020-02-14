@@ -11,3 +11,12 @@
 	- books page   : reviews of books / tv / movies
 
 4. Add summary posts for each section explaining the goal and including an index.
+
+5. Migrate site to anthonypan.com and update links on the index page.
+
+
+6. Follow the Jekyll Style Guide
+	https://ben.balter.com/jekyll-style-guide/
+
+7. Thank the tutorial that I used to set Jekyll up.
+	https://programminghistorian.org/en/lessons/building-static-sites-with-jekyll-github-pages#setting-up-jekyll-

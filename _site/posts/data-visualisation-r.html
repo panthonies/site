@@ -106,122 +106,269 @@
   <span class="article-list-minutes">
     
     
-      2 minute read
+      12 minute read
     
   </span>
   <span class="article-list-divider">-</span>
   <div class="article-list-tags">
+    
+      
+      <a href="/site/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/site/tag/R" title="See all posts with tag 'R'">R</a>
     
   </div>
 </div>
           </header>
 
           <div class="article-content">
-            <p>Chalk uses the default Jekyll syntax highlighting gem Rouge. It has a customized style for both light and dark theme.
-Use the <code class="highlighter-rouge">highlight</code> tag to use the following code highlighting your preferred language:</p>
+            <p>In an effort to reduce the amount of time that I spend searching the Internet for basic ggplot2 questions, I’m writing a brief overview of the very basics on the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf">grammar of graphics</a> as a reference that I can come back to for a quick refresher.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- This is a comment --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;h1&gt;</span>This is a heading<span class="nt">&lt;/h1&gt;</span>
-  <span class="nt">&lt;p&gt;</span>
-    This is a paragraph text.
-  <span class="nt">&lt;/p&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+<p><strong>First things first:</strong> The <a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">RStudio ggplot2 Cheat Sheet</a> most likely has everything you need to know and more. To be honest, you might just be here for this link.</p>
 
-<h2 id="headings">Headings</h2>
+<p>One last thing before we begin – make sure that you have installed, updated, and loaded the <a href="https://www.tidyverse.org">tidyverse</a> package.</p>
 
-<p>Chalk includes 3 headings by default:</p>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### install packages</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span><span class="w">
 
-<h2 id="heading-first-level">Heading first level</h2>
-<h3 id="heading-second-level">Heading second level</h3>
-<h4 id="heading-third-level">Heading third level</h4>
+</span><span class="c1">### update packages</span><span class="w">
+</span><span class="n">tidyverse_update</span><span class="p">()</span><span class="w">
 
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="gu">## Heading first level</span>
-<span class="gu">### Heading second level</span>
-<span class="gu">#### Heading third level</span></code></pre></figure>
+</span><span class="c1">### load packages</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span></code></pre></figure>
 
-<h2 id="lists">Lists</h2>
+<p>Now, let’s get started.</p>
 
-<p>Unordered list example:</p>
+<h1 id="the-general-structure-of-graphs">The General Structure of Graphs</h1>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">DATA</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+	</span><span class="o">&lt;</span><span class="n">GEOM_FUNCTION</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+		</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="o">&lt;</span><span class="n">MAPPINGS</span><span class="o">&gt;</span><span class="p">)</span><span class="w">
+		</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">STAT</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+		</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">POSITION</span><span class="o">&gt;</span><span class="p">)</span><span class="w">
+	</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+	</span><span class="o">&lt;</span><span class="n">COORDINATE_FUNCTION</span><span class="o">&gt;</span><span class="w"> </span><span class="o">+</span><span class="w">
+	</span><span class="o">&lt;</span><span class="n">FACET_FUNCTION</span><span class="o">&gt;</span></code></pre></figure>
+
+<h3 id="data">Data</h3>
+<p>Put your data in this parameter to creates a coordinate system and define the dataset.</p>
+
+<h3 id="geom_function">Geom_Function</h3>
+<p>This adds a layer of geometric shapes (points, bars, lines) that represent the dataset. Some examples are:</p>
+
 <ul>
-  <li>Unordered list item 1</li>
-  <li>Unordered list item 2</li>
-  <li>Unordered list item 3</li>
-  <li>Unordered list item 4</li>
+  <li>GEOM_POINT creates a scatterplot</li>
+  <li>GEOM_BAR creates a bar graph</li>
+  <li>GEOM_SMOOTH creates a smooth line</li>
 </ul>
 
-<p>Ordered list example:</p>
-<ol>
-  <li>Ordered list item 1</li>
-  <li>Ordered list item 1</li>
-  <li>Ordered list item 1</li>
-  <li>Ordered list item 1</li>
-</ol>
+<h4 id="mappings">Mappings</h4>
+<p>Mappings define how your variables are mapped to visual properties on the graph. They can be defined locally (inside of your geom_function) or globally (inside of the parent ggplot function). They are always defined by aesthetic properties, such as:</p>
 
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="p">*</span> Unordered list item 1
-<span class="p">*</span> Unordered list item 2
-<span class="p">
-1.</span> Order list item 1
-<span class="p">2.</span> Order list item 1</code></pre></figure>
-
-<h2 id="emoji-support-star">Emoji support <img class="emoji" title=":star:" alt=":star:" src="https://github.githubassets.com/images/icons/emoji/unicode/2b50.png" height="20" width="20">
-</h2>
-
-<p>Emoji’s can be used everywhere in <img class="emoji" title=":cat2:" alt=":cat2:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f408.png" height="20" width="20"> your markdown!</p>
-
-<h2 id="quotes">Quotes</h2>
-
-<p>A quote looks like this:</p>
-
-<blockquote>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna.</p>
-</blockquote>
-
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown"><span class="gt">&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</span>
-incididunt ut labore et dolore magna.</code></pre></figure>
-
-<h2 id="media">Media</h2>
-
-<p>Images can be added with a default <code class="highlighter-rouge">&lt;img&gt;</code> tag.
-If you wish that an image can be enlarged on click use the image include tag. You can pass 3 variables:</p>
 <ul>
-  <li>
-<code class="highlighter-rouge">path</code>: Image to show in the blog post.</li>
-  <li>
-<code class="highlighter-rouge">path-detail</code>: Image to show when enlarging.</li>
-  <li>
-<code class="highlighter-rouge">alt</code>: Alt text for image in blog post.</li>
+  <li>x: the variable to map on the x-axis</li>
+  <li>y: the variable to map on the y-axis</li>
+  <li>color/fill: the <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour">color</a> of the data on the graph</li>
+  <li>alpha: the transparency of data on the graph (from 0, transparent to 1, opaque)</li>
+  <li>shape: the shape (numbers #1-20) of points on the graph</li>
+  <li>size: the size of points on the graphs (in mm)</li>
+  <li>stroke: the size of shape borders (in mm)</li>
+  <li>linetype: type of line to display on the graph</li>
 </ul>
 
-<p><a href="/site/assets/documentation/sample-image@2x-f8eae5b88a72da0c485e1c9821020764ff2c5b7d3a5c05f1e14fb2a276c07781.jpg">
-  <img src="/site/assets/documentation/sample-image-0a264584b152aa8d86f61525d05ae1131787d0a1029aa1cb7e3e4148b5d34755.jpg" alt="Sample image" class="zooming" data-rjs="/site/assets/documentation/sample-image@2x-f8eae5b88a72da0c485e1c9821020764ff2c5b7d3a5c05f1e14fb2a276c07781.jpg" data-zooming-width="1220" data-zooming-height="813">
+<p>Note: you can map additional variables to color, alpha, etc. in addition to x and y, although whether this is actually a good idea depends on your data.</p>
+
+<p>Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing “?geom_point”). See the end of this post for quick mapping references.</p>
+
+<h4 id="stat">Stat</h4>
+<p>Stat, or statistical transformation, are used to transform the data before graphing it. Each geometric function has a default statistical transformation – the most common example is bar graphs computing and displaying a count of a variable in the data.</p>
+
+<p>You may need to define a stat in these cases:</p>
+<ul>
+  <li>to override the default stat of a geometric function. For example, using stat = “identity” for geom_bar if you already have a frequency variable in the data.</li>
+  <li>to override the default mapping from transformed variables to aesthetics. For example, using geom_bar to display a proportion.</li>
+  <li>as an alternative to geom_function to build a layer for your graph (see the ggplot2 cheat sheet)</li>
+</ul>
+
+<h4 id="position">Position</h4>
+<p>Position is used mainly for bar charts to help with displaying data. When you use color or fill to map a third variable in your data to different colors, there are a number of ways to position the additional information on your graph. The options include:</p>
+
+<ul>
+  <li>by default, the bar chart will stack the bars</li>
+  <li>identity: creates overlapping bars (not that useful, but if you’re doing it then use fill = NA)</li>
+  <li>dodge: places bars next to one another (the most useful, in my opinion)</li>
+  <li>fill: makes all of the bars the same height (if you don’t care about the y-variable)</li>
+</ul>
+
+<p>Note: geom_jitter() is a useful position adjustment for scatter plots to solve the problem of overplotting (where you have a lot of overlapping dots that aren’t visible).</p>
+
+<h3 id="coordinate-function">Coordinate Function</h3>
+<p>Most likely, you won’t be using this argument because the default Cartesian coordinate system will satisfy your needs. However, here are some common uses:</p>
+
+<ul>
+  <li>coord_flip() switches the x and y axes</li>
+  <li>coord_fixed() lets you define the ratio between your x and y axes (default: 1)</li>
+</ul>
+
+<h3 id="facet-function">Facet Function</h3>
+<p>Facets are subplots that are useful for visually separating your data by discrete variables. You can create facets in two main ways:</p>
+
+<ul>
+  <li>facet_wrap(): splits the plot by a single discrete variable</li>
+  <li>facet_grid(): splits the plot by a combination of two variables separated by ~</li>
+</ul>
+
+<h3 id="titles-labels-and-axes">Titles, Labels, and Axes</h3>
+<p>Even though these aspects are not a part of the basic structure of graphs, they are one of the most important. Nobody cares how great your graph looks if they don’t know what it’s meant to show.</p>
+
+<p>The basics are best shown through example:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Example: Titles, Labels, and Axes</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trans</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">scale_x_discrete</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"X-Axis Name"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Y-Axis Name"</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Twenty"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Thirty"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Forty"</span><span class="p">),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="m">50</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Graph Title"</span><span class="p">,</span><span class="w"> </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Graph subtitle"</span><span class="p">,</span><span class="w"> </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Graph Caption"</span><span class="p">)</span></code></pre></figure>
+
+<h1 id="and-were-finished-not-too-bad-right">…and we’re finished! Not too bad, right?</h1>
+<p>I’ve included some useful references and example code below that illustrates the concepts of this post in practice.</p>
+
+<h2 id="quick-references">Quick References</h2>
+<p>A reference for ggplot2 point shapes: 
+<a href="/site/assets/documentation/ggplot2_shapes-00ffa4a5dd3c3f53caf8b5f8e7dbcf79ccba1a4d63771811903869e784d4bf6a.png">
+  <img src="/site/assets/documentation/ggplot2_shapes-00ffa4a5dd3c3f53caf8b5f8e7dbcf79ccba1a4d63771811903869e784d4bf6a.png" alt="ggplot2 shapes" class="zooming" data-rjs="/site/assets/documentation/ggplot2_shapes-00ffa4a5dd3c3f53caf8b5f8e7dbcf79ccba1a4d63771811903869e784d4bf6a.png" data-zooming-width="1152" data-zooming-height="384" />
 </a></p>
 
-<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>image.html<span class="w"> </span><span class="na">path</span><span class="o">=</span><span class="s2">"documentation/sample-image.jpg"</span><span class="err">
-</span><span class="w">                      </span><span class="na">path-detail</span><span class="o">=</span><span class="s2">"documentation/sample-image@2x.jpg"</span><span class="err">
-</span><span class="w">                      </span><span class="na">alt</span><span class="o">=</span><span class="s2">"Sample image"</span><span class="w"> </span><span class="p">%}</span></code></pre></figure>
+<p>A reference for ggplot2 line types:
+<a href="/site/assets/documentation/ggplot2_linetypes-f510bf19cf58da36b4b3ba3b8ad295974573798937bee756757f9700970a0341.png">
+  <img src="/site/assets/documentation/ggplot2_linetypes-f510bf19cf58da36b4b3ba3b8ad295974573798937bee756757f9700970a0341.png" alt="ggplot2 line types" class="zooming" data-rjs="/site/assets/documentation/ggplot2_linetypes-f510bf19cf58da36b4b3ba3b8ad295974573798937bee756757f9700970a0341.png" data-zooming-width="350" data-zooming-height="259" />
+</a></p>
 
-<p>Videos can be added and are responsive by default (4x3 by default, 16x9 with extra class).</p>
+<h2 id="basic-examples-in-r-code">Basic Examples in R code</h2>
+<p>I recommend copying and pasting this code into RStudio for ease of reading, since the formatting is not ideal on this page.</p>
 
-<div class="embed-responsive embed-responsive-16by9">
-<iframe src="https://www.youtube.com/embed/vO7m8Hre72E?modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0" allowfullscreen=""></iframe>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### load package</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># using mpg data from tidyverse, we can create basic scatterplots</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">5</span><span class="p">),</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># experimenting with the line geom</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># multiple geoms in one plot - local mapping</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># multiple geoms in one plot - global mapping</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># multiple geoms in one plot - both global and local mappings</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># basic transformations - automatically done by bar graphs, histograms, and others</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># basic transformations - proportion graph</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stat</span><span class="p">(</span><span class="n">prop</span><span class="p">),</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># adding color/fill</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># use position =  "identity" for overlapping bars (recommend fill = NA)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># use position = "fill" to make all of the bars the same height</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">),</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># use position = "dodge" to place bars beside one another</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">),</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dodge"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># for scatter plots, use jitter to solve overplotting (overlapping points)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">),</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"jitter"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trans</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trans</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># coordinate systems: coord(flip) switches x and y axis</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_boxplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># using facets - subplots that display subsets of the data</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">drv</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">cyl</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">drv</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># use labs to add labels to the chart</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Number of cuts of diamond and their clarity"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Subtitle"</span><span class="p">,</span><span class="w">
+       </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Type of Cut"</span><span class="p">,</span><span class="w">
+       </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Count"</span><span class="p">,</span><span class="w">
+       </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sample Caption"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># use scale_x_continuous and scale_y_continuous to set the axis</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_abline</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_fixed</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="kc">NA</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="kc">NA</span><span class="p">))</span></code></pre></figure>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>This post is meant for a person who has used ggplot2 in the past and is looking for a brief summary of the basics. The content in this post is based on chapter three of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund, which I would highly recommend reading in full if you have never used ggplot2 before. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
 </div>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"embed-responsive embed-responsive-16by9"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">"url-to-video"</span> <span class="na">allowfullscreen</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></figure>
-
 
           </div>
           <div class="article-share">
             
             
             <a href="https://twitter.com/home?status=Basic+Data+Visualization+in+R%20-%20http://localhost:4000/site/posts/data-visualisation-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
-              <svg viewbox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"></path></svg>
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
             </a>
             <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/site/posts/data-visualisation-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
-              <svg viewbox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"></path></svg>
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
             </a>
           </div>
           <a href="javascript:history.back()">Back</a>
@@ -229,7 +376,7 @@ If you wish that an image can be enlarged on click use the image include tag. Yo
         </article>
         <footer class="footer scrollappear">
 
-<small class="pull-left"> ©2019 All rights reserved. 
+<small class="pull-left"> &copy;2019 All rights reserved. 
 
 <a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
 
