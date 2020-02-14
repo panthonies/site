@@ -12,3 +12,7 @@ gem "mini_magick"
 gem "sass"
 gem "sprockets", "~> 3.7"
 gem "uglifier"
+group :jekyll_plugins do
+  # other plugins here
+  gem 'jekyll-stickyposts'
+end

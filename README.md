@@ -25,7 +25,7 @@ Features:
   - Proper sharing links for posts on Facebook, Twitter and Google Plus.
   - SEO optimized.
   - Support for local fonts.
-  - Support for emoji's.
+  - Support for emoji's. - see https://www.webfx.com/tools/emoji-cheat-sheet/
 
 Integrations
   - [Disqus](https://disqus.com/)
