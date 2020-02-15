@@ -122,7 +122,7 @@ A reference for ggplot2 line types:
 {% include image.html path="documentation/ggplot2_linetypes.png" path-detail="documentation/ggplot2_linetypes.png" alt="ggplot2 line types" %}
 
 ## Basic Examples in R code
-I recommend copying and pasting this code into RStudio for ease of reading, since the formatting is not ideal on this page.
+I recommend copying and pasting this code into RStudio for ease of use since the formatting on this page is not ideal. 
 {% highlight R %}
 ### load package
 library("tidyverse")

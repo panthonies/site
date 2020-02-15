@@ -12,7 +12,7 @@
 
 4. Add summary posts for each section explaining the goal and including an index.
 
-5. Migrate site to anthonypan.com and update links on the index page.
+5. Migrate site to anthonypan.com and update links on the index page and baseurl in config.yml
 
 
 6. Follow the Jekyll Style Guide
