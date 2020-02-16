@@ -115,7 +115,7 @@ ggplot(data = mpg) +
   labs(title = "Graph Title", subtitle = "Graph subtitle", caption = "Graph Caption")
 {% endhighlight %}
 
-# ...and we're finished! Not too bad, right?
+#### ...and we're finished! Not too bad, right?
 I've included some useful references and example code below that illustrates the concepts of this post in practice.
 
 ## Quick References
