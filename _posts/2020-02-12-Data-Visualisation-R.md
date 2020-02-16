@@ -46,33 +46,33 @@ Put your data in this parameter to creates a coordinate system and define the da
 ### Geom_Function
 This adds a layer of geometric shapes (points, bars, lines) that represent the dataset. Some examples are:
 
-* GEOM_POINT creates a scatterplot
-* GEOM_BAR creates a bar graph
-* GEOM_SMOOTH creates a smooth line
+* {% ihighlight r %}GEOM_POINT{% endihighlight %} creates a scatterplot
+* {% ihighlight r %}GEOM_BAR{% endihighlight %} creates a bar graph
+* {% ihighlight r %}GEOM_SMOOTH{% endihighlight %} creates a smooth line
 
 #### Mappings
 Mappings define how your variables are mapped to visual properties on the graph. They can be defined locally (inside of your geom_function) or globally (inside of the parent ggplot function). They are always defined by aesthetic properties, such as:
 
-* x: the variable to map on the x-axis
-* y: the variable to map on the y-axis
-* color/fill: the [color](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) of the data on the graph
-* alpha: the transparency of data on the graph (from 0, transparent to 1, opaque)
-* shape: the shape (numbers #1-20) of points on the graph
-* size: the size of points on the graphs (in mm)
-* stroke: the size of shape borders (in mm) 
-* linetype: type of line to display on the graph
+* {% ihighlight r %}x{% endihighlight %}: the variable to map on the x-axis
+* {% ihighlight r %}y{% endihighlight %}: the variable to map on the y-axis
+* {% ihighlight r %}color/fill{% endihighlight %}: the [color](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) of the data on the graph
+* {% ihighlight r %}alpha{% endihighlight %}: the transparency of data on the graph (from 0, transparent to 1, opaque)
+* {% ihighlight r %}shape{% endihighlight %}: the shape (numbers #1-20) of points on the graph
+* {% ihighlight r %}size{% endihighlight %}: the size of points on the graphs (in mm)
+* {% ihighlight r %}stroke{% endihighlight %}: the size of shape borders (in mm) 
+* {% ihighlight r %}linetype{% endihighlight %}: type of line to display on the graph
 
 Note: you can map additional variables to color, alpha, etc. in addition to x and y, although whether this is actually a good idea depends on your data.
 
-Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing "?geom_point"). See the end of this post for quick mapping references.
+Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing {% ihighlight r %}?geom_point{% endihighlight %}). See the end of this post for quick mapping references.
 
 #### Stat
 Stat, or statistical transformation, are used to transform the data before graphing it. Each geometric function has a default statistical transformation -- the most common example is bar graphs computing and displaying a count of a variable in the data.
 
 You may need to define a stat in these cases:
-* to override the default stat of a geometric function. For example, using stat = "identity" for geom_bar if you already have a frequency variable in the data.
-* to override the default mapping from transformed variables to aesthetics. For example, using geom_bar to display a proportion. 
-* as an alternative to geom_function to build a layer for your graph (see the ggplot2 cheat sheet)
+* to override the default stat of a geometric function. For example, using {% ihighlight r %}stat = "identity"{% endihighlight %} for {% ihighlight r %}geom_bar{% endihighlight %} if you already have a frequency variable in the data.
+* to override the default mapping from transformed variables to aesthetics. For example, using {% ihighlight r %}geom_bar{% endihighlight %} to display a proportion. 
+* as an alternative to {% ihighlight r %}geom_function{% endihighlight %} to build a layer for your graph (see the ggplot2 cheat sheet)
 
 
 #### Position 
@@ -83,20 +83,20 @@ Position is used mainly for bar charts to help with displaying data. When you us
 * dodge: places bars next to one another (the most useful, in my opinion)
 * fill: makes all of the bars the same height (if you don't care about the y-variable)
 
-Note: geom_jitter() is a useful position adjustment for scatter plots to solve the problem of overplotting (where you have a lot of overlapping dots that aren't visible).
+Note: {% ihighlight r %}geom_jitter(){% endihighlight %} is a useful position adjustment for scatter plots to solve the problem of overplotting (where you have a lot of overlapping dots that aren't visible).
 
 ### Coordinate Function
 Most likely, you won't be using this argument because the default Cartesian coordinate system will satisfy your needs. However, here are some common uses:
 
-* coord_flip() switches the x and y axes
-* coord_fixed() lets you define the ratio between your x and y axes (default: 1)
+* {% ihighlight r %}coord_flip(){% endihighlight %} switches the x and y axes
+* {% ihighlight r %}coord_fixed(){% endihighlight %} lets you define the ratio between your x and y axes (default: 1)
 
 
 ### Facet Function
 Facets are subplots that are useful for visually separating your data by discrete variables. You can create facets in two main ways:
 
-* facet_wrap(): splits the plot by a single discrete variable
-* facet_grid(): splits the plot by a combination of two variables separated by ~
+* {% ihighlight r %}facet_wrap(){% endihighlight %} splits the plot by a single discrete variable
+* {% ihighlight r %}facet_grid(){% endihighlight %} splits the plot by a combination of two variables separated by {% ihighlight r %}~{% endihighlight %}
 
 ### Titles, Labels, and Axes
 Even though these aspects are not a part of the basic structure of graphs, they are one of the most important. Nobody cares how great your graph looks if they don't know what it's meant to show.
@@ -108,7 +108,10 @@ The basics are best shown through example:
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = trans, y = hwy)) + 
   scale_x_discrete(name = "X-Axis Name") +
-  scale_y_continuous(name = "Y-Axis Name", breaks = c(20, 30, 40), labels = c("Twenty", "Thirty", "Forty"), limits = c(10,50)) +
+  scale_y_continuous(name = "Y-Axis Name", 
+    breaks = c(20, 30, 40), 
+    labels = c("Twenty", "Thirty", "Forty"), 
+    limits = c(10,50)) +
   labs(title = "Graph Title", subtitle = "Graph subtitle", caption = "Graph Caption")
 {% endhighlight %}
 
@@ -122,7 +125,7 @@ A reference for ggplot2 line types:
 {% include image.html path="documentation/ggplot2_linetypes.png" path-detail="documentation/ggplot2_linetypes.png" alt="ggplot2 line types" %}
 
 ## Basic Examples in R code
-I recommend copying and pasting this code into RStudio for ease of use since the formatting on this page is not ideal. 
+I recommend copying and pasting this code into RStudio for ease of use.
 {% highlight R %}
 ### load package
 library("tidyverse")
