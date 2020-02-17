@@ -120,9 +120,9 @@ I've included some useful references and example code below that illustrates the
 
 ## Quick References
 A reference for ggplot2 point shapes: 
-{% include image.html path="documentation/ggplot2_shapes.png" path-detail="documentation/ggplot2_shapes.png" alt="ggplot2 shapes" %}
+{% include image.html path="documentation/02-12-ggplot2_shapes.png" path-detail="documentation/02-12-ggplot2_shapes.png" alt="ggplot2 shapes" %}
 A reference for ggplot2 line types:
-{% include image.html path="documentation/ggplot2_linetypes.png" path-detail="documentation/ggplot2_linetypes.png" alt="ggplot2 line types" %}
+{% include image.html path="documentation/02-12-ggplot2_linetypes.png" path-detail="documentation/02-12-ggplot2_linetypes.png" alt="ggplot2 line types" %}
 
 ## Basic Examples in R code
 I recommend copying and pasting this code into RStudio for ease of use.
