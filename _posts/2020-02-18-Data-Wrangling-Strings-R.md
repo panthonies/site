@@ -8,7 +8,7 @@ tags: [academic, r]
 
 In this post we'll be taking a look at basic string functions, regular expression syntax, and several applications of regular expressions in string manipulation.[^1]
 
-[^1]: This post is meant for a person who is looking for a refresher on string manipulation and regular expressions in R. The content in this post is based on chapter fourteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a in-depth examples.
+[^1]: This post is meant for a person who is looking for a refresher on string manipulation and regular expressions in R. The content in this post is based on chapter fourteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for in-depth examples.
 
 The [RStudio String Manipulation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-strings.pdf){:target="blank"} has great reference material on this topic in a condensed format. 
 
