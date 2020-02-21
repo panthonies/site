@@ -1,16 +1,18 @@
 ---
 layout: post
-title: "Basic High-Level Data Wrangling in R: Imports, Pivots, and Joins"
+title: "High-Level Data Wrangling in R: Imports, Pivots, and Joins"
 description: "In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables."
 thumb_image: 
-tags: [academic, R]
+tags: [academic, r]
 ---
 
-**The scenario:** you have a dataset that you'd like to analyze, but before you can do so, you have to import it into R and get it into a workable format.[^1] First, let's explore the concept of tidy data.
+**The scenario:** you have a dataset that you'd like to analyze, but before you can do so, you have to import it into R and get it into a workable format. This post dives into the necessary precursors to any kind of data analysis: importing and tidying data.[^1] For reference, here is the [RStudio Data Import Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-import.pdf){:target="blank"}. 
+
+First, let's explore the concept of tidy data.
 
 In a tidy dataset, each variable must have its own column, each observation must have its own row, and each value must have its own cell -- in practice, you can make a dataset tidy by formatting it as a **tibble** and putting each variable into a column. This allows you to make use of R's vectorized nature and store the data in a consistent way.
 
-###### A quick detour: Tibble Tips and Tricks
+##### A quick detour to introduce **tibbles**, an improved type of data frame:
 * Tibbles only print the first 10 rows of data by default, and has stricter subsetting rules than data frames
 * Create a new tibble from individual vectors: {% ihighlight R %}tibble(){% endihighlight %}
 * Create a new tibble by doing data entry in code: {% ihighlight R %}tribble(){% endihighlight %}

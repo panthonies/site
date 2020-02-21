@@ -3,7 +3,7 @@ layout: post
 title: "Basic Data Exploration in R"
 description: "In which we examine some common practical examples of data exploration: observing variance and co-variance with histograms, boxplots, scatterplots, and heat maps."
 thumb_image: 
-tags: [academic, R]
+tags: [academic, r]
 ---
 
 In this post we'll be taking a look at several examples of data exploration using the {% ihighlight R %}diamonds{% endihighlight %} dataset in the tidyverse library.[^1]

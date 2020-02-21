@@ -3,12 +3,12 @@ layout: post
 title: "Basic Data Transformation in R"
 description: "In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by."
 thumb_image: 
-tags: [academic, R]
+tags: [academic, r]
 ---
 
 In this post we'll be taking a look at basic data transformation in R -- namely, six important R functions included in the [dplyr](http://dplyr.tidyverse.org) package:[^1]
 
-[^1]: This post is meant for a person who is looking for a refresher on the very basics of the dplyr package (i.e., me when I inevitably forget how to summarize data). The content in this post is based on chapter five of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
+[^1]: This post is meant for a person who is looking for a refresher on the very basics of the dplyr package (i.e., me when I inevitably forget how to summarize data). The content in this post is based on chapter five of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
 * {% ihighlight r %}filter(){% endihighlight %} - filter rows
 * {% ihighlight r %}arrange(){% endihighlight %} - order rows
@@ -19,7 +19,7 @@ In this post we'll be taking a look at basic data transformation in R -- namely,
 
 These functions will help you scratch the surface of manipulating datasets.
 
-**First things first:** Here is the [RStudio Data Wrangling with dplyr and tidyr Cheat Sheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), if that's what you're looking for.
+**First things first:** Here is the [RStudio Data Transformation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-transformation.pdf), if that's what you're looking for.
 
 ### Prologue: The Pipe
 Before we get into the functions themselves, let's review an important part of R syntax: the pipe, {% ihighlight R %}%>%{% endihighlight %}. The pipe symbol can be read as "then."

@@ -1,4 +1,4 @@
 ---
-slug: R
-name: R
+slug: r
+name: r
 ---

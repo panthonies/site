@@ -54,6 +54,7 @@ assets:
     - _assets/javascripts
     - _assets/stylesheets
     - _assets/yarn
+    - pdf
 collections:
   my_tags:
     output: true

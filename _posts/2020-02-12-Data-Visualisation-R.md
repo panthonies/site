@@ -3,14 +3,14 @@ layout: post
 title: "Basic Data Visualization in R"
 description: "In which we review the fundamentals of creating graphs in R with ggplot2."
 thumb_image: 
-tags: [academic, R]
+tags: [academic, r]
 ---
 
 In an effort to reduce the amount of time that I spend searching the Internet for basic ggplot2 questions, I'm writing a brief overview of the very basics on the [grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.pdf) as a reference that I can come back to for a quick refresher.[^1]
 
 [^1]: This post is meant for a person who has used ggplot2 in the past and is looking for a brief summary of the basics. The content in this post is based on chapter three of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would highly recommend reading in full if you have never used ggplot2 before.
 
-**First things first:** The [RStudio ggplot2 Cheat Sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) most likely has everything you need to know and more. To be honest, you might just be here for this link.
+**First things first:** The [RStudio ggplot2 Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-visualization.pdf){:target="blank"} most likely has everything you need to know, and the [Cookbook for R](http://www.cookbook-r.com/Graphs/) provides solutions to common problems. To be honest, you might just be here for these links.
 
 One last thing before we begin -- make sure that you have installed, updated, and loaded the [tidyverse](https://www.tidyverse.org) package. 
 
