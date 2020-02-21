@@ -1,0 +1,4 @@
+---
+slug: academic
+name: academic
+---

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | High-Level Data Wrangling in R: Imports, Pivots, and Joins</title>
+  <meta name="description" content="In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="High-Level Data Wrangling in R: Imports, Pivots, and Joins">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/site/posts/data-wrangling-high-level-r">
+  <meta property="og:description" content="In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://localhost:4000/site/posts/data-wrangling-high-level-r">
+  <meta name="twitter:title" content="High-Level Data Wrangling in R: Imports, Pivots, and Joins">
+  <meta name="twitter:description" content="In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.">
+
+  
+    <meta property="og:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+  
+
+  <link href="http://localhost:4000/site/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+    
+
+  
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/site/about" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/site/about" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/site/" title="writing">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>High-Level Data Wrangling in R: Imports, Pivots, and Joins</h1>
+            <p>In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    February 17, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      9 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/site/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/site/tag/r" title="See all posts with tag 'r'">r</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <p><strong>The scenario:</strong> you have a dataset that you’d like to analyze, but before you can do so, you have to import it into R and get it into a workable format. This post dives into the necessary precursors to any kind of data analysis: importing and tidying data.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> For reference, here is the <a href="/site/pdf/r-cheat-sheet-data-import.pdf" target="blank">RStudio Data Import Cheat Sheet</a>.</p>
+
+<p>First, let’s explore the concept of tidy data.</p>
+
+<p>In a tidy dataset, each variable must have its own column, each observation must have its own row, and each value must have its own cell – in practice, you can make a dataset tidy by formatting it as a <strong>tibble</strong> and putting each variable into a column. This allows you to make use of R’s vectorized nature and store the data in a consistent way.</p>
+
+<h5 id="a-quick-detour-to-introduce-tibbles-an-improved-type-of-data-frame">A quick detour to introduce <strong>tibbles</strong>, an improved type of data frame:</h5>
+<ul>
+  <li>Tibbles only print the first 10 rows of data by default, and has stricter subsetting rules than data frames</li>
+  <li>Create a new tibble from individual vectors: <code class="highlight language-r" data-lang="r"><span class="n">tibble</span><span class="p">()</span></code></li>
+  <li>Create a new tibble by doing data entry in code: <code class="highlight language-r" data-lang="r"><span class="n">tribble</span><span class="p">()</span></code></li>
+  <li>Turn a data frame into a tibble: <code class="highlight language-r" data-lang="r"><span class="n">as_tibble</span><span class="p">()</span></code></li>
+  <li>Turn a tibble into a data frame: <code class="highlight language-r" data-lang="r"><span class="n">as.data.frame</span><span class="p">()</span></code></li>
+  <li>Use backticks to refer to non-syntactic column names for tibbles</li>
+  <li>For more details, see <code class="highlight language-r" data-lang="r"><span class="n">vignette</span><span class="p">(</span><span class="s2">"tibble"</span><span class="p">)</span></code></li>
+</ul>
+
+<h2 id="importing-data">Importing Data</h2>
+<p>There are a number of different functions to import different types of flat files into data frames, and they all work similarly – we’ll be using <code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> from the <em>readr</em> package, which is part of the tidyverse.</p>
+
+<p><code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># skip the first two lines of the file, first processed row is not headings</span><span class="w">
+</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"filepath"</span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># drop all lines that start with "#", and name the three columns "x", "y", and "z"</span><span class="w">
+</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"filepath"</span><span class="p">,</span><span class="w"> </span><span class="n">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">col_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span><span class="w"> </span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="s2">"z"</span><span class="p">),</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"."</span><span class="p">)</span></code></pre></figure>
+
+<p>However, if the first 1000 rows of a column is not representative of the whole dataset or if there are other parsing problems, identify the problem rows with <code class="highlight language-r" data-lang="r"><span class="n">problem</span><span class="p">()</span></code> and try the following:</p>
+
+<ol>
+  <li>Specify the column types manually with the parameter <code class="highlight language-r" data-lang="r"><span class="n">col_types</span></code></li>
+  <li>Increase the number of lines to parse from 1000 with parameter <code class="highlight language-r" data-lang="r"><span class="n">guess_max</span></code></li>
+  <li>Import all columns as characters using <code class="highlight language-r" data-lang="r"><span class="n">col_types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cols</span><span class="p">(</span><span class="n">.default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col_character</span><span class="p">())</span></code>, then resolve the errors, possibly with <code class="highlight language-r" data-lang="r"><span class="n">type_convert</span><span class="p">()</span></code></li>
+  <li>Read the file into a character vector of lines, <code class="highlight language-r" data-lang="r"><span class="n">read_lines</span><span class="p">()</span></code> or a character vector of length one, <code class="highlight language-r" data-lang="r"><span class="n">read_file</span><span class="p">()</span></code>, and then use more advanced string parsing skills.</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Solution 1: Specify the column types manually with col_types</span><span class="w">
+</span><span class="n">challenge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="n">readr_example</span><span class="p">(</span><span class="s2">"challenge.csv"</span><span class="p">))</span><span class="w">
+</span><span class="n">challenge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="w">
+  </span><span class="n">readr_example</span><span class="p">(</span><span class="s2">"challenge.csv"</span><span class="p">),</span><span class="w"> 
+  </span><span class="n">col_types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cols</span><span class="p">(</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col_double</span><span class="p">(),</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col_date</span><span class="p">()))</span></code></pre></figure>
+
+<h5 id="but-wait--how-does-r-parse-data-and-what-can-go-wrong">But wait – how does R parse data, and what can go wrong?</h5>
+<p>Parsing functions take a character vector and return a more specialized vector like a logical, integer, or date. They make up the foundation of importing data, and are useful to understand for imports.</p>
+
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_factor</span><span class="p">()</span></code></li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_logical</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_integer</span><span class="p">()</span></code></li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_double</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_number</span><span class="p">()</span></code> – potential problems with different grouping marks</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_character</span><span class="p">()</span></code> – potential problems with non UTF-8 encoding; try <code class="highlight language-r" data-lang="r"><span class="n">guess_encoding</span><span class="p">()</span></code></li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_date</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_time</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_datetime</span><span class="p">()</span></code> – potential problems with formatting; <a href="https://r4ds.had.co.nz/data-import.html#readr-datetimes">reference</a>.</li>
+</ul>
+
+<h2 id="managing-data-in-a-single-table">Managing Data in a Single Table</h2>
+<p>When some of the column names are <em>values</em> and not variable names, we can use <code class="highlight language-r" data-lang="r"><span class="n">pivot_longer</span><span class="p">()</span></code> to pivot the columns into a new pair of variables, for example:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">preg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
+  </span><span class="o">~</span><span class="n">pregnant</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">male</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">female</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">     </span><span class="kc">NA</span><span class="p">,</span><span class="w">    </span><span class="m">10</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"no"</span><span class="p">,</span><span class="w">      </span><span class="m">20</span><span class="p">,</span><span class="w">    </span><span class="m">12</span><span class="p">)</span><span class="w">
+</span><span class="n">preg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="w">
+  	</span><span class="nf">c</span><span class="p">(</span><span class="s2">"male"</span><span class="p">,</span><span class="w"> </span><span class="s2">"female"</span><span class="p">),</span><span class="w"> </span><span class="c1"># these column names should be values</span><span class="w">
+  	</span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"sex"</span><span class="p">,</span><span class="w">    </span><span class="c1"># new column with names of the old columns: 'sex'</span><span class="w">
+  	</span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="c1"># new column with values of the old columns: 'count'</span><span class="w">
+</span><span class="c1">#&gt; # A tibble: 4 x 3</span><span class="w">
+</span><span class="c1">#&gt;   pregnant sex    count</span><span class="w">
+</span><span class="c1">#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;</span><span class="w">
+</span><span class="c1">#&gt; 1 yes      male      NA</span><span class="w">
+</span><span class="c1">#&gt; 2 yes      female    10</span><span class="w">
+</span><span class="c1">#&gt; 3 no       male      20</span><span class="w">
+</span><span class="c1">#&gt; 4 no       female    12</span></code></pre></figure>
+
+<p>When some of the observations are scattered across mutiple rows, we can use <code class="highlight language-r" data-lang="r"><span class="n">pivot_wider</span><span class="p">()</span></code> to move values into column names, for example:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">people</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
+  </span><span class="o">~</span><span class="n">name</span><span class="p">,</span><span class="w">              </span><span class="o">~</span><span class="n">names</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="n">values</span><span class="p">,</span><span class="w">
+  </span><span class="c1">#------------------|--------|------</span><span class="w">
+  </span><span class="s2">"Chancelor Bennett"</span><span class="p">,</span><span class="w"> </span><span class="s2">"age"</span><span class="p">,</span><span class="w">    </span><span class="m">58</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Chancelor Bennett"</span><span class="p">,</span><span class="w"> </span><span class="s2">"height"</span><span class="p">,</span><span class="w"> </span><span class="m">26</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Saoirse Ronan"</span><span class="p">,</span><span class="w">     </span><span class="s2">"age"</span><span class="p">,</span><span class="w">    </span><span class="m">25</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"Saoirse Ronan"</span><span class="p">,</span><span class="w">     </span><span class="s2">"height"</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">)</span><span class="w">
+</span><span class="n">people</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_wider</span><span class="p">(</span><span class="w">
+  	</span><span class="n">names_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">names</span><span class="p">,</span><span class="w">   </span><span class="c1"># new columns should come from 'age' and 'height'</span><span class="w">
+  	</span><span class="n">values_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">)</span><span class="w"> </span><span class="c1"># new values for columns should come from 'values'</span><span class="w">
+</span><span class="c1">#&gt; # A tibble: 2 x 3</span><span class="w">
+</span><span class="c1">#&gt;  name                age height</span><span class="w">
+</span><span class="c1">#&gt;  &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;</span><span class="w">
+</span><span class="c1">#&gt;1 Chancelor Bennett    58     26</span><span class="w">
+</span><span class="c1">#&gt;2 Saoirse Ronan        25     54</span></code></pre></figure>
+
+<p>If needed, we can use <code class="highlight language-r" data-lang="r"><span class="n">separate</span><span class="p">(),</span><span class="w"> </span><span class="n">unite</span><span class="p">()</span></code> to split columns and combine columns:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">people</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">separate</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"first_name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"last_name"</span><span class="p">),</span><span class="w"> </span><span class="c1"># split name column</span><span class="w">
+   </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">,</span><span class="w"> 
+   </span><span class="n">convert</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">unite</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"first_name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"last_name"</span><span class="p">)</span><span class="w">	</span><span class="c1"># combine name column</span></code></pre></figure>
+
+<p>Missing values can be <strong>missing explicitly</strong> with an NA flag, or <strong>missing implicitly</strong> if they’re just not listed. In the following example, the 4th quarter of 2015 is explicity missing and the 1st quarter of 2016 is implicitly missing.</p>
+
+<p>We can make both missing values explicit with <code class="highlight language-r" data-lang="r"><span class="n">pivot_wider</span></code> or <code class="highlight language-r" data-lang="r"><span class="n">complete</span><span class="p">()</span></code>, or make both missing values implicit with <code class="highlight language-r" data-lang="r"><span class="n">pivot_longer</span><span class="p">(</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">values_drop_na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span></code></p>
+
+<p>Note: <code class="highlight language-r" data-lang="r"><span class="n">fill</span><span class="p">()</span></code> can be used to fill in missing values with the most recent non-missing value.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">stocks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tibble</span><span class="p">(</span><span class="w">
+  </span><span class="n">year</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">),</span><span class="w">
+  </span><span class="n">qtr</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">   </span><span class="m">1</span><span class="p">,</span><span class="w">    </span><span class="m">2</span><span class="p">,</span><span class="w">    </span><span class="m">3</span><span class="p">,</span><span class="w">    </span><span class="m">4</span><span class="p">,</span><span class="w">    </span><span class="m">2</span><span class="p">,</span><span class="w">    </span><span class="m">3</span><span class="p">,</span><span class="w">    </span><span class="m">4</span><span class="p">),</span><span class="w">
+  </span><span class="n">return</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1.88</span><span class="p">,</span><span class="w"> </span><span class="m">0.59</span><span class="p">,</span><span class="w"> </span><span class="m">0.35</span><span class="p">,</span><span class="w">   </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">0.92</span><span class="p">,</span><span class="w"> </span><span class="m">0.17</span><span class="p">,</span><span class="w"> </span><span class="m">2.66</span><span class="p">))</span><span class="w">
+
+</span><span class="n">stocks</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># view both missing values explicitly using pivot_wider</span><span class="w">
+  </span><span class="n">pivot_wider</span><span class="p">(</span><span class="n">names_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">values_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">return</span><span class="p">)</span><span class="w">
+</span><span class="c1">#&gt; # A tibble: 4 x 3</span><span class="w">
+</span><span class="c1">#&gt;    qtr `2015` `2016`</span><span class="w">
+</span><span class="c1">#&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span><span class="w">
+</span><span class="c1">#&gt;1     1   1.88  NA   </span><span class="w">
+</span><span class="c1">#&gt;2     2   0.59   0.92</span><span class="w">
+</span><span class="c1">#&gt;3     3   0.35   0.17</span><span class="w">
+</span><span class="c1">#&gt;4     4  NA      2.66</span><span class="w">
+
+</span><span class="n">stocks2</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># hide both missing values using pivot_longer(..., values_drop_na = TRUE)</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="w">
+  	</span><span class="nf">c</span><span class="p">(</span><span class="n">`2015`</span><span class="p">,</span><span class="n">`2016`</span><span class="p">),</span><span class="w"> 
+  	</span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"year"</span><span class="p">,</span><span class="w"> 
+  	</span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"return"</span><span class="p">,</span><span class="w"> 
+  	</span><span class="n">values_drop_na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="c1">#&gt; # A tibble: 6 x 3</span><span class="w">
+</span><span class="c1">#&gt;    qtr year  return</span><span class="w">
+</span><span class="c1">#&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;</span><span class="w">
+</span><span class="c1">#&gt;1     1 2015    1.88</span><span class="w">
+</span><span class="c1">#&gt;2     2 2015    0.59</span><span class="w">
+</span><span class="c1">#&gt;3     2 2016    0.92</span><span class="w">
+</span><span class="c1">#&gt;4     3 2015    0.35</span><span class="w">
+</span><span class="c1">#&gt;5     3 2016    0.17</span><span class="w">
+</span><span class="c1">#&gt;6     4 2016    2.66</span><span class="w">
+
+</span><span class="n">stocks</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># make missing values explicit using complete() to check combos of year/qtr</span><span class="w">
+  </span><span class="n">complete</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">qtr</span><span class="p">)</span><span class="w">
+</span><span class="c1">#&gt;# A tibble: 8 x 3</span><span class="w">
+</span><span class="c1">#&gt;   year   qtr return</span><span class="w">
+</span><span class="c1">#&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span><span class="w">
+</span><span class="c1">#&gt;1  2015     1   1.88</span><span class="w">
+</span><span class="c1">#&gt;2  2015     2   0.59</span><span class="w">
+</span><span class="c1">#&gt;3  2015     3   0.35</span><span class="w">
+</span><span class="c1">#&gt;4  2015     4  NA   </span><span class="w">
+</span><span class="c1">#&gt;5  2016     1  NA   </span><span class="w">
+</span><span class="c1">#&gt;6  2016     2   0.92</span><span class="w">
+</span><span class="c1">#&gt;7  2016     3   0.17</span><span class="w">
+</span><span class="c1">#&gt;8  2016     4   2.66</span></code></pre></figure>
+
+<h2 id="managing-relational-data-in-multiple-tables">Managing Relational Data in Multiple Tables</h2>
+<p>Combine data between related data by matching the unique identifier in your main table (primary key) with the unique identifier in another table (foreign key). To ensure that your joins work smoothly:</p>
+
+<ol>
+  <li>Identify the variables that are the primary key in each table</li>
+  <li>Check that none of the variables in the primary key are missing</li>
+  <li>Check that the primary keys match foreign keys in another table with <code class="highlight language-r" data-lang="r"><span class="n">anti_join</span><span class="p">()</span></code></li>
+</ol>
+
+<h4 id="mutating-joins-combine-variables-from-two-tables"><strong>Mutating Joins:</strong> Combine variables from two tables</h4>
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">inner</span><span class="w"> </span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - only matching values are kept</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">left_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>  - all x values are kept - MOST COMMON</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">right_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - all y values are kept</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">full_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>  - all x and y values are kept</li>
+</ul>
+
+<h4 id="filtering-joins-affects-observations-not-variables"><strong>Filtering Joins:</strong> Affects observations, not variables</h4>
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">semi_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - keeps all observations in x that have a match in y</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">anti_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - drops all observations in x that have a match in y</li>
+</ul>
+
+<h4 id="set-operations-assumes-both-tables-have-the-same-variables"><strong>Set Operations:</strong> Assumes both tables have the same variables</h4>
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">intersect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - return only observations in both x and y</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">union</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>    - return unique observations in x and y</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">setdiff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>   - return observations in x, but not in y</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>The content in this post is based on chapters nine through thirteen of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund, which I would recommend reading for a more thorough explanation. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=High-Level+Data+Wrangling+in+R:+Imports,+Pivots,+and+Joins%20-%20http://localhost:4000/site/posts/data-wrangling-high-level-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/site/posts/data-wrangling-high-level-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          <a href="javascript:history.back()">Back</a>
+          
+        </article>
+        <footer class="footer scrollappear">
+
+<small class="pull-left"> &copy;2019 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/site/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/site/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+  <script src="/site/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js" type="text/javascript"></script>
+
+
+<script src="/site/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+</body>
+</html>

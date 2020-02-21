@@ -4,30 +4,54 @@
     <title>Anthony Pan</title>
     <description></description>
     <link>http://localhost:4000</link>
-    <atom:link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:4000/site/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Introducing chalk</title>
-        <description>Chalk is a high quality, completely customizable, performant and 100% free blog template for Jekyll.</description>
-        <pubDate>Sat, 23 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/introducing-chalk</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/introducing-chalk</guid>
+        <title>Data Wrangling in R: Strings</title>
+        <description>In which we dive into string manipulation, with a focus on regular expressions.</description>
+        <pubDate>Tue, 18 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/data-wrangling-strings-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-strings-r</guid>
       </item>
     
       <item>
-        <title>How to configure Chalk</title>
-        <description>Learn more about the config file for Chalk and how to set it up properly.</description>
-        <pubDate>Fri, 22 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/configuring-chalk</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/configuring-chalk</guid>
+        <title>High-Level Data Wrangling in R: Imports, Pivots, and Joins</title>
+        <description>In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.</description>
+        <pubDate>Mon, 17 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/data-wrangling-high-level-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-high-level-r</guid>
       </item>
     
       <item>
-        <title>Chalk sample post with all elements</title>
-        <description>Have a look at all the predesigned elements you can use in Chalk.</description>
-        <pubDate>Thu, 21 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/blog/posts/chalk-sample-post-with-all-elements</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/posts/chalk-sample-post-with-all-elements</guid>
+        <title>Basic Data Exploration in R</title>
+        <description>In which we examine some common practical examples of data exploration: observing variance and co-variance with histograms, boxplots, scatterplots, and heat maps.</description>
+        <pubDate>Sun, 16 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/data-exploration-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/data-exploration-r</guid>
+      </item>
+    
+      <item>
+        <title>Basic Data Transformation in R</title>
+        <description>In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.</description>
+        <pubDate>Sat, 15 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/data-transformation-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/data-transformation-r</guid>
+      </item>
+    
+      <item>
+        <title>Basic Data Visualization in R</title>
+        <description>In which we review the fundamentals of creating graphs in R with ggplot2.</description>
+        <pubDate>Wed, 12 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/data-visualisation-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/data-visualisation-r</guid>
+      </item>
+    
+      <item>
+        <title>Index: Start Here</title>
+        <description>An introduction to this blog, and a list of all my posts.</description>
+        <pubDate>Wed, 01 Jan 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/index</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/index</guid>
       </item>
     
   </channel>

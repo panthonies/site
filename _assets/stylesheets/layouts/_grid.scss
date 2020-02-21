@@ -87,7 +87,7 @@
 // Centers your grid container with a max-width.
 
 .grid-centered {
-  max-width: $max-width;
+  max-width: $max-width * 1.40;
   margin-right: auto;
   margin-left: auto;
 }

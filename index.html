@@ -1,11 +1,12 @@
 ---
 layout: default
-title: "The high quality, completely customizable, performant and 100% free blog template for Jekyll"
-description: "Chalk uses all the best tools and merges them into one premium blogging theme."
+title: "Blog"
+description: "Blog"
 ---
 
 <ul class="article-list">
-  {% for post in paginator.posts %}
+  {% assign sorted = paginator.posts | sort: "stickiness" %}
+  {% for post in sorted %}
     <li class="article-list-item {% if site.scrollappear_enabled %}scrollappear{% endif %}">
       <a href="{{ post.url | relative_url }}" title="{{ post.title }}">
         <h5>

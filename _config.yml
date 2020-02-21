@@ -4,7 +4,7 @@ blog_theme: light # Or use dark
 name: Anthony Pan
 paginate: 25
 url: "localhost:4000"
-baseurl: "/site/"
+baseurl: "/site"
 
 
 # Optional settings
@@ -14,7 +14,7 @@ discus_identifier:  # Add your Disqus identifier
 ga_analytics: # Add your GA Tracking Id
 local_fonts: false # Change to true if you wish to use local fonts
 rss_enabled: false # Change to false if not
-scrollappear_enabled: false # Change to false to disable
+scrollappear_enabled: true # Change to false to disable
 tag_nav_enabled: false # Change to true if you wish to show an additional 'tag-list' navigation below the header
 theme_toggle: false # Change to true if you wish to show an icon in the navigation for dynamic theme toggling
 social:
@@ -54,6 +54,7 @@ assets:
     - _assets/javascripts
     - _assets/stylesheets
     - _assets/yarn
+    - pdf
 collections:
   my_tags:
     output: true
@@ -81,5 +82,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+  - rouge
+  - jekyll_inline_highlight
 paginate_path: /posts/page/:num/
 permalink: posts/:slug
