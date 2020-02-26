@@ -21,6 +21,7 @@ library("nycflights13") # example data set of flights leaving from NYC in 2013
 [^1]: This post is meant for a person who is looking for a refresher on dates and times in R, and the content in this post is based on chapter sixteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
 
 ## Creating Dates and Times
+---
 
 ##### 1. Create dates and times from strings
 
@@ -62,7 +63,7 @@ flights_dt %>%
                       alt="Make Date-Time" %}
 
 ## Retrieve and Edit Date and Time Components
-
+---
 Retrieve date and time components from a date or date-time with the following functions:
 
 * {% ihighlight R %}year(){% endihighlight %} returns the year
@@ -96,7 +97,7 @@ flights_dt %>%
                       alt="Set Components of Date Time" %}
 
 ## Time Spans: Durations, Periods and Intervals
-
+---
 If you subtract two dates in R regularly, you get a "*difftime*" object that records a time span in seconds, minutes, hours, days, or weeks, which isn't great because the units aren't consistent. Time spans are better measured in these three ways:
 
 1. Durations, which represent an exact number of seconds
@@ -151,13 +152,12 @@ next_year <- today() + years(1)
 {% endhighlight %}
 
 ## Time Zones
-
+---
 Time zones are complicated, but here are a couple of basic functions that are useful to know:
 
 * {% ihighlight R %}Sys.timezone(){% endihighlight %} returns the time zone of your workstation, according to R
 * {% ihighlight R %}with_tz(<DATETIME>, tzone = "America/Detroit"){% endihighlight %} changes time zone while keeping the instant in time
 * {% ihighlight R %}force_tz(<DATETIME>, tzone = "America/Detroit"){% endihighlight %} changes time zone and changes the instant in time
-
 
 
 

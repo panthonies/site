@@ -55,7 +55,7 @@ people_sample_2_factors <- parse_factor(people_sample_2, levels = age_levels)
 * If you would like to match the order of levels with the order of appearance in the data, then set levels as follows: {% ihighlight R %}factor(data, levels = unique(data)){% endihighlight %}
 
 ## Working with Factors
-
+---
 We can reorder factors with these functions (often useful for visualizations):
 
 * {% ihighlight R %}fct_inorder(){% endihighlight %} orders factors in order of their appearance in the data
@@ -232,3 +232,4 @@ gss_cat %>%
 #> 5 Christian    689
 #> 6 Jewish       388
 {% endhighlight %}
+

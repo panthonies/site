@@ -173,3 +173,4 @@ ggplot(data = smaller, mapping = aes(x = carat, y = price)) +
 {% include image.html path="documentation/02-16-covariance-cutnumber.png"
                       path-detail="documentation/02-16-covariance-cutnumber.png"
                       alt="Covariance Cutnumber" %}
+
