@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Programming in R: Pipes, Functions, and Vectors</title>
+  <meta name="description" content="In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Programming in R: Pipes, Functions, and Vectors">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/site/posts/programming-r-1">
+  <meta property="og:description" content="In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://localhost:4000/site/posts/programming-r-1">
+  <meta name="twitter:title" content="Programming in R: Pipes, Functions, and Vectors">
+  <meta name="twitter:description" content="In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.">
+
+  
+    <meta property="og:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+  
+
+  <link href="http://localhost:4000/site/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+    
+
+  
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/site/about" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/site/about" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/site/" title="writing">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>Programming in R: Pipes, Functions, and Vectors</h1>
+            <p>In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    February 25, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      9 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/site/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/site/tag/r" title="See all posts with tag 'r'">r</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <p>I’ll start with some general tips &amp; tricks that I find useful in RStudio before jumping into the main topics:<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+<ul>
+  <li><strong>cmd + shift + r</strong> creates a commented header in the code for readability</li>
+  <li><strong>cmd + shift + p</strong> resends a code chunk from the editor into console</li>
+  <li><strong>cmd + shift + f10</strong> restarts RStudio</li>
+  <li><strong>cmd + shift + s</strong> reruns the current script</li>
+</ul>
+
+<h2 id="pipes">Pipes</h2>
+<hr />
+<p>Pipes, which can be denoted by <code class="highlight language-r" data-lang="r"><span class="o">%&gt;%</span></code> and pronounced while reading code as “then,” help clearly express a sequence of multiple operations by eliminating the need to create intermediate objects and bringing focus to the primary object and its transformations.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w">
+</span><span class="n">...</span></code></pre></figure>
+
+<p>However, because pipes reassemble code in a form that overwrites an intermediate object, they <strong>will not work</strong> for:</p>
+
+<ol>
+  <li>Functions that use the current environment must explicity define the environment if being used in a pipeline; for example, <code class="highlight language-r" data-lang="r"><span class="n">assign</span><span class="p">(),</span><span class="w"> </span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">load</span><span class="p">()</span></code></li>
+  <li>Functions that use lazy evaluation cannot be used with pipes; for example, <code class="highlight language-r" data-lang="r"><span class="w"> </span><span class="n">try</span><span class="p">(),</span><span class="w"> </span><span class="n">tryCatch</span><span class="p">(),</span><span class="w"> </span><span class="n">suppresMessages</span><span class="p">(),</span><span class="w"> </span><span class="n">suppressWarnings</span><span class="p">()</span></code></li>
+</ol>
+
+<p>Furthermore, <strong>do not</strong> use pipes in these scenarios:</p>
+
+<ul>
+  <li>If there are multiple inputs or outputs (pipes should only transform one primary object)</li>
+  <li>If there is a directed graph with a complex dependency structure (pipes are linear)</li>
+  <li>If there are many steps in the pipeline, consider creating meaningfully named intermediate objects to help debugging</li>
+</ul>
+
+<p>The pipe is loaded automatically in the tidyverse, but originally comes from the <em>magrittr</em> package. The <em>magrittr</em> package also has some additional piping tools that may be useful:</p>
+
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="o">%T&gt;%</span></code> returns the left-hand side instead of the right-hand side. This is useful for printing, plotting, or saving objects in a way that doesn’t terminate the pipeline.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="o">%$%</span></code> explodes out the variables in a data frame so you can refer to them explicitly. This is useful if you want to pass individual vectors, not data frames, into functions.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="s2">"magrittr"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Use %T&gt;% to plot a distribution and continue to use that object in a pipeline</span><span class="w">
+</span><span class="n">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">matrix</span><span class="p">(</span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%T&gt;%</span><span class="w">
+  </span><span class="n">plot</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">str</span><span class="p">()</span><span class="w">
+</span><span class="c1"># Use %$% to find correlation between two columns by referring to the columns explicitly</span><span class="w">
+</span><span class="n">mtcars</span><span class="w"> </span><span class="o">%$%</span><span class="w">
+  </span><span class="n">cor</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span></code></pre></figure>
+
+<h2 id="functions">Functions</h2>
+<hr />
+<p>You should consider creating a function when you’ve copied and pasted a block of code more than twice. The aspects of functions that we’ll dive into below are conditional execution, function arguments, and return values.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+
+<h4 id="conditional-execution">Conditional Execution</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">condition_1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1"># code executed when condition_1 is TRUE</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">condition_2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1"># code executed when condition_2 is TRUE</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1"># code executed when both conditions are FALSE</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>conditions can be linked with <code class="highlight language-r" data-lang="r"><span class="o">||</span></code> or <code class="highlight language-r" data-lang="r"><span class="o">&amp;&amp;</span></code></li>
+  <li>use <code class="highlight language-r" data-lang="r"><span class="n">near</span><span class="p">()</span></code> when comparing floating point numbers</li>
+  <li>use <code class="highlight language-r" data-lang="r"><span class="n">ifelse</span><span class="p">()</span></code> for conditional element selection</li>
+  <li>use <code class="highlight language-html" data-lang="html">switch()</code> to eliminate long chains of if statements</li>
+  <li>use <code class="highlight language-r" data-lang="r"><span class="n">cut</span><span class="p">()</span></code> to eliminate long chains of if statements; this is useful because it works with vectors</li>
+  <li>be careful when testing for equality because <code class="highlight language-r" data-lang="r"><span class="o">==</span></code> is vectorized; either ensure vectors are length 1, collapse vectors with <code class="highlight language-html" data-lang="html">all()</code> or <code class="highlight language-html" data-lang="html">any()</code>, or use the non-vectorized function <code class="highlight language-r" data-lang="r"><span class="n">identical</span><span class="p">()</span></code></li>
+</ul>
+
+<p>Below are two simple examples of <code class="highlight language-r" data-lang="r"><span class="n">cut</span><span class="p">()</span></code> and <code class="highlight language-r" data-lang="r"><span class="nf">switch</span><span class="p">()</span></code> in action.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># use cut() to separate temperatures into different descriptive categories</span><span class="w">
+</span><span class="n">cut</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-99</span><span class="p">,</span><span class="w"> </span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">,</span><span class="w"> </span><span class="m">66</span><span class="p">),</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">),</span><span class="w">
+    </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"freezing"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cold"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cool"</span><span class="p">,</span><span class="w"> </span><span class="s2">"warm"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hot"</span><span class="p">))</span><span class="w">
+</span><span class="c1">#&gt; [1] freezing freezing cold     warm     hot     </span><span class="w">
+</span><span class="c1">#&gt; Levels: freezing cold cool warm hot</span><span class="w">
+
+</span><span class="c1"># use switch() to quickly define alternative arithmatic operations based on an input</span><span class="w">
+</span><span class="n">arithmatic</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+ </span><span class="nf">switch</span><span class="p">(</span><span class="n">op</span><span class="p">,</span><span class="w">
+   </span><span class="n">plus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w">
+   </span><span class="n">minus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w">
+   </span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w">
+   </span><span class="n">divide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w">
+   </span><span class="n">stop</span><span class="p">(</span><span class="s2">"Unknown op!"</span><span class="p">)</span><span class="w">
+ </span><span class="p">)</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<h4 id="function-arguments">Function Arguments</h4>
+<p>Generally, the standard naming convention for function arguments are as follows:</p>
+
+<ul>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span></code>: vectors.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span></code>: numeric indices (typically rows and columns).</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">df</span></code>: a data frame.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">n</span></code>: length, or number of rows.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">p</span></code>: number of columns.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="n">w</span></code>: a vector of weights.</li>
+</ul>
+
+<p>It is common to check for preconditions for your functions, such as making sure the inputs are in the correct format. If these conditions are not met, you may want to exit the function immediately. You can check for preconditions using <code class="highlight language-r" data-lang="r"><span class="n">stop</span><span class="p">()</span></code> to check a condition and throw an error, or <code class="highlight language-r" data-lang="r"><span class="n">stopifnot</span><span class="p">()</span></code> to check if each argument is true, and return a generic error message if any are not true.</p>
+
+<p>Finally, functions can include a <code class="highlight language-r" data-lang="r"><span class="n">...</span></code> argument to send an arbitrary number of inputs on to another function, for example:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># using "...", this function collapses many strings into one comma-delimited string</span><span class="w">
+</span><span class="n">commas</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">str_c</span><span class="p">(</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">", "</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<h4 id="return-values">Return Values</h4>
+<p>The return value is usually the last statement that a function evaluates, but you can coose to return early by using <code class="highlight language-r" data-lang="r"><span class="nf">return</span><span class="p">()</span></code> – for example, if the inputs are empty, or if there are simple edge cases.</p>
+
+<p>Functions can either <strong>transform</strong> an object or create <strong>side-effects</strong> like drawing a graph or saving a file. For functions that are side-effects, consider returning the first aragument invisibly so that they can still be used in a pipeline.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># prints the number of missing values in a data frame while preserving pipeline</span><span class="w">
+</span><span class="n">show_missings</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="w">
+  </span><span class="n">cat</span><span class="p">(</span><span class="s2">"Missing values: "</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="s2">"\n"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w">
+  </span><span class="nf">invisible</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<h2 id="vectors">Vectors</h2>
+<hr />
+<p>Most functions that you write will work with vectors, a data structure with a sequence of cells that contain data.</p>
+<ol>
+  <li><strong>Atomic vectors</strong> are one-dimensional, only contain one type of data, and fall into one of six categories: logical, integer, double, character, complex and raw. <strong>Null</strong> represents the absence of a vector.</li>
+  <li><strong>Lists</strong>, or recursive vectors, can contain multiple types of data, including other lists.</li>
+</ol>
+
+<p>Every vector has two required properties – type, determined with <code class="highlight language-r" data-lang="r"><span class="n">typeof</span><span class="p">()</span></code>, and length, determined with <code class="highlight language-r" data-lang="r"><span class="nf">length</span><span class="p">()</span></code>. They can also have aritrary additional attributes, which create augmented vectors such as factors (built on integer vectors), date/times (built on numberic vectors), and data frames/tibbles (built on lists).</p>
+
+<h3 id="1-atomic-vectors">1. Atomic Vectors</h3>
+<ul>
+  <li>Logical vectors can take three possible values: TRUE, FALSE, NA</li>
+  <li>Integer vectors contain integers; numbers are doubles by default, place an <code class="highlight language-r" data-lang="r"><span class="n">L</span></code> after the number to denote an integer.</li>
+  <li>Double vectors contain doubles; null values are represented by <code class="highlight language-r" data-lang="r"><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">NaN</span><span class="p">,</span><span class="w"> </span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="kc">Inf</span></code></li>
+  <li>Character vectors are made up of string elements</li>
+  <li>Raw and complex vectors are rarely used in data analysis</li>
+</ul>
+
+<p>Note: each type of atommic vector has its own missing value: <code class="highlight language-r" data-lang="r"><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_integer_</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_real_</span><span class="p">,</span><span class="w"> </span><span class="kc">NA_character_</span></code>. They will always be converted to the correct type using implicit coercion rules.</p>
+
+<p><strong>Coerce vectors</strong> from one type to another either implicitly by using a vector in a specific context that expects a certain type, or explicitly through a function such as <code class="highlight language-r" data-lang="r"><span class="nf">as.logical</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.double</span><span class="p">(),</span><span class="w"> </span><span class="nf">as.character</span><span class="p">()</span></code>. In addition, R will implicitly coerce the length of vectors by recycling the shorter vector to the same length as the longer vector.</p>
+
+<p><strong>Check the vector</strong> type with the <code class="highlight language-r" data-lang="r"><span class="n">is_</span><span class="o">*</span></code> family of functions for each type; for example, <code class="highlight language-r" data-lang="r"><span class="nf">is_logical</span><span class="p">(),</span><span class="w"> </span><span class="n">is_scalar_logical</span><span class="p">()</span></code>.</p>
+
+<p><strong>Name vectors</strong> during creation with <code class="highlight language-r" data-lang="r"><span class="nf">c</span><span class="p">()</span></code> or after creation with <code class="highlight language-r" data-lang="r"><span class="n">set_names</span><span class="p">()</span></code> to provide for easier subsetting.</p>
+
+<p><strong>Subset vectors</strong> using brackets, <code class="highlight language-r" data-lang="r"><span class="p">[</span></code>.Vectors can be subsetted with numeric vectors to denote position, logical vectors to keep all values corresponding to a TRUE value, character vectors to denote names, and empty brackets to select rows or columns of matrices.</p>
+
+<h3 id="2-lists">2. Lists</h3>
+<p>Lists can be created with <code class="highlight language-r" data-lang="r"><span class="nf">list</span><span class="p">()</span></code>, and you can check the structure of a list using <code class="highlight language-r" data-lang="r"><span class="n">str</span><span class="p">()</span></code>. To subset lists,</p>
+<ol>
+  <li><code class="highlight language-r" data-lang="r"><span class="p">[</span></code> extracts a new, smaller list.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="p">[[</span></code> extracts a single component from a list, drilling down and removing a level of hierarchy.</li>
+  <li><code class="highlight language-r" data-lang="r"><span class="o">$</span></code> extracts named elements of a list.</li>
+</ol>
+
+<p>Lists also have arbitrary additional attributes that can be viewed and set individually with <code class="highlight language-r" data-lang="r"><span class="nf">attr</span><span class="p">()</span></code>, or collectively with <code class="highlight language-r" data-lang="r"><span class="nf">attributes</span><span class="p">()</span></code>. The three fundamental attributes of lists are</p>
+<ol>
+  <li>Names, used to name the elements of a vector</li>
+  <li>Dimensions, which makes a vector behave like a matrix or array</li>
+  <li>Class, used to implement the S3 object oriented system and controls the behavior of generic functions such as <code class="highlight language-r" data-lang="r"><span class="n">as.Date</span></code>, based on different classes of input.</li>
+</ol>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapters seventeen through twenty of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>More complicated functions may warrant unit testing. For information regarding unit testing in R, see <a href="http://r-pkgs.had.co.nz/tests.html">the testthat package</a>. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Programming+in+R:+Pipes,+Functions,+and+Vectors%20-%20http://localhost:4000/site/posts/programming-r-1" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/site/posts/programming-r-1" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          <a href="javascript:history.back()">Back</a>
+          
+        </article>
+        <footer class="footer scrollappear">
+
+<small class="pull-left"> &copy;2019 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/site/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/site/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+  <script src="/site/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js" type="text/javascript"></script>
+
+
+<script src="/site/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+</body>
+</html>

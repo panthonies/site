@@ -25,6 +25,7 @@ In a tidy dataset, each variable must have its own column, each observation must
 [^1]: The content in this post is based on chapters nine through thirteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
 ## Importing Data
+---
 There are a number of different functions to import different types of flat files into data frames, and they all work similarly -- we'll be using {% ihighlight R %}read_csv(){% endihighlight %} from the *readr* package, which is part of the tidyverse.
 
 {% ihighlight R %}read_csv(){% endihighlight %} scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:
@@ -63,6 +64,7 @@ Parsing functions take a character vector and return a more specialized vector l
 * {% ihighlight R %}parse_date(), parse_time(), parse_datetime(){% endihighlight %} -- potential problems with formatting; [reference](https://r4ds.had.co.nz/data-import.html#readr-datetimes).
 
 ## Managing Data in a Single Table
+---
 When some of the column names are *values* and not variable names, we can use {% ihighlight R %}pivot_longer(){% endihighlight %} to pivot the columns into a new pair of variables, for example:
 {% highlight R %}
 preg <- tribble(
@@ -168,6 +170,7 @@ stocks %>% # make missing values explicit using complete() to check combos of ye
 {% endhighlight %}
 
 ## Managing Relational Data in Multiple Tables
+---
 Combine data between related data by matching the unique identifier in your main table (primary key) with the unique identifier in another table (foreign key). To ensure that your joins work smoothly:
 
 1. Identify the variables that are the primary key in each table
@@ -188,8 +191,4 @@ Combine data between related data by matching the unique identifier in your main
 * {% ihighlight R %}intersect(x, y){% endihighlight %} - return only observations in both x and y 
 * {% ihighlight R %}union(x, y){% endihighlight %}    - return unique observations in x and y
 * {% ihighlight R %}setdiff(x, y){% endihighlight %}   - return observations in x, but not in y
-
-
-
-
 

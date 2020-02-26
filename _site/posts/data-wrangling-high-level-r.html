@@ -141,6 +141,7 @@
 </ul>
 
 <h2 id="importing-data">Importing Data</h2>
+<hr />
 <p>There are a number of different functions to import different types of flat files into data frames, and they all work similarly – we’ll be using <code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> from the <em>readr</em> package, which is part of the tidyverse.</p>
 
 <p><code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:</p>
@@ -180,6 +181,7 @@
 </ul>
 
 <h2 id="managing-data-in-a-single-table">Managing Data in a Single Table</h2>
+<hr />
 <p>When some of the column names are <em>values</em> and not variable names, we can use <code class="highlight language-r" data-lang="r"><span class="n">pivot_longer</span><span class="p">()</span></code> to pivot the columns into a new pair of variables, for example:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">preg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
@@ -278,6 +280,7 @@
 </span><span class="c1">#&gt;8  2016     4   2.66</span></code></pre></figure>
 
 <h2 id="managing-relational-data-in-multiple-tables">Managing Relational Data in Multiple Tables</h2>
+<hr />
 <p>Combine data between related data by matching the unique identifier in your main table (primary key) with the unique identifier in another table (foreign key). To ensure that your joins work smoothly:</p>
 
 <ol>

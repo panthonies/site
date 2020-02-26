@@ -28,7 +28,7 @@ library("tidyverse")
 Now, let's get started.
 
 # The General Structure of Graphs
-
+---
 {% highlight R %}
 ggplot(data = <DATA>) + 
 	<GEOM_FUNCTION>(
@@ -118,13 +118,15 @@ ggplot(data = mpg) +
 #### ...and we're finished! Not too bad, right?
 I've included some useful references and example code below that illustrates the concepts of this post in practice.
 
-## Quick References
+### Quick References
+
 A reference for ggplot2 point shapes: 
 {% include image.html path="documentation/02-12-ggplot2_shapes.png" path-detail="documentation/02-12-ggplot2_shapes.png" alt="ggplot2 shapes" %}
 A reference for ggplot2 line types:
 {% include image.html path="documentation/02-12-ggplot2_linetypes.png" path-detail="documentation/02-12-ggplot2_linetypes.png" alt="ggplot2 line types" %}
 
 ## Basic Examples in R code
+---
 I recommend copying and pasting this code into RStudio for ease of use.
 {% highlight R %}
 ### load package
@@ -231,4 +233,3 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
   scale_x_continuous(limits = c(0,NA)) +
   scale_y_continuous(limits = c(0,NA))
 {% endhighlight %}
-

@@ -8,11 +8,11 @@ tags: [academic, r]
 
 In this post we'll be taking a look at basic string functions, regular expression syntax, and several applications of regular expressions in string manipulation.[^1]
 
-[^1]: This post is meant for a person who is looking for a refresher on string manipulation and regular expressions in R. The content in this post is based on chapter fourteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a in-depth examples.
+[^1]: This post is meant for a person who is looking for a refresher on string manipulation and regular expressions in R. The content in this post is based on chapter fourteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for in-depth examples.
 
 The [RStudio String Manipulation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-strings.pdf){:target="blank"} has great reference material on this topic in a condensed format. 
 
-## String Basics
+### String Basics
 
 * {% ihighlight R %}str_length(){% endihighlight %} returns the number of characters in a string 
 * {% ihighlight R %}str_replace_na(){% endihighlight %} turns missing values (NA) into "NA" 
@@ -23,7 +23,7 @@ The [RStudio String Manipulation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-she
 * {% ihighlight R %}str_to_lower(), str_to_upper(), str_to_title(){% endihighlight %} changes cases; specify locale if necessary
 
 ## Regular Expressions - Basic Syntax
-
+---
 #### Anchors
 * {% ihighlight R %}^{% endihighlight %} matches the start of a string
 * {% ihighlight R %}${% endihighlight %} matches the end of a string
@@ -238,7 +238,7 @@ str_view(bananas, regex("^banana # search for all bananas",
 {% endhighlight %}
 
 ## Applying Pattern Matching Without Regular Expressions
-
+---
 All of the functions that we've looked at to apply pattern matching via regular expressions by default. However, it is possible to override the pattern matching type by explicity specifying one of three functions in place of {% ihighlight R %}regex(){% endihighlight %}:
 
 1. {% ihighlight R %}fixed(){% endihighlight %} matches the exact specified sequence of bytes, ignoring all special regular expressions. It is much faster than regular expressions, but be careful with non-English data.

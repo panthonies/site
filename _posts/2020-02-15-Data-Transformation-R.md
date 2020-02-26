@@ -30,7 +30,7 @@ x %>% f(y) %>% g(z) == g(f(x, y), z)
 ...
 {% endhighlight %}
 
-See the R code at the bottom for examples of the pipe in action.
+See the R code at the bottom for examples of the pipe in action, and my [post on programming in R](programming-r) for a deeper dive into pipes.
 
 ## Filter
 {% ihighlight R %}filter(){% endihighlight %} allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.
@@ -92,7 +92,7 @@ Use {% ihighlight R %}ungroup(){% endihighlight %} to remove groupings.
 Keep reading for examples of these functions in action.
 
 ## Examples and R Code
-
+---
 We'll be using two libraries: [tidyverse](https://www.tidyverse.org), which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.
 
 {% highlight R %}
