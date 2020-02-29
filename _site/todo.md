@@ -36,6 +36,7 @@
 	https://randomcriticalanalysis.com/why-conventional-wisdom-on-health-care-is-wrong-a-primer/#rcatoc-income-predicts-changes-in-health-expenditure
 
 
+<span style="color:blue">some *blue* text</span>.
 
 
 	-Post-

@@ -7,6 +7,14 @@
     <atom:link href="http://localhost:4000/site/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Model Building in R</title>
+        <description>In which we explore the basics of modeling as an exploratory tool through recording and graphing predictions and residuals, variable interactions, and transformations.</description>
+        <pubDate>Thu, 27 Feb 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/modeling-r</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/modeling-r</guid>
+      </item>
+    
+      <item>
         <title>Programming in R: Iteration</title>
         <description>In which we explore the basics of iteration through the lenses of functional and imperative programming by examining for loops, map functions, and more.</description>
         <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Wed, 12 Feb 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/site/posts/data-visualisation-r</link>
         <guid isPermaLink="true">http://localhost:4000/site/posts/data-visualisation-r</guid>
-      </item>
-    
-      <item>
-        <title>Index: Start Here</title>
-        <description>An introduction to this blog, and a list of all my posts.</description>
-        <pubDate>Wed, 01 Jan 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/index</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/index</guid>
       </item>
     
   </channel>

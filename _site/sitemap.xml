@@ -2,19 +2,23 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/site/tag/r/</loc>
-<lastmod>2020-02-26T00:55:40-05:00</lastmod>
+<lastmod>2020-02-28T19:00:54-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/site/tag/academic/</loc>
-<lastmod>2020-02-26T00:55:40-05:00</lastmod>
+<lastmod>2020-02-28T19:00:54-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/site/tag/web/</loc>
-<lastmod>2020-02-26T00:55:40-05:00</lastmod>
+<lastmod>2020-02-28T19:00:54-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/site/posts/index</loc>
 <lastmod>2020-01-01T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/site/posts/modeling-r</loc>
+<lastmod>2020-02-27T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/site/posts/programming-r-2</loc>
@@ -72,7 +76,7 @@
 </url>
 <url>
 <loc>http://localhost:4000/site/pdf/r-cheat-sheet-datetime.pdf</loc>
-<lastmod>2020-02-21T01:59:17-05:00</lastmod>
+<lastmod>2020-02-26T01:01:05-05:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/site/pdf/r-cheat-sheet-rstudio-ide.pdf</loc>
