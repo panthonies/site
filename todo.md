@@ -40,5 +40,11 @@
 	https://prospect.org/power/americans-liberal-even-know/
 	https://www.cnbc.com/2019/03/27/majority-of-americans-support-progressive-policies-such-as-paid-maternity-leave-free-college.html
 
+	Choosing a statistical test:
+	https://help.xlstat.com/s/article/which-statistical-test-should-you-use?language=en_US
+	https://i.pinimg.com/originals/a4/f2/ee/a4f2ee4585a5b19cce7a4a34608fb009.jpg
+
 	Zelda: Breath of the Wild captures my base desire to chill out in a beautiful place. 
 
+	Useful: collapsible sections in markdown
+	https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab

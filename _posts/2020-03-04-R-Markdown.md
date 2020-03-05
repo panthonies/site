@@ -60,7 +60,7 @@ output:
 
 **Tip:** Change the code chunk defaults at the beginning of the document -- for example, if you are presenting a doc for decision makers, you can turn off the default display of code globally:
 
-{% highlight R %}
+{% highlight x %}
 ```{r example_setup_chunk, include = FALSE}
 knitr::opts_chunk$set(
   echo = FALSE
@@ -75,7 +75,7 @@ knitr::opts_chunk$set(
 2. Check the working directory with `r getwd()` in a chunk.
 3. Set `r error = TRUE` on the chunk causing the problem, then use `r print()` and `r str()` to check settings.
 
-### Misc Info - R Markdown Formats
+### Misc Info - Additional R Markdown Formats
 
 The output format can be set permanently by modifying the YAML header or set once by calling `rmarkdown::render()`.
 

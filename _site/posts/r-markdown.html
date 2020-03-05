@@ -180,11 +180,11 @@ output:
 
 <p><strong>Tip:</strong> Change the code chunk defaults at the beginning of the document – for example, if you are presenting a doc for decision makers, you can turn off the default display of code globally:</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="err">``</span><span class="n">`{r example_setup_chunk, include = FALSE}
+<figure class="highlight"><pre><code class="language-x" data-lang="x">```{r example_setup_chunk, include = FALSE}
 knitr::opts_chunk$set(
   echo = FALSE
 )
-`</span><span class="err">``</span></code></pre></figure>
+```</code></pre></figure>
 
 <h3 id="troubleshooting-r-markdown">Troubleshooting R Markdown</h3>
 
@@ -194,7 +194,7 @@ knitr::opts_chunk$set(
   <li>Set <code class="highlighter-rouge">r error = TRUE</code> on the chunk causing the problem, then use <code class="highlighter-rouge">r print()</code> and <code class="highlighter-rouge">r str()</code> to check settings.</li>
 </ol>
 
-<h3 id="misc-info---r-markdown-formats">Misc Info - R Markdown Formats</h3>
+<h3 id="misc-info---additional-r-markdown-formats">Misc Info - Additional R Markdown Formats</h3>
 
 <p>The output format can be set permanently by modifying the YAML header or set once by calling <code class="highlighter-rouge">rmarkdown::render()</code>.</p>
 
