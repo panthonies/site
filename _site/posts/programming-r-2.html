@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -106,7 +106,7 @@
   <span class="article-list-minutes">
     
     
-      13 minute read
+      12 minute read
     
   </span>
   <span class="article-list-divider">-</span>
@@ -126,7 +126,7 @@
             <p>Iteration, like functions, serve to reduce the amount of duplication in code. In R, this comes in two flavors: imperative programming, such as for and while loops, and functional programming, which avoids changing-state data.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
 <h2 id="imperative-programming-for-loops">Imperative Programming: For Loops</h2>
-<p>When creating for loops in R, it’s important to allocate sufficient space for new objects using the <code class="highlight language-r" data-lang="r"><span class="n">vector</span><span class="p">()</span></code> function. For example, we create a new object that computes the median of each column of a data frame:</p>
+<p>When creating for loops in R, it’s important to allocate sufficient space for new objects using the <code class="highlighter-rouge">vector()</code> function. For example, we create a new object that computes the median of each column of a data frame:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">output</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vector</span><span class="p">(</span><span class="s2">"double"</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="w"> </span><span class="c1"># 1. output: make sure to allocate sufficient space</span><span class="w">
 </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">          </span><span class="c1"># 2. sequence: how should the function iterate?</span><span class="w">
@@ -135,9 +135,9 @@
 
 <p>There are a couple of looping patterns worth noting:</p>
 <ol>
-  <li><code class="highlight language-r" data-lang="r"><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span></code> loops over indices; this is the most common way to construct for loops.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span></code> loops over elements; this is useful if you only care about side effects like plots.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span></code> loops over names; this is useful if you only need names</li>
+  <li><code class="highlighter-rouge">for (i in seq_along(xs))</code> loops over indices; this is the most common way to construct for loops.</li>
+  <li><code class="highlighter-rouge">for (x in xs)</code> loops over elements; this is useful if you only care about side effects like plots.</li>
+  <li><code class="highlighter-rouge">for (nm in names(xs))</code> loops over names; this is useful if you only need names</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># using seq_along(), we can extract names and values of all indices</span><span class="w">
@@ -148,9 +148,9 @@
 
 <p>Most of the time, you will know what form the function output will take. However, if the length of the output is unknown, combine the data into a single object after the loop is complete:</p>
 <ul>
-  <li>When generating an unknown number of results, save vectors to a list and combine them into a single vector with <code class="highlight language-r" data-lang="r"><span class="n">unlist</span><span class="p">()</span></code></li>
-  <li>When generating a long string, save outputs in a character vector and combine them into a single string with <code class="highlight language-r" data-lang="r"><span class="n">paste</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span></code></li>
-  <li>When generating a big data frame, save output to a list and combine them into a single data frame with <code class="highlight language-r" data-lang="r"><span class="n">bind_rows</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></code></li>
+  <li>When generating an unknown number of results, save vectors to a list and combine them into a single vector with <code class="highlighter-rouge">unlist()</code></li>
+  <li>When generating a long string, save outputs in a character vector and combine them into a single string with <code class="highlighter-rouge">paste(output, collapse = "")</code></li>
+  <li>When generating a big data frame, save output to a list and combine them into a single data frame with <code class="highlighter-rouge">bind_rows(output)</code></li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># sample a random number (1-100) of observations from a normal dist with different means</span><span class="w">
@@ -191,11 +191,11 @@
 <p>Map functions automate the pattern of looping over a vector, applying a function to each piece, and returning a new vector that’s the same length as the input. These functions are a part of the <em>purrr</em> package, which are implemented in C for speed. There is one map function for each type of output:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map</span><span class="p">()</span></code> makes a list</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map_lgl</span><span class="p">()</span></code> makes a logical vector</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map_int</span><span class="p">()</span></code> makes an integer vector</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map_dbl</span><span class="p">()</span></code> makes a double vector</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map_chr</span><span class="p">()</span></code> makes a character vector</li>
+  <li><code class="highlighter-rouge">map()</code> makes a list</li>
+  <li><code class="highlighter-rouge">map_lgl()</code> makes a logical vector</li>
+  <li><code class="highlighter-rouge">map_int()</code> makes an integer vector</li>
+  <li><code class="highlighter-rouge">map_dbl()</code> makes a double vector</li>
+  <li><code class="highlighter-rouge">map_chr()</code> makes a character vector</li>
 </ul>
 
 <p><strong>Example 1:</strong> The most basic case – calculate the means of all columns of the <em>mtcars</em> dataset.</p>
@@ -224,7 +224,7 @@
 <p>If any one of the mapping operations fails, then an error message will be returned with no output. There are three ways to deal with failures:</p>
 
 <ol>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">safely</span><span class="p">()</span></code> returns a modified version of a function that returns a list of two elements – result and error.</li>
+  <li><code class="highlighter-rouge">safely()</code> returns a modified version of a function that returns a list of two elements – result and error.</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="s2">"a"</span><span class="p">)</span><span class="w">
@@ -245,7 +245,7 @@
 </span><span class="c1">#&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></figure>
 
 <ol start="2">
-  <li><code class="highlight language-r" data-lang="r"><span class="n">possibly</span><span class="p">()</span></code> always always succeeds, but gives a default value when there is an error.</li>
+  <li><code class="highlighter-rouge">possibly()</code> always always succeeds, but gives a default value when there is an error.</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="s2">"a"</span><span class="p">)</span><span class="w">
@@ -254,7 +254,7 @@
 </span><span class="c1">#&gt; num [1:3] 0 2.3 NA</span></code></pre></figure>
 
 <ol start="3">
-  <li><code class="highlight language-r" data-lang="r"><span class="n">quietly</span><span class="p">()</span></code> captures printed output, messages, and warnings instead of errors.</li>
+  <li><code class="highlighter-rouge">quietly()</code> captures printed output, messages, and warnings instead of errors.</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="w">
@@ -274,7 +274,7 @@
 
 <h4 id="map-a-function-over-multiple-arguments-map2-and-pmap">Map a function over multiple arguments: <strong>map2()</strong> and <strong>pmap()</strong></h4>
 <ol>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">map2</span><span class="p">()</span></code> allows you to iterate along two related inputs in parallel. As an example, we can draw a random sample from the normal distribution with three different mean and standard deviation pairs:</li>
+  <li><code class="highlighter-rouge">map2()</code> allows you to iterate along two related inputs in parallel. As an example, we can draw a random sample from the normal distribution with three different mean and standard deviation pairs:</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w">
@@ -282,7 +282,7 @@
 </span><span class="n">map2</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">sigma</span><span class="p">,</span><span class="w"> </span><span class="n">rnorm</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">str</span><span class="p">()</span></code></pre></figure>
 
 <ol start="2">
-  <li><code class="highlight language-r" data-lang="r"><span class="n">pmap</span><span class="p">()</span></code>, on a similar note, iterates along a list of related inputs in parallel. If your arguments are the same length, it is best practice to store them in a data frame. For example, we can vary the mean, standard deviation, and the number of samples from a normal distribution:</li>
+  <li><code class="highlighter-rouge">pmap()</code>, on a similar note, iterates along a list of related inputs in parallel. If your arguments are the same length, it is best practice to store them in a data frame. For example, we can vary the mean, standard deviation, and the number of samples from a normal distribution:</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">params</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
@@ -296,7 +296,7 @@
 
 <h4 id="map-multiple-functions-with-multiple-sets-of-arguments-invoke_map">Map multiple functions with multiple sets of arguments: <strong>invoke_map()</strong></h4>
 
-<p><code class="highlight language-r" data-lang="r"><span class="n">invoke_map</span><span class="p">()</span></code> can invoke different functions with multiple parameters. Use a data frame to make matching pairs easier. For example, we can generate samples from three different types of distributions with their own inputs:</p>
+<p><code class="highlighter-rouge">invoke_map()</code> can invoke different functions with multiple parameters. Use a data frame to make matching pairs easier. For example, we can generate samples from three different types of distributions with their own inputs:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sim</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w"> </span><span class="c1"># use a data frame to make matching pairs easier</span><span class="w">
   </span><span class="o">~</span><span class="n">f</span><span class="p">,</span><span class="w">      </span><span class="o">~</span><span class="n">params</span><span class="p">,</span><span class="w">
@@ -309,9 +309,9 @@
 
 <h4 id="walk-an-alternative-to-map">Walk: an alternative to map</h4>
 
-<p>When you want to call a function for its side effects, such as printing output to the screen or saving files to disk, you can use the walk functions: <code class="highlight language-r" data-lang="r"><span class="n">walk</span><span class="p">(),</span><span class="w"> </span><span class="n">walk2</span><span class="p">(),</span><span class="w"> </span><span class="n">pwalk</span><span class="p">()</span></code>.</p>
+<p>When you want to call a function for its side effects, such as printing output to the screen or saving files to disk, you can use the walk functions: <code class="highlighter-rouge">walk(), walk2(), pwalk()</code>.</p>
 
-<p>For example, if you had a list of plots and a vector of file names, you can use the <code class="highlight language-r" data-lang="r"><span class="n">pwalk</span><span class="p">()</span></code> function to save each file to teh corresponding location on disk.</p>
+<p>For example, if you had a list of plots and a vector of file names, you can use the <code class="highlighter-rouge">pwalk()</code> function to save each file to teh corresponding location on disk.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
 </span><span class="n">plots</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
@@ -330,11 +330,11 @@
 <h4 id="predicate-functions-check-a-condition-returning-either-true-or-false">Predicate functions check a condition, returning either TRUE or FALSE</h4>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">keep</span><span class="p">()</span></code> keeps element where the predicate is true</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">discard</span><span class="p">()</span></code> discards elements where the predicate is false</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">some</span><span class="p">()</span></code> and <code class="highlight language-r" data-lang="r"><span class="n">every</span><span class="p">()</span></code> determines if the predicate is true for any or all of the elements</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">detect</span><span class="p">()</span></code> finds the first element where true, detect_index returns its position</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">head_while</span><span class="p">()</span></code> and <code class="highlight language-r" data-lang="r"><span class="n">tail_while</span><span class="p">()</span></code> take elements from the start r end of a vector while a predicate is true</li>
+  <li><code class="highlighter-rouge">keep()</code> keeps element where the predicate is true</li>
+  <li><code class="highlighter-rouge">discard()</code> discards elements where the predicate is false</li>
+  <li><code class="highlighter-rouge">some()</code> and <code class="highlighter-rouge">every()</code> determines if the predicate is true for any or all of the elements</li>
+  <li><code class="highlighter-rouge">detect()</code> finds the first element where true, detect_index returns its position</li>
+  <li><code class="highlighter-rouge">head_while()</code> and <code class="highlighter-rouge">tail_while()</code> take elements from the start r end of a vector while a predicate is true</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># keep columns that are factors</span><span class="w">
@@ -369,7 +369,7 @@
 
 <h4 id="reduce-and-accumulate-use-a-binary-function-to-simplify-complex-lists">Reduce and Accumulate use a binary function to simplify complex lists</h4>
 
-<p><code class="highlight language-r" data-lang="r"><span class="n">reduce</span><span class="p">()</span></code> takes a binary function – a function with two primary inputs – and applies it to a list until only one element is left.</p>
+<p><code class="highlighter-rouge">reduce()</code> takes a binary function – a function with two primary inputs – and applies it to a list until only one element is left.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># find the intersection of all vectors in a list</span><span class="w">
 </span><span class="n">vs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
@@ -380,7 +380,7 @@
 </span><span class="n">vs</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">reduce</span><span class="p">(</span><span class="n">intersect</span><span class="p">)</span><span class="w">
 </span><span class="c1">#&gt; [1]  1  3 10</span></code></pre></figure>
 
-<p><code class="highlight language-r" data-lang="r"><span class="n">accumulate</span><span class="p">()</span></code> is the same as reduce except it keeps all of the interim results.</p>
+<p><code class="highlighter-rouge">accumulate()</code> is the same as reduce except it keeps all of the interim results.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># accumulate the values of a random sampling from 1-10</span><span class="w">
 </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="w">

@@ -7,9 +7,25 @@
     <atom:link href="http://localhost:4000/site/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Creating Simple Documents with R Markdown</title>
+        <description>In which we review the basics of R Markdown files, including the YAML header, code chunk options, and formatting options.</description>
+        <pubDate>Wed, 04 Mar 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/r-markdown</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/r-markdown</guid>
+      </item>
+    
+      <item>
+        <title>Notes on 'Winners Take All' by Anand Giridharadas</title>
+        <description>Winners Take All: The Elite Charade of Changing the World was published in 2018 and investigates how the global elite's efforts to change the world preserve the status quo and obscure their role in causing the problems they later seek to solve. In this post, I attempt to summarize his core argument.</description>
+        <pubDate>Tue, 03 Mar 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/site/posts/winners-take-all</link>
+        <guid isPermaLink="true">http://localhost:4000/site/posts/winners-take-all</guid>
+      </item>
+    
+      <item>
         <title>Model Building in R</title>
         <description>In which we explore the basics of modeling as an exploratory tool through recording and graphing predictions and residuals, variable interactions, and transformations.</description>
-        <pubDate>Thu, 27 Feb 2020 00:00:00 -0500</pubDate>
+        <pubDate>Fri, 28 Feb 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/site/posts/modeling-r</link>
         <guid isPermaLink="true">http://localhost:4000/site/posts/modeling-r</guid>
       </item>
@@ -68,22 +84,6 @@
         <pubDate>Sun, 16 Feb 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/site/posts/data-exploration-r</link>
         <guid isPermaLink="true">http://localhost:4000/site/posts/data-exploration-r</guid>
-      </item>
-    
-      <item>
-        <title>Basic Data Transformation in R</title>
-        <description>In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.</description>
-        <pubDate>Sat, 15 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-transformation-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-transformation-r</guid>
-      </item>
-    
-      <item>
-        <title>Basic Data Visualization in R</title>
-        <description>In which we review the fundamentals of creating graphs in R with ggplot2.</description>
-        <pubDate>Wed, 12 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-visualisation-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-visualisation-r</guid>
       </item>
     
   </channel>

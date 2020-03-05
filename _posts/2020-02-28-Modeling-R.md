@@ -21,7 +21,7 @@ options(na.action = na.warn) # warns you if models drop data
 
 ## Model Basics
 
-Let's go through an example exploratory workflow of fitting a model to a continuous variable using simulated dataset {% ihighlight R %}sim1{% endihighlight %}:
+Let's go through an example exploratory workflow of fitting a model to a continuous variable using simulated dataset `sim1`:
 
 ##### 1. **Graph the initial data.**
 {% highlight R %}
@@ -38,7 +38,7 @@ ggplot(sim1, aes(x, y)) +
 sim1_mod <- lm(y ~ x, data = sim1)
 {% endhighlight %}
 
-**Note:** To model an interaction between x-variables, use {% ihighlight R %}*{% endihighlight %}
+**Note:** To model an interaction between x-variables, use `*`
 
 {:start="3"}
 ##### 3. **Create a new data frame with model prediction data.**
@@ -48,7 +48,7 @@ grid <- sim1 %>%
   add_predictions(sim1_mod) 
 {% endhighlight %}
 
-**Note:** {% ihighlight R %}add_predictions(){% endihighlight %} adds a single new column with model predictions, {% ihighlight R %}spread_predictions(){% endihighlight %} adds one column for each model, and {% ihighlight R %}gather_predictions(){% endihighlight %} two columns, model and prediction, and repeats the input rows for each model.
+**Note:** `add_predictions()` adds a single new column with model predictions, `spread_predictions()` adds one column for each model, and `gather_predictions()` two columns, model and prediction, and repeats the input rows for each model.
 
 {:start="4"}
 ##### 4. **Graph the initial data with the fitted model.**
@@ -81,7 +81,7 @@ ggplot(sim1, aes(x, resid)) +
 
 ## Transformations
 
-Transformations can be perfromed inside of the model formula, but if it contains an operation of {% ihighlight R %}+, -, *, ^,{% endihighlight %} wrap it in {% ihighlight R %}I(){% endihighlight %} so it doesn't become part of the model specs. Let's go through an example workflow again, this time with a polynomial transformation.
+Transformations can be perfromed inside of the model formula, but if it contains an operation of `+, -, *, ^,` wrap it in `I()` so it doesn't become part of the model specs. Let's go through an example workflow again, this time with a polynomial transformation.
 
 ##### 1. **Create and graph the initial data.**
 {% highlight R %}
@@ -115,7 +115,7 @@ grid <- sim5 %>%
   gather_predictions(mod1, mod2, mod3, mod4, mod5, .pred = "y")
 {% endhighlight %}
 
-**Note:** {% ihighlight R %}seq_range(){% endihighlight %} provides a specified number of values between the minimum and maximum of a variable, which can be useful for graphing.
+**Note:** `seq_range()` provides a specified number of values between the minimum and maximum of a variable, which can be useful for graphing.
 
 {:start="4"}
 ##### 4. **Graph the initial data with the fitted models.**
@@ -252,9 +252,9 @@ The life expectancy example above made use of list-column data structures. In ge
 
 ### Creating List-Columns
 
-* {% ihighlight R %}nest(){% endihighlight %} converts a grouped data frame into a nested data frame with a list-column of data frames.
-* {% ihighlight R %}mutate(){% endihighlight %} applied with vectorized functions that return a list will create list-columns.
-* {% ihighlight R %}summarize(){% endihighlight %} applied with summary functions that return multiple results will create list-columns.
+* `nest()` converts a grouped data frame into a nested data frame with a list-column of data frames.
+* `mutate()` applied with vectorized functions that return a list will create list-columns.
+* `summarize()` applied with summary functions that return multiple results will create list-columns.
 
 {% highlight R %}
 # summarize the quantiles of miles per gallon by the number of cylinders in the car
@@ -279,8 +279,8 @@ mtcars %>%
 ### Simplifying List-Columns
 In order to manipulate and visualize the data, you will need to simplify list-columns.
 
-* If you want a single value from the list-column, use {% ihighlight R %}mutate(){% endihighlight %} with {% ihighlight R %}map_lgl(), map_int(), map_dbl(), map_chr(){% endihighlight %} to create an atomic vector.
-* If you want many values from the list-column, use {% ihighlight R %}unnest(){% endihighlight %} to convert list columns back to regular columns, repeating the rows as many times as necessary.
+* If you want a single value from the list-column, use `mutate()` with `map_lgl(), map_int(), map_dbl(), map_chr()` to create an atomic vector.
+* If you want many values from the list-column, use `unnest()` to convert list columns back to regular columns, repeating the rows as many times as necessary.
 
 {% highlight R %}
 # extract a single value by referring to its element name
@@ -302,9 +302,9 @@ df %>% mutate(
 ### Turning Models into Tidy Data 
 The following three functions help turn models into tidy data, and often make use of list-columns.
 
-* {% ihighlight R %}glance(){% endihighlight %} returns a row for each model, where each column gives a model summary.
-* {% ihighlight R %}tidy(){% endihighlight %} returns a row for each coefficient in the model, where each column has info about estimate/variability.
-* {% ihighlight R %}augment(){% endihighlight %} returns a row for each row in data, adding extra values like residuals and influence stats.
+* `glance()` returns a row for each model, where each column gives a model summary.
+* `tidy()` returns a row for each coefficient in the model, where each column has info about estimate/variability.
+* `augment()` returns a row for each row in data, adding extra values like residuals and influence stats.
 
 
 

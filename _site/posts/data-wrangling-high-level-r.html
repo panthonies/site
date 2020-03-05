@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -106,7 +106,7 @@
   <span class="article-list-minutes">
     
     
-      9 minute read
+      8 minute read
     
   </span>
   <span class="article-list-divider">-</span>
@@ -132,19 +132,19 @@
 <h5 id="a-quick-detour-to-introduce-tibbles-an-improved-type-of-data-frame">A quick detour to introduce <strong>tibbles</strong>, an improved type of data frame:</h5>
 <ul>
   <li>Tibbles only print the first 10 rows of data by default, and has stricter subsetting rules than data frames</li>
-  <li>Create a new tibble from individual vectors: <code class="highlight language-r" data-lang="r"><span class="n">tibble</span><span class="p">()</span></code></li>
-  <li>Create a new tibble by doing data entry in code: <code class="highlight language-r" data-lang="r"><span class="n">tribble</span><span class="p">()</span></code></li>
-  <li>Turn a data frame into a tibble: <code class="highlight language-r" data-lang="r"><span class="n">as_tibble</span><span class="p">()</span></code></li>
-  <li>Turn a tibble into a data frame: <code class="highlight language-r" data-lang="r"><span class="n">as.data.frame</span><span class="p">()</span></code></li>
+  <li>Create a new tibble from individual vectors: <code class="highlighter-rouge">tibble()</code></li>
+  <li>Create a new tibble by doing data entry in code: <code class="highlighter-rouge">tribble()</code></li>
+  <li>Turn a data frame into a tibble: <code class="highlighter-rouge">as_tibble()</code></li>
+  <li>Turn a tibble into a data frame: <code class="highlighter-rouge">as.data.frame()</code></li>
   <li>Use backticks to refer to non-syntactic column names for tibbles</li>
-  <li>For more details, see <code class="highlight language-r" data-lang="r"><span class="n">vignette</span><span class="p">(</span><span class="s2">"tibble"</span><span class="p">)</span></code></li>
+  <li>For more details, see <code class="highlighter-rouge">vignette("tibble")</code></li>
 </ul>
 
 <h2 id="importing-data">Importing Data</h2>
 <hr />
-<p>There are a number of different functions to import different types of flat files into data frames, and they all work similarly – we’ll be using <code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> from the <em>readr</em> package, which is part of the tidyverse.</p>
+<p>There are a number of different functions to import different types of flat files into data frames, and they all work similarly – we’ll be using <code class="highlighter-rouge">read_csv()</code> from the <em>readr</em> package, which is part of the tidyverse.</p>
 
-<p><code class="highlight language-r" data-lang="r"><span class="n">read_csv</span><span class="p">()</span></code> scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:</p>
+<p><code class="highlighter-rouge">read_csv()</code> scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># skip the first two lines of the file, first processed row is not headings</span><span class="w">
 </span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"filepath"</span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
@@ -152,13 +152,13 @@
 </span><span class="c1"># drop all lines that start with "#", and name the three columns "x", "y", and "z"</span><span class="w">
 </span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"filepath"</span><span class="p">,</span><span class="w"> </span><span class="n">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">col_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span><span class="w"> </span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="s2">"z"</span><span class="p">),</span><span class="w"> </span><span class="n">na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"."</span><span class="p">)</span></code></pre></figure>
 
-<p>However, if the first 1000 rows of a column is not representative of the whole dataset or if there are other parsing problems, identify the problem rows with <code class="highlight language-r" data-lang="r"><span class="n">problem</span><span class="p">()</span></code> and try the following:</p>
+<p>However, if the first 1000 rows of a column is not representative of the whole dataset or if there are other parsing problems, identify the problem rows with <code class="highlighter-rouge">problem()</code> and try the following:</p>
 
 <ol>
-  <li>Specify the column types manually with the parameter <code class="highlight language-r" data-lang="r"><span class="n">col_types</span></code></li>
-  <li>Increase the number of lines to parse from 1000 with parameter <code class="highlight language-r" data-lang="r"><span class="n">guess_max</span></code></li>
-  <li>Import all columns as characters using <code class="highlight language-r" data-lang="r"><span class="n">col_types</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cols</span><span class="p">(</span><span class="n">.default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col_character</span><span class="p">())</span></code>, then resolve the errors, possibly with <code class="highlight language-r" data-lang="r"><span class="n">type_convert</span><span class="p">()</span></code></li>
-  <li>Read the file into a character vector of lines, <code class="highlight language-r" data-lang="r"><span class="n">read_lines</span><span class="p">()</span></code> or a character vector of length one, <code class="highlight language-r" data-lang="r"><span class="n">read_file</span><span class="p">()</span></code>, and then use more advanced string parsing skills.</li>
+  <li>Specify the column types manually with the parameter <code class="highlighter-rouge">col_types</code></li>
+  <li>Increase the number of lines to parse from 1000 with parameter <code class="highlighter-rouge">guess_max</code></li>
+  <li>Import all columns as characters using <code class="highlighter-rouge">col_types = cols(.default = col_character())</code>, then resolve the errors, possibly with <code class="highlighter-rouge">type_convert()</code></li>
+  <li>Read the file into a character vector of lines, <code class="highlighter-rouge">read_lines()</code> or a character vector of length one, <code class="highlighter-rouge">read_file()</code>, and then use more advanced string parsing skills.</li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Solution 1: Specify the column types manually with col_types</span><span class="w">
@@ -173,16 +173,16 @@
 <p>Parsing functions take a character vector and return a more specialized vector like a logical, integer, or date. They make up the foundation of importing data, and are useful to understand for imports.</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_factor</span><span class="p">()</span></code></li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_logical</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_integer</span><span class="p">()</span></code></li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_double</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_number</span><span class="p">()</span></code> – potential problems with different grouping marks</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_character</span><span class="p">()</span></code> – potential problems with non UTF-8 encoding; try <code class="highlight language-r" data-lang="r"><span class="n">guess_encoding</span><span class="p">()</span></code></li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">parse_date</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_time</span><span class="p">(),</span><span class="w"> </span><span class="n">parse_datetime</span><span class="p">()</span></code> – potential problems with formatting; <a href="https://r4ds.had.co.nz/data-import.html#readr-datetimes">reference</a>.</li>
+  <li><code class="highlighter-rouge">parse_factor()</code></li>
+  <li><code class="highlighter-rouge">parse_logical(), parse_integer()</code></li>
+  <li><code class="highlighter-rouge">parse_double(), parse_number()</code> – potential problems with different grouping marks</li>
+  <li><code class="highlighter-rouge">parse_character()</code> – potential problems with non UTF-8 encoding; try <code class="highlighter-rouge">guess_encoding()</code></li>
+  <li><code class="highlighter-rouge">parse_date(), parse_time(), parse_datetime()</code> – potential problems with formatting; <a href="https://r4ds.had.co.nz/data-import.html#readr-datetimes">reference</a>.</li>
 </ul>
 
 <h2 id="managing-data-in-a-single-table">Managing Data in a Single Table</h2>
 <hr />
-<p>When some of the column names are <em>values</em> and not variable names, we can use <code class="highlight language-r" data-lang="r"><span class="n">pivot_longer</span><span class="p">()</span></code> to pivot the columns into a new pair of variables, for example:</p>
+<p>When some of the column names are <em>values</em> and not variable names, we can use <code class="highlighter-rouge">pivot_longer()</code> to pivot the columns into a new pair of variables, for example:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">preg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
   </span><span class="o">~</span><span class="n">pregnant</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">male</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">female</span><span class="p">,</span><span class="w">
@@ -201,7 +201,7 @@
 </span><span class="c1">#&gt; 3 no       male      20</span><span class="w">
 </span><span class="c1">#&gt; 4 no       female    12</span></code></pre></figure>
 
-<p>When some of the observations are scattered across mutiple rows, we can use <code class="highlight language-r" data-lang="r"><span class="n">pivot_wider</span><span class="p">()</span></code> to move values into column names, for example:</p>
+<p>When some of the observations are scattered across mutiple rows, we can use <code class="highlighter-rouge">pivot_wider()</code> to move values into column names, for example:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">people</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tribble</span><span class="p">(</span><span class="w">
   </span><span class="o">~</span><span class="n">name</span><span class="p">,</span><span class="w">              </span><span class="o">~</span><span class="n">names</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="n">values</span><span class="p">,</span><span class="w">
@@ -220,7 +220,7 @@
 </span><span class="c1">#&gt;1 Chancelor Bennett    58     26</span><span class="w">
 </span><span class="c1">#&gt;2 Saoirse Ronan        25     54</span></code></pre></figure>
 
-<p>If needed, we can use <code class="highlight language-r" data-lang="r"><span class="n">separate</span><span class="p">(),</span><span class="w"> </span><span class="n">unite</span><span class="p">()</span></code> to split columns and combine columns:</p>
+<p>If needed, we can use <code class="highlighter-rouge">separate(), unite()</code> to split columns and combine columns:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">people</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
   </span><span class="n">separate</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"first_name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"last_name"</span><span class="p">),</span><span class="w"> </span><span class="c1"># split name column</span><span class="w">
@@ -230,9 +230,9 @@
 
 <p>Missing values can be <strong>missing explicitly</strong> with an NA flag, or <strong>missing implicitly</strong> if they’re just not listed. In the following example, the 4th quarter of 2015 is explicity missing and the 1st quarter of 2016 is implicitly missing.</p>
 
-<p>We can make both missing values explicit with <code class="highlight language-r" data-lang="r"><span class="n">pivot_wider</span></code> or <code class="highlight language-r" data-lang="r"><span class="n">complete</span><span class="p">()</span></code>, or make both missing values implicit with <code class="highlight language-r" data-lang="r"><span class="n">pivot_longer</span><span class="p">(</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">values_drop_na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span></code></p>
+<p>We can make both missing values explicit with <code class="highlighter-rouge">pivot_wider</code> or <code class="highlighter-rouge">complete()</code>, or make both missing values implicit with <code class="highlighter-rouge">pivot_longer(..., values_drop_na = TRUE</code></p>
 
-<p>Note: <code class="highlight language-r" data-lang="r"><span class="n">fill</span><span class="p">()</span></code> can be used to fill in missing values with the most recent non-missing value.</p>
+<p>Note: <code class="highlighter-rouge">fill()</code> can be used to fill in missing values with the most recent non-missing value.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">stocks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tibble</span><span class="p">(</span><span class="w">
   </span><span class="n">year</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2015</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">,</span><span class="w"> </span><span class="m">2016</span><span class="p">),</span><span class="w">
@@ -286,28 +286,28 @@
 <ol>
   <li>Identify the variables that are the primary key in each table</li>
   <li>Check that none of the variables in the primary key are missing</li>
-  <li>Check that the primary keys match foreign keys in another table with <code class="highlight language-r" data-lang="r"><span class="n">anti_join</span><span class="p">()</span></code></li>
+  <li>Check that the primary keys match foreign keys in another table with <code class="highlighter-rouge">anti_join()</code></li>
 </ol>
 
 <h4 id="mutating-joins-combine-variables-from-two-tables"><strong>Mutating Joins:</strong> Combine variables from two tables</h4>
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">inner</span><span class="w"> </span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - only matching values are kept</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">left_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>  - all x values are kept - MOST COMMON</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">right_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - all y values are kept</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">full_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>  - all x and y values are kept</li>
+  <li><code class="highlighter-rouge">inner join(x, y)</code> - only matching values are kept</li>
+  <li><code class="highlighter-rouge">left_join(x, y)</code>  - all x values are kept - MOST COMMON</li>
+  <li><code class="highlighter-rouge">right_join(x, y)</code> - all y values are kept</li>
+  <li><code class="highlighter-rouge">full_join(x, y)</code>  - all x and y values are kept</li>
 </ul>
 
 <h4 id="filtering-joins-affects-observations-not-variables"><strong>Filtering Joins:</strong> Affects observations, not variables</h4>
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">semi_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - keeps all observations in x that have a match in y</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">anti_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - drops all observations in x that have a match in y</li>
+  <li><code class="highlighter-rouge">semi_join(x, y)</code> - keeps all observations in x that have a match in y</li>
+  <li><code class="highlighter-rouge">anti_join(x, y)</code> - drops all observations in x that have a match in y</li>
 </ul>
 
 <h4 id="set-operations-assumes-both-tables-have-the-same-variables"><strong>Set Operations:</strong> Assumes both tables have the same variables</h4>
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">intersect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code> - return only observations in both x and y</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">union</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>    - return unique observations in x and y</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">setdiff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span></code>   - return observations in x, but not in y</li>
+  <li><code class="highlighter-rouge">intersect(x, y)</code> - return only observations in both x and y</li>
+  <li><code class="highlighter-rouge">union(x, y)</code>    - return unique observations in x and y</li>
+  <li><code class="highlighter-rouge">setdiff(x, y)</code>   - return observations in x, but not in y</li>
 </ul>
 
 <div class="footnotes">

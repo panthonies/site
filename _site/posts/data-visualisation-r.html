@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -159,37 +159,37 @@
 <p>This adds a layer of geometric shapes (points, bars, lines) that represent the dataset. Some examples are:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">GEOM_POINT</span></code> creates a scatterplot</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">GEOM_BAR</span></code> creates a bar graph</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">GEOM_SMOOTH</span></code> creates a smooth line</li>
+  <li><code class="highlighter-rouge">GEOM_POINT</code> creates a scatterplot</li>
+  <li><code class="highlighter-rouge">GEOM_BAR</code> creates a bar graph</li>
+  <li><code class="highlighter-rouge">GEOM_SMOOTH</code> creates a smooth line</li>
 </ul>
 
 <h4 id="mappings">Mappings</h4>
 <p>Mappings define how your variables are mapped to visual properties on the graph. They can be defined locally (inside of your geom_function) or globally (inside of the parent ggplot function). They are always defined by aesthetic properties, such as:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">x</span></code>: the variable to map on the x-axis</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">y</span></code>: the variable to map on the y-axis</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">color</span><span class="o">/</span><span class="n">fill</span></code>: the <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour">color</a> of the data on the graph</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">alpha</span></code>: the transparency of data on the graph (from 0, transparent to 1, opaque)</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">shape</span></code>: the shape (numbers #1-20) of points on the graph</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">size</span></code>: the size of points on the graphs (in mm)</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">stroke</span></code>: the size of shape borders (in mm)</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">linetype</span></code>: type of line to display on the graph</li>
+  <li><code class="highlighter-rouge">x</code>: the variable to map on the x-axis</li>
+  <li><code class="highlighter-rouge">y</code>: the variable to map on the y-axis</li>
+  <li><code class="highlighter-rouge">color/fill</code>: the <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour">color</a> of the data on the graph</li>
+  <li><code class="highlighter-rouge">alpha</code>: the transparency of data on the graph (from 0, transparent to 1, opaque)</li>
+  <li><code class="highlighter-rouge">shape</code>: the shape (numbers #1-20) of points on the graph</li>
+  <li><code class="highlighter-rouge">size</code>: the size of points on the graphs (in mm)</li>
+  <li><code class="highlighter-rouge">stroke</code>: the size of shape borders (in mm)</li>
+  <li><code class="highlighter-rouge">linetype</code>: type of line to display on the graph</li>
 </ul>
 
 <p>Note: you can map additional variables to color, alpha, etc. in addition to x and y, although whether this is actually a good idea depends on your data.</p>
 
-<p>Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing <code class="highlight language-r" data-lang="r"><span class="o">?</span><span class="n">geom_point</span></code>). See the end of this post for quick mapping references.</p>
+<p>Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing <code class="highlighter-rouge">?geom_point</code>). See the end of this post for quick mapping references.</p>
 
 <h4 id="stat">Stat</h4>
 <p>Stat, or statistical transformation, are used to transform the data before graphing it. Each geometric function has a default statistical transformation – the most common example is bar graphs computing and displaying a count of a variable in the data.</p>
 
 <p>You may need to define a stat in these cases:</p>
 <ul>
-  <li>to override the default stat of a geometric function. For example, using <code class="highlight language-r" data-lang="r"><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span></code> for <code class="highlight language-r" data-lang="r"><span class="n">geom_bar</span></code> if you already have a frequency variable in the data.</li>
-  <li>to override the default mapping from transformed variables to aesthetics. For example, using <code class="highlight language-r" data-lang="r"><span class="n">geom_bar</span></code> to display a proportion.</li>
-  <li>as an alternative to <code class="highlight language-r" data-lang="r"><span class="n">geom_function</span></code> to build a layer for your graph (see the ggplot2 cheat sheet)</li>
+  <li>to override the default stat of a geometric function. For example, using <code class="highlighter-rouge">stat = "identity"</code> for <code class="highlighter-rouge">geom_bar</code> if you already have a frequency variable in the data.</li>
+  <li>to override the default mapping from transformed variables to aesthetics. For example, using <code class="highlighter-rouge">geom_bar</code> to display a proportion.</li>
+  <li>as an alternative to <code class="highlighter-rouge">geom_function</code> to build a layer for your graph (see the ggplot2 cheat sheet)</li>
 </ul>
 
 <h4 id="position">Position</h4>
@@ -202,22 +202,22 @@
   <li>fill: makes all of the bars the same height (if you don’t care about the y-variable)</li>
 </ul>
 
-<p>Note: <code class="highlight language-r" data-lang="r"><span class="n">geom_jitter</span><span class="p">()</span></code> is a useful position adjustment for scatter plots to solve the problem of overplotting (where you have a lot of overlapping dots that aren’t visible).</p>
+<p>Note: <code class="highlighter-rouge">geom_jitter()</code> is a useful position adjustment for scatter plots to solve the problem of overplotting (where you have a lot of overlapping dots that aren’t visible).</p>
 
 <h3 id="coordinate-function">Coordinate Function</h3>
 <p>Most likely, you won’t be using this argument because the default Cartesian coordinate system will satisfy your needs. However, here are some common uses:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">coord_flip</span><span class="p">()</span></code> switches the x and y axes</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">coord_fixed</span><span class="p">()</span></code> lets you define the ratio between your x and y axes (default: 1)</li>
+  <li><code class="highlighter-rouge">coord_flip()</code> switches the x and y axes</li>
+  <li><code class="highlighter-rouge">coord_fixed()</code> lets you define the ratio between your x and y axes (default: 1)</li>
 </ul>
 
 <h3 id="facet-function">Facet Function</h3>
 <p>Facets are subplots that are useful for visually separating your data by discrete variables. You can create facets in two main ways:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">facet_wrap</span><span class="p">()</span></code> splits the plot by a single discrete variable</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">facet_grid</span><span class="p">()</span></code> splits the plot by a combination of two variables separated by <code class="highlight language-r" data-lang="r"><span class="o">~</span></code></li>
+  <li><code class="highlighter-rouge">facet_wrap()</code> splits the plot by a single discrete variable</li>
+  <li><code class="highlighter-rouge">facet_grid()</code> splits the plot by a combination of two variables separated by <code class="highlighter-rouge">~</code></li>
 </ul>
 
 <h3 id="titles-labels-and-axes">Titles, Labels, and Axes</h3>

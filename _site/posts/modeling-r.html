@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -100,7 +100,7 @@
             <p>In which we explore the basics of modeling as an exploratory tool through recording and graphing predictions and residuals, variable interactions, and transformations.</p>
             <div class="article-list-footer">
   <span class="article-list-date">
-    February 27, 2020
+    February 28, 2020
   </span>
   <span class="article-list-divider">-</span>
   <span class="article-list-minutes">
@@ -134,7 +134,7 @@
 
 <h2 id="model-basics">Model Basics</h2>
 
-<p>Let’s go through an example exploratory workflow of fitting a model to a continuous variable using simulated dataset <code class="highlight language-r" data-lang="r"><span class="n">sim1</span></code>:</p>
+<p>Let’s go through an example exploratory workflow of fitting a model to a continuous variable using simulated dataset <code class="highlighter-rouge">sim1</code>:</p>
 
 <h5 id="1-graph-the-initial-data">1. <strong>Graph the initial data.</strong></h5>
 
@@ -149,7 +149,7 @@
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sim1_mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sim1</span><span class="p">)</span></code></pre></figure>
 
-<p><strong>Note:</strong> To model an interaction between x-variables, use <code class="highlight language-r" data-lang="r"><span class="o">*</span></code></p>
+<p><strong>Note:</strong> To model an interaction between x-variables, use <code class="highlighter-rouge">*</code></p>
 
 <h5 start="3" id="3-create-a-new-data-frame-with-model-prediction-data">3. <strong>Create a new data frame with model prediction data.</strong></h5>
 
@@ -157,7 +157,7 @@
   </span><span class="n">data_grid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">add_predictions</span><span class="p">(</span><span class="n">sim1_mod</span><span class="p">)</span><span class="w"> </span></code></pre></figure>
 
-<p><strong>Note:</strong> <code class="highlight language-r" data-lang="r"><span class="n">add_predictions</span><span class="p">()</span></code> adds a single new column with model predictions, <code class="highlight language-r" data-lang="r"><span class="n">spread_predictions</span><span class="p">()</span></code> adds one column for each model, and <code class="highlight language-r" data-lang="r"><span class="n">gather_predictions</span><span class="p">()</span></code> two columns, model and prediction, and repeats the input rows for each model.</p>
+<p><strong>Note:</strong> <code class="highlighter-rouge">add_predictions()</code> adds a single new column with model predictions, <code class="highlighter-rouge">spread_predictions()</code> adds one column for each model, and <code class="highlighter-rouge">gather_predictions()</code> two columns, model and prediction, and repeats the input rows for each model.</p>
 
 <h5 start="4" id="4-graph-the-initial-data-with-the-fitted-model">4. <strong>Graph the initial data with the fitted model.</strong></h5>
 
@@ -186,7 +186,7 @@
 
 <h2 id="transformations">Transformations</h2>
 
-<p>Transformations can be perfromed inside of the model formula, but if it contains an operation of <code class="highlight language-r" data-lang="r"><span class="o">+</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="p">,</span></code> wrap it in <code class="highlight language-r" data-lang="r"><span class="n">I</span><span class="p">()</span></code> so it doesn’t become part of the model specs. Let’s go through an example workflow again, this time with a polynomial transformation.</p>
+<p>Transformations can be perfromed inside of the model formula, but if it contains an operation of <code class="highlighter-rouge">+, -, *, ^,</code> wrap it in <code class="highlighter-rouge">I()</code> so it doesn’t become part of the model specs. Let’s go through an example workflow again, this time with a polynomial transformation.</p>
 
 <h5 id="1-create-and-graph-the-initial-data">1. <strong>Create and graph the initial data.</strong></h5>
 
@@ -216,7 +216,7 @@
   </span><span class="n">data_grid</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq_range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">expand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
   </span><span class="n">gather_predictions</span><span class="p">(</span><span class="n">mod1</span><span class="p">,</span><span class="w"> </span><span class="n">mod2</span><span class="p">,</span><span class="w"> </span><span class="n">mod3</span><span class="p">,</span><span class="w"> </span><span class="n">mod4</span><span class="p">,</span><span class="w"> </span><span class="n">mod5</span><span class="p">,</span><span class="w"> </span><span class="n">.pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"y"</span><span class="p">)</span></code></pre></figure>
 
-<p><strong>Note:</strong> <code class="highlight language-r" data-lang="r"><span class="n">seq_range</span><span class="p">()</span></code> provides a specified number of values between the minimum and maximum of a variable, which can be useful for graphing.</p>
+<p><strong>Note:</strong> <code class="highlighter-rouge">seq_range()</code> provides a specified number of values between the minimum and maximum of a variable, which can be useful for graphing.</p>
 
 <h5 start="4" id="4-graph-the-initial-data-with-the-fitted-models">4. <strong>Graph the initial data with the fitted models.</strong></h5>
 
@@ -337,9 +337,9 @@
 <h3 id="creating-list-columns">Creating List-Columns</h3>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">nest</span><span class="p">()</span></code> converts a grouped data frame into a nested data frame with a list-column of data frames.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">mutate</span><span class="p">()</span></code> applied with vectorized functions that return a list will create list-columns.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">summarize</span><span class="p">()</span></code> applied with summary functions that return multiple results will create list-columns.</li>
+  <li><code class="highlighter-rouge">nest()</code> converts a grouped data frame into a nested data frame with a list-column of data frames.</li>
+  <li><code class="highlighter-rouge">mutate()</code> applied with vectorized functions that return a list will create list-columns.</li>
+  <li><code class="highlighter-rouge">summarize()</code> applied with summary functions that return multiple results will create list-columns.</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># summarize the quantiles of miles per gallon by the number of cylinders in the car</span><span class="w">
@@ -364,8 +364,8 @@
 <p>In order to manipulate and visualize the data, you will need to simplify list-columns.</p>
 
 <ul>
-  <li>If you want a single value from the list-column, use <code class="highlight language-r" data-lang="r"><span class="n">mutate</span><span class="p">()</span></code> with <code class="highlight language-r" data-lang="r"><span class="n">map_lgl</span><span class="p">(),</span><span class="w"> </span><span class="n">map_int</span><span class="p">(),</span><span class="w"> </span><span class="n">map_dbl</span><span class="p">(),</span><span class="w"> </span><span class="n">map_chr</span><span class="p">()</span></code> to create an atomic vector.</li>
-  <li>If you want many values from the list-column, use <code class="highlight language-r" data-lang="r"><span class="n">unnest</span><span class="p">()</span></code> to convert list columns back to regular columns, repeating the rows as many times as necessary.</li>
+  <li>If you want a single value from the list-column, use <code class="highlighter-rouge">mutate()</code> with <code class="highlighter-rouge">map_lgl(), map_int(), map_dbl(), map_chr()</code> to create an atomic vector.</li>
+  <li>If you want many values from the list-column, use <code class="highlighter-rouge">unnest()</code> to convert list columns back to regular columns, repeating the rows as many times as necessary.</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># extract a single value by referring to its element name</span><span class="w">
@@ -388,9 +388,9 @@
 <p>The following three functions help turn models into tidy data, and often make use of list-columns.</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">glance</span><span class="p">()</span></code> returns a row for each model, where each column gives a model summary.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">tidy</span><span class="p">()</span></code> returns a row for each coefficient in the model, where each column has info about estimate/variability.</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">augment</span><span class="p">()</span></code> returns a row for each row in data, adding extra values like residuals and influence stats.</li>
+  <li><code class="highlighter-rouge">glance()</code> returns a row for each model, where each column gives a model summary.</li>
+  <li><code class="highlighter-rouge">tidy()</code> returns a row for each coefficient in the model, where each column has info about estimate/variability.</li>
+  <li><code class="highlighter-rouge">augment()</code> returns a row for each row in data, adding extra values like residuals and influence stats.</li>
 </ul>
 
 <div class="footnotes">

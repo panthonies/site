@@ -35,10 +35,10 @@
 	Healthcare Spending
 	https://randomcriticalanalysis.com/why-conventional-wisdom-on-health-care-is-wrong-a-primer/#rcatoc-income-predicts-changes-in-health-expenditure
 
+	Policies Most Americans Support
+	https://www.thenation.com/article/archive/progressive-nation-voter-suppression/
+	https://prospect.org/power/americans-liberal-even-know/
+	https://www.cnbc.com/2019/03/27/majority-of-americans-support-progressive-policies-such-as-paid-maternity-leave-free-college.html
 
-<span style="color:blue">some *blue* text</span>.
+	Zelda: Breath of the Wild captures my base desire to chill out in a beautiful place. 
 
-
-	-Post-
-
-Zelda: Breath of the Wild captures my base desire to chill out in a beautiful place. 

@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -123,7 +123,7 @@
           </header>
 
           <div class="article-content">
-            <p>In this post we’ll be taking a look at several examples of data exploration using the <code class="highlight language-r" data-lang="r"><span class="n">diamonds</span></code> dataset in the tidyverse library.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+            <p>In this post we’ll be taking a look at several examples of data exploration using the <code class="highlighter-rouge">diamonds</code> dataset in the tidyverse library.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### load package</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span></code></pre></figure>
@@ -158,7 +158,7 @@
 
 <p><strong>Example 3:</strong> Play with the x-axis and y-axis limits to identify outliers. In this example, there are some very high values of the “x” variable, a measure of a diamond’s dimensions, which could indicate data entry errors.</p>
 
-<p>Note that in ggplot2, <code class="highlight language-r" data-lang="r"><span class="n">coord_cartesian</span><span class="p">()</span></code> keeps truncated values while <code class="highlight language-r" data-lang="r"><span class="n">xlim</span><span class="p">(),</span><span class="w"> </span><span class="n">ylim</span><span class="p">()</span></code> discards them.</p>
+<p>Note that in ggplot2, <code class="highlighter-rouge">coord_cartesian()</code> keeps truncated values while <code class="highlighter-rouge">xlim(), ylim()</code> discards them.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
@@ -183,7 +183,7 @@
 </ul>
 
 <h3 id="case-1-a-categorical-and-a-continuous-variable">Case 1: A Categorical and a Continuous Variable</h3>
-<p><strong>Example 1:</strong> Use <code class="highlight language-r" data-lang="r"><span class="n">geom_freqpoly</span><span class="p">()</span></code> to overlay multiple histograms by density. Here we can see multiple histograms of carat, split by cut.</p>
+<p><strong>Example 1:</strong> Use <code class="highlighter-rouge">geom_freqpoly()</code> to overlay multiple histograms by density. Here we can see multiple histograms of carat, split by cut.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_freqpoly</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span></code></pre></figure>
@@ -222,7 +222,7 @@
 
 <h3 id="case-2-two-categorical-variables">Case 2: Two Categorical Variables</h3>
 
-<p><strong>Example 1:</strong> We can use <code class="highlight language-r" data-lang="r"><span class="n">geom_count</span></code> to map both categorical variables and display their frequency with the size of a point in a grid. In this example, we can see the distribution of observations between diamond cut and color.</p>
+<p><strong>Example 1:</strong> We can use <code class="highlighter-rouge">geom_count</code> to map both categorical variables and display their frequency with the size of a point in a grid. In this example, we can see the distribution of observations between diamond cut and color.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_count</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="p">))</span></code></pre></figure>

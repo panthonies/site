@@ -8,7 +8,7 @@ tags: [academic, r]
 
 Here we'll review the creation of dates and times, the components that make up dates and times, time spans, and time zones in R.[^1] See the [RStudio Dates and Times Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-datetime.pdf){:target="blank"} for a condensed reference. 
 
-There are three types of data that refer to an instant in time: **dates**, **times**, and **date-times**. You can retrieve the current date with {% ihighlight R %}date(){% endihighlight %} and the current date-time with {% ihighlight R %}now(){% endihighlight %}. 
+There are three types of data that refer to an instant in time: **dates**, **times**, and **date-times**. You can retrieve the current date with `date()` and the current date-time with `now()`. 
 
 We will use the following three packages in this post: 
 
@@ -25,7 +25,7 @@ library("nycflights13") # example data set of flights leaving from NYC in 2013
 
 ##### 1. Create dates and times from strings
 
-Use a function containing {% ihighlight R %}y, m, d{% endihighlight %} and {% ihighlight R %}h, m, s{% endihighlight %} to turn a string or series of numbers into a date or date-time. 
+Use a function containing `y, m, d` and `h, m, s` to turn a string or series of numbers into a date or date-time. 
 
 {% highlight R %}
 ymd("2020-02-22") # numbers in quotes. any combo of ymd will work
@@ -36,7 +36,7 @@ ymd_h(2020022213, tz = "EST") # supply timezone with tz
 
 ##### 2. Create dates and times from other types of data
 
-Use {% ihighlight R %}as_date(){% endihighlight %} and {% ihighlight R %}as_time(){% endihighlight %} to convert an object to a date or a date-time.
+Use `as_date()` and `as_time()` to convert an object to a date or a date-time.
 
 {% highlight R %}
 as_date(now()) # change a date-time to a date
@@ -45,7 +45,7 @@ as_datetime(today()) # change a date to a date-time
 
 ##### 3. Create dates and times from components spread across multiple columns in a table
 
-Use {% ihighlight R %}make_datetime(){% endihighlight %} to create a date-time if your data is spread out across multiple columns in a table. For example, in the nycflights13 dataset, there are separate columns for year, month, day, departure hour, and departure minute. We can create a new date-time column for departure time, and use this new column to visualize the distribution of flights on any day.
+Use `make_datetime()` to create a date-time if your data is spread out across multiple columns in a table. For example, in the nycflights13 dataset, there are separate columns for year, month, day, departure hour, and departure minute. We can create a new date-time column for departure time, and use this new column to visualize the distribution of flights on any day.
 
 {% highlight R %}
 flights_dt <- flights %>%
@@ -66,21 +66,21 @@ flights_dt %>%
 ---
 Retrieve date and time components from a date or date-time with the following functions:
 
-* {% ihighlight R %}year(){% endihighlight %} returns the year
-* {% ihighlight R %}month(..., label = TRUE){% endihighlight %} returns the month; set label = TRUE to return abbreviated month name
-* {% ihighlight R %}wday(..., label = TRUE, abbr = FALSE){% endihighlight %} returns the day of the week; set abbr = FALSE to return full name
-* {% ihighlight R %}mday(){% endihighlight %} returns the day of the month
-* {% ihighlight R %}yday(){% endihighlight %} returns the day of the year
-* {% ihighlight R %}hour(){% endihighlight %} returns the hour
-* {% ihighlight R %}minute(){% endihighlight %} returns the minute
-* {% ihighlight R %}second{% endihighlight %} returns the second
+* `year()` returns the year
+* `month(..., label = TRUE)` returns the month; set label = TRUE to return abbreviated month name
+* `wday(..., label = TRUE, abbr = FALSE)` returns the day of the week; set abbr = FALSE to return full name
+* `mday()` returns the day of the month
+* `yday()` returns the day of the year
+* `hour()` returns the hour
+* `minute()` returns the minute
+* `second` returns the second
 
 Edit date and time components with the following functions:
 
-* {% ihighlight R %}update(<DATE>, year = ..., month = ..., mday = ..., hour = ...){% endihighlight %} updates dates manually
-* {% ihighlight R %}round_date(){% endihighlight %} rounds to the nearest specified unit (minute, hour, day, week, month, year, etc.)
-* {% ihighlight R %}floor_date(){% endihighlight %} rounds down to the nearest specified unit
-* {% ihighlight R %}ceiling_date(){% endihighlight %} rounds up to the nearest specified unit
+* `update(<DATE>, year = ..., month = ..., mday = ..., hour = ...)` updates dates manually
+* `round_date()` rounds to the nearest specified unit (minute, hour, day, week, month, year, etc.)
+* `floor_date()` rounds down to the nearest specified unit
+* `ceiling_date()` rounds up to the nearest specified unit
 
 **Tip:** Set larger components of a date to a constant to explore patterns in the smaller components. For example, in nycflights13, we can set the flight day to a constant to view the distribution of flights across the course of the day for every day of the year:
 
@@ -140,7 +140,7 @@ ymd("2020-02-22") + years(1) # can be added and subtracted from dates
 
 ##### 3. Intervals
 
-Intervals are durations with starting an ending points, and are represented by {% ihighlight R %}%--%{% endihighlight %}. They are useful when trying to determine how long a specific period is, sice you want to include all time discrepancies for that period.
+Intervals are durations with starting an ending points, and are represented by `%--%`. They are useful when trying to determine how long a specific period is, sice you want to include all time discrepancies for that period.
 
 For example, you may want to know the number of days between today and the same day next year -- this calculation depends on whether it's a leap year or not, so we should use intervals.
 
@@ -155,9 +155,9 @@ next_year <- today() + years(1)
 ---
 Time zones are complicated, but here are a couple of basic functions that are useful to know:
 
-* {% ihighlight R %}Sys.timezone(){% endihighlight %} returns the time zone of your workstation, according to R
-* {% ihighlight R %}with_tz(<DATETIME>, tzone = "America/Detroit"){% endihighlight %} changes time zone while keeping the instant in time
-* {% ihighlight R %}force_tz(<DATETIME>, tzone = "America/Detroit"){% endihighlight %} changes time zone and changes the instant in time
+* `Sys.timezone()` returns the time zone of your workstation, according to R
+* `with_tz(<DATETIME>, tzone = "America/Detroit")` changes time zone while keeping the instant in time
+* `force_tz(<DATETIME>, tzone = "America/Detroit")` changes time zone and changes the instant in time
 
 
 

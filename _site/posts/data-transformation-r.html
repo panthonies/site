@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -106,7 +106,7 @@
   <span class="article-list-minutes">
     
     
-      15 minute read
+      13 minute read
     
   </span>
   <span class="article-list-divider">-</span>
@@ -126,12 +126,12 @@
             <p>In this post we’ll be taking a look at basic data transformation in R – namely, six important R functions included in the <a href="http://dplyr.tidyverse.org">dplyr</a> package:<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">filter</span><span class="p">()</span></code> - filter rows</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">arrange</span><span class="p">()</span></code> - order rows</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">select</span><span class="p">()</span></code> - select columns</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">mutate</span><span class="p">()</span></code> - transform and create variables</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">group_by</span><span class="p">()</span></code> - group data</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">summarize</span><span class="p">()</span></code> - summarize data</li>
+  <li><code class="highlighter-rouge">filter()</code> - filter rows</li>
+  <li><code class="highlighter-rouge">arrange()</code> - order rows</li>
+  <li><code class="highlighter-rouge">select()</code> - select columns</li>
+  <li><code class="highlighter-rouge">mutate()</code> - transform and create variables</li>
+  <li><code class="highlighter-rouge">group_by()</code> - group data</li>
+  <li><code class="highlighter-rouge">summarize()</code> - summarize data</li>
 </ul>
 
 <p>These functions will help you scratch the surface of manipulating datasets.</p>
@@ -139,7 +139,7 @@
 <p><strong>First things first:</strong> Here is the <a href="/site/pdf/r-cheat-sheet-data-transformation.pdf">RStudio Data Transformation Cheat Sheet</a>, if that’s what you’re looking for.</p>
 
 <h3 id="prologue-the-pipe">Prologue: The Pipe</h3>
-<p>Before we get into the functions themselves, let’s review an important part of R syntax: the pipe, <code class="highlight language-r" data-lang="r"><span class="o">%&gt;%</span></code>. The pipe symbol can be read as “then.”</p>
+<p>Before we get into the functions themselves, let’s review an important part of R syntax: the pipe, <code class="highlighter-rouge">%&gt;%</code>. The pipe symbol can be read as “then.”</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">
 </span><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w">
@@ -148,68 +148,68 @@
 <p>See the R code at the bottom for examples of the pipe in action, and my <a href="programming-r">post on programming in R</a> for a deeper dive into pipes.</p>
 
 <h2 id="filter">Filter</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">filter</span><span class="p">()</span></code> allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.</p>
+<p><code class="highlighter-rouge">filter()</code> allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.</p>
 <ul>
-  <li>Filter with comparison operators: <code class="highlight language-r" data-lang="r"><span class="o">==</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">&lt;=</span></code></li>
-  <li>Filter with logical operators – and, or not, and exclusive or: <code class="highlight language-r" data-lang="r"><span class="o">&amp;</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="p">,</span><span class="w"> </span><span class="n">xor</span><span class="p">()</span></code></li>
-  <li>Filter on rows where x is one of the values in vector y: <code class="highlight language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">%</span><span class="k">in</span><span class="w"> </span><span class="n">y</span></code></li>
-  <li>Determine if a value is missing: <code class="highlight language-r" data-lang="r"><span class="nf">is.na</span><span class="p">()</span></code></li>
-  <li>Determine if numbers fall within an inclusive range: <code class="highlight language-r" data-lang="r"><span class="n">between</span><span class="p">()</span></code></li>
+  <li>Filter with comparison operators: <code class="highlighter-rouge">== , != , &gt; , &gt;= , &lt; , &lt;=</code></li>
+  <li>Filter with logical operators – and, or not, and exclusive or: <code class="highlighter-rouge">&amp;, |, !, xor()</code></li>
+  <li>Filter on rows where x is one of the values in vector y: <code class="highlighter-rouge">x %in y</code></li>
+  <li>Determine if a value is missing: <code class="highlighter-rouge">is.na()</code></li>
+  <li>Determine if numbers fall within an inclusive range: <code class="highlighter-rouge">between()</code></li>
 </ul>
 
-<p>Note: Don’t forget De Morgan’s law, <code class="highlight language-r" data-lang="r"><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">!</span><span class="n">x</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">!</span><span class="n">y</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">x</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">y</span></code></p>
+<p>Note: Don’t forget De Morgan’s law, <code class="highlighter-rouge">!(x &amp; y) == !x | !y , !(x | y) = !x &amp; !y</code></p>
 
 <h2 id="arrange">Arrange</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">arrange</span><span class="p">()</span></code> allows you to re-order the rows of your dataset.</p>
+<p><code class="highlighter-rouge">arrange()</code> allows you to re-order the rows of your dataset.</p>
 <ul>
   <li>By default, arrange sorts your data in ascending order</li>
-  <li>Sort data in descending order with <code class="highlight language-r" data-lang="r"><span class="n">desc</span><span class="p">()</span></code></li>
+  <li>Sort data in descending order with <code class="highlighter-rouge">desc()</code></li>
   <li>Missing values are placed at the end unless explicitly told otherwise</li>
 </ul>
 
 <h2 id="select">Select</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">select</span><span class="p">()</span></code> lets you zoom in on a subset of the data based on the names of columns. This is useful for narrowing data with many variables down to only the ones you care about.</p>
+<p><code class="highlighter-rouge">select()</code> lets you zoom in on a subset of the data based on the names of columns. This is useful for narrowing data with many variables down to only the ones you care about.</p>
 <ul>
-  <li>Select based on column name: <code class="highlight language-r" data-lang="r"><span class="n">starts_with</span><span class="p">(),</span><span class="w"> </span><span class="n">ends_with</span><span class="p">(),</span><span class="w"> </span><span class="n">contains</span><span class="p">(),</span><span class="w"> </span><span class="n">matches</span><span class="p">()</span></code></li>
-  <li>Select all columns between two columns, inclusive: <code class="highlight language-r" data-lang="r"><span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="n">y</span><span class="p">)</span></code></li>
-  <li>Exclude columns from being selected: <code class="highlight language-r" data-lang="r"><span class="o">-</span></code></li>
-  <li>Rename a variable without dropping the others: <code class="highlight language-r" data-lang="r"><span class="n">rename</span><span class="p">()</span></code></li>
-  <li>Reorder ceertain columns to the very beginning: <code class="highlight language-r" data-lang="r"><span class="n">select</span><span class="p">()</span></code> with <code class="highlight language-r" data-lang="r"><span class="n">everything</span><span class="p">()</span></code></li>
+  <li>Select based on column name: <code class="highlighter-rouge">starts_with(), ends_with(), contains(), matches()</code></li>
+  <li>Select all columns between two columns, inclusive: <code class="highlighter-rouge">(x:y)</code></li>
+  <li>Exclude columns from being selected: <code class="highlighter-rouge">-</code></li>
+  <li>Rename a variable without dropping the others: <code class="highlighter-rouge">rename()</code></li>
+  <li>Reorder ceertain columns to the very beginning: <code class="highlighter-rouge">select()</code> with <code class="highlighter-rouge">everything()</code></li>
 </ul>
 
 <h2 id="mutate">Mutate</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">mutate</span><span class="p">()</span></code> lets you add new columns that are functions of existing columns to the end of the table.</p>
+<p><code class="highlighter-rouge">mutate()</code> lets you add new columns that are functions of existing columns to the end of the table.</p>
 <ul>
-  <li>Create columns with arithmatic operators, <code class="highlight language-r" data-lang="r"><span class="o">+</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="o">/</span><span class="p">,</span><span class="w"> </span><span class="o">^</span></code>, with aggregate functions, <code class="highlight language-r" data-lang="r"><span class="n">sum</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span></code></li>
-  <li>Create columns with integer division, <code class="highlight language-r" data-lang="r"><span class="o">%/%</span></code>, and remainder ,<code class="highlight language-r" data-lang="r"><span class="o">%%</span></code></li>
-  <li>Create columns with logs: <code class="highlight language-python" data-lang="python"><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">log2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></li>
-  <li>Create columns with offsets, such as leading and lagging values, i.e. <code class="highlight language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lead</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">lag</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></li>
-  <li>Create columns with cumulative and rolling aggregates: <code class="highlight language-r" data-lang="r"><span class="n">cumsum</span><span class="p">,</span><span class="w"> </span><span class="n">cumprod</span><span class="p">,</span><span class="w"> </span><span class="n">cummin</span><span class="p">,</span><span class="w"> </span><span class="n">cummax</span><span class="p">,</span><span class="w"> </span><span class="n">cummean</span></code></li>
-  <li>Create columns with logical comparisons: <code class="highlight language-r" data-lang="r"><span class="o">&lt;</span><span class="p">,</span><span class="w"> </span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="o">==</span><span class="p">,</span><span class="w"> </span><span class="o">!=</span></code></li>
-  <li>Create columns with ranking functions: <code class="highlight language-r" data-lang="r"><span class="n">minrank</span><span class="p">,</span><span class="w"> </span><span class="n">row_number</span><span class="p">,</span><span class="w"> </span><span class="n">percent_rank</span><span class="p">,</span><span class="w"> </span><span class="n">ntile</span></code></li>
-  <li>Select the top or bottom entries in a group <code class="highlight language-r" data-lang="r"><span class="n">top_n</span><span class="p">()</span></code></li>
-  <li>Only keep the new variables that you define with <code class="highlight language-r" data-lang="r"><span class="n">transmute</span><span class="p">()</span></code></li>
+  <li>Create columns with arithmatic operators, <code class="highlighter-rouge">+, -, *, /, ^</code>, with aggregate functions, <code class="highlighter-rouge">sum, mean</code></li>
+  <li>Create columns with integer division, <code class="highlighter-rouge">%/%</code>, and remainder ,<code class="highlighter-rouge">%%</code></li>
+  <li>Create columns with logs: <code class="highlighter-rouge">log(x), log2(x), log10(x)</code></li>
+  <li>Create columns with offsets, such as leading and lagging values, i.e. <code class="highlighter-rouge">x - lead(x), x != lag(x)</code></li>
+  <li>Create columns with cumulative and rolling aggregates: <code class="highlighter-rouge">cumsum, cumprod, cummin, cummax, cummean</code></li>
+  <li>Create columns with logical comparisons: <code class="highlighter-rouge">&lt;, &gt;, ==, !=</code></li>
+  <li>Create columns with ranking functions: <code class="highlighter-rouge">minrank, row_number, percent_rank, ntile</code></li>
+  <li>Select the top or bottom entries in a group <code class="highlighter-rouge">top_n()</code></li>
+  <li>Only keep the new variables that you define with <code class="highlighter-rouge">transmute()</code></li>
 </ul>
 
 <h2 id="group-by">Group By</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">group_by</span><span class="p">()</span></code> changes the scope of analysis from the complete dataset to individually defined groups.</p>
+<p><code class="highlighter-rouge">group_by()</code> changes the scope of analysis from the complete dataset to individually defined groups.</p>
 
-<p>It is most useful when used with <code class="highlight language-r" data-lang="r"><span class="n">summarize</span><span class="p">()</span></code>, but it can also be used with <code class="highlight language-r" data-lang="r"><span class="n">mutate</span><span class="p">()</span></code> and <code class="highlight language-r" data-lang="r"><span class="n">filter</span><span class="p">()</span></code> – for example, if you wanted to fine the worst members of each group, find all groups bigger than a threshold, or create group summary metrics.</p>
+<p>It is most useful when used with <code class="highlighter-rouge">summarize()</code>, but it can also be used with <code class="highlighter-rouge">mutate()</code> and <code class="highlighter-rouge">filter()</code> – for example, if you wanted to fine the worst members of each group, find all groups bigger than a threshold, or create group summary metrics.</p>
 
-<p>Use <code class="highlight language-r" data-lang="r"><span class="n">ungroup</span><span class="p">()</span></code> to remove groupings.</p>
+<p>Use <code class="highlighter-rouge">ungroup()</code> to remove groupings.</p>
 
 <h2 id="summarize">Summarize</h2>
-<p><code class="highlight language-r" data-lang="r"><span class="n">summarize</span><span class="p">()</span></code> collapses a data frame into a single row. If the data is grouped, then it summarizes by group.</p>
+<p><code class="highlighter-rouge">summarize()</code> collapses a data frame into a single row. If the data is grouped, then it summarizes by group.</p>
 <ul>
-  <li>Summarize by location: <code class="highlight language-r" data-lang="r"><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">median</span></code></li>
-  <li>Summarize by spread: <code class="highlight language-r" data-lang="r"><span class="n">sd</span><span class="p">,</span><span class="w"> </span><span class="n">IQR</span><span class="p">,</span><span class="w"> </span><span class="n">mad</span></code>, (std. deviation, interquartile range, median absolute deviation)</li>
-  <li>Summarize by rank: <code class="highlight language-r" data-lang="r"><span class="n">min</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">,</span><span class="w"> </span><span class="n">quantile</span></code></li>
-  <li>Summarize by position: <code class="highlight language-r" data-lang="r"><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">nth</span><span class="p">,</span><span class="w"> </span><span class="n">last</span></code></li>
-  <li>Summarize by count: <code class="highlight language-r" data-lang="r"><span class="n">n</span><span class="p">(),</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span><span class="w"> </span><span class="n">n_distinct</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></li>
-  <li>Use the <code class="highlight language-r" data-lang="r"><span class="n">na.rm</span></code> parameter for functions like mean to specify whether to remove missing values before computation.</li>
-  <li>Use a count, <code class="highlight language-r" data-lang="r"><span class="n">n</span><span class="p">()</span></code>, when doing aggregation to prevent drawing conclusions from small amounts of data</li>
-  <li>Use the <code class="highlight language-r" data-lang="r"><span class="n">count</span><span class="p">()</span></code> function (with an optional weight variable) if you simply want a count</li>
-  <li>Use the <code class="highlight language-r" data-lang="r"><span class="n">count</span><span class="p">()</span></code> function to also find counts and proportions of logical values</li>
+  <li>Summarize by location: <code class="highlighter-rouge">mean, median</code></li>
+  <li>Summarize by spread: <code class="highlighter-rouge">sd, IQR, mad</code>, (std. deviation, interquartile range, median absolute deviation)</li>
+  <li>Summarize by rank: <code class="highlighter-rouge">min, max, quantile</code></li>
+  <li>Summarize by position: <code class="highlighter-rouge">first, nth, last</code></li>
+  <li>Summarize by count: <code class="highlighter-rouge">n(), sum(is.na(x)), n_distinct(x)</code></li>
+  <li>Use the <code class="highlighter-rouge">na.rm</code> parameter for functions like mean to specify whether to remove missing values before computation.</li>
+  <li>Use a count, <code class="highlighter-rouge">n()</code>, when doing aggregation to prevent drawing conclusions from small amounts of data</li>
+  <li>Use the <code class="highlighter-rouge">count()</code> function (with an optional weight variable) if you simply want a count</li>
+  <li>Use the <code class="highlighter-rouge">count()</code> function to also find counts and proportions of logical values</li>
 </ul>
 
 <h4 id="the-end">…The End!</h4>

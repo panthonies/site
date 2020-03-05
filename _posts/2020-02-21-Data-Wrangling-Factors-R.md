@@ -10,6 +10,8 @@ tags: [academic, r]
 
 Factors are a data type designed to work with categorical variables, which have a fixed and known set of possible values.[^1] They are more convenient to work with than strings for two main reasons: they help with sorting data, and help with identifying valid categories (i.e. prevent typos).
 
+For a one-page reference on manipulating factors, check out the [RStudio Factors Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-factors.pdf){:target="blank"}.
+
 [^1]: This post is meant for a person who is looking for a refresher on factors in R, and the content in this post is based on chapter fifteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
 
 ##### 1. Factors help with sorting data
@@ -52,25 +54,25 @@ people_sample_2_factors <- parse_factor(people_sample_2, levels = age_levels)
 
 ##### Additional notes:
 * If you do not specify factor levels, then factors are created from the data in alphabetical order. 
-* If you would like to match the order of levels with the order of appearance in the data, then set levels as follows: {% ihighlight R %}factor(data, levels = unique(data)){% endihighlight %}
+* If you would like to match the order of levels with the order of appearance in the data, then set levels as follows: `factor(data, levels = unique(data))`
 
 ## Working with Factors
 ---
 We can reorder factors with these functions (often useful for visualizations):
 
-* {% ihighlight R %}fct_inorder(){% endihighlight %} orders factors in order of their appearance in the data
-* {% ihighlight R %}fct_reorder(){% endihighlight %} orders factors based on other variables
-* {% ihighlight R %}fct_relevel(){% endihighlight %} brings specified factors to the beginning of the list of factors
-* {% ihighlight R %}fct_infreq(){% endihighlight %} orders factors based on its frequency
-* {% ihighlight R %}fct_rev{% endihighlight %} reverses the order of factor levels
+* `fct_inorder()` orders factors in order of their appearance in the data
+* `fct_reorder()` orders factors based on other variables
+* `fct_relevel()` brings specified factors to the beginning of the list of factors
+* `fct_infreq()` orders factors based on its frequency
+* `fct_rev` reverses the order of factor levels
 
 And we can modify factors with these functions:
 
-* {% ihighlight R %}fct_recode(){% endihighlight %} changes the values of each factor level
-* {% ihighlight R %}fct_collapse(){% endihighlight %} collapses many factor levels into fewer levels
-* {% ihighlight R %}fct_lump(){% endihighlight %} lumps together the least or most common factor levels into an "other" category
+* `fct_recode()` changes the values of each factor level
+* `fct_collapse()` collapses many factor levels into fewer levels
+* `fct_lump()` lumps together the least or most common factor levels into an "other" category
 
-We'll explore examples of ordering and modifying factors using the {% ihighlight R %}gss_cat{% endihighlight %} dataset, a sample of categorical values from the General Social survey that comes from the {% ihighlight R %}forcats{% endihighlight %} package in the tidyverse. Here is a preview of the data:
+We'll explore examples of ordering and modifying factors using the `gss_cat` dataset, a sample of categorical values from the General Social survey that comes from the `forcats` package in the tidyverse. Here is a preview of the data:
 
 {% highlight R %}
 head(gss_cat, 3)
@@ -84,7 +86,7 @@ head(gss_cat, 3)
 
 ### Examples: Ordering Factors
 
-**Order factors based on another variable when the factor is mapped to position** with {% ihighlight R %}fct_reorder(){% endihighlight %}:
+**Order factors based on another variable when the factor is mapped to position** with `fct_reorder()`:
 
 {% highlight R %}
 # summarize the data by each religion and how many hours of tv they watch
@@ -106,7 +108,7 @@ relig_summary %>%
                       path-detail="documentation/02-21-factors-fct-reorder.png"
                       alt="Factor Reorder" %}
 
-**Order factors based on another variable when the factor is mapped to a non-position aesthetic** with {% ihighlight R %}fct_reorder2(){% endihighlight %}:
+**Order factors based on another variable when the factor is mapped to a non-position aesthetic** with `fct_reorder2()`:
 
 {% highlight R %}
 # summarize the data by age, marital status, and proportion of age with marital status
@@ -128,7 +130,7 @@ ggplot(by_age, aes(age, prop, colour = fct_reorder2(marital, age, prop))) +
                       alt="Factor Reorder 2" %}
 
 
-**Bring specified factors to the beginning of the list of factors** with {% ihighlight R %}fct_relevel(){% endihighlight %}:
+**Bring specified factors to the beginning of the list of factors** with `fct_relevel()`:
 
 
 {% highlight R %}
@@ -150,7 +152,7 @@ ggplot(rincome_summary,
                       path-detail="documentation/02-21-factors-fct-relevel.png"
                       alt="Factor Relevel" %}
 
-**Order factors based on its frequency** with {% ihighlight R %}fct_infreq(){% endihighlight %}:
+**Order factors based on its frequency** with `fct_infreq()`:
 
 {% highlight R %}
 # graph the different marital statuses by increasing frequency
@@ -166,7 +168,7 @@ gss_cat %>%
 ### Examples: Modifying Factor Levels
 
 
-**Change the values of each level** with {% ihighlight R %}fct_recode(){% endihighlight %}:
+**Change the values of each level** with `fct_recode()`:
 
 {% highlight R %}
 # fct_recode() - change the values of each level
@@ -195,7 +197,7 @@ gss_cat %>%
 #> 10 Democrat, strong       3490
 {% endhighlight %}
 
-**Collapse many specific levels into fewer levels** with {% ihighlight R %}fct_collapse(){% endihighlight %}:
+**Collapse many specific levels into fewer levels** with `fct_collapse()`:
 
 {% highlight R %}gss_cat %>%
 # fct_collapse() - collapse levels
@@ -215,7 +217,7 @@ gss_cat %>%
 #> 4 dem      7180
 {% endhighlight %}
 
-**Lump together least or most common factor levels** with {% ihighlight R %}fct_lump(){% endihighlight %}:
+**Lump together least or most common factor levels** with `fct_lump()`:
 
 {% highlight R %}
 # fct_lump() - lumps groups togetherlumps together groups to make a plot or table simpler

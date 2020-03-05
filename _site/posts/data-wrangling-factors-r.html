@@ -32,7 +32,7 @@
     
       <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
       <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-816f971f364348e7853a95e4725e773f5e118fa96230c63a9be83e3f2ef3ce0a.css">
+      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
     
 
   
@@ -127,6 +127,8 @@
 
 <p>Factors are a data type designed to work with categorical variables, which have a fixed and known set of possible values.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> They are more convenient to work with than strings for two main reasons: they help with sorting data, and help with identifying valid categories (i.e. prevent typos).</p>
 
+<p>For a one-page reference on manipulating factors, check out the <a href="/site/pdf/r-cheat-sheet-factors.pdf" target="blank">RStudio Factors Cheat Sheet</a>.</p>
+
 <h5 id="1-factors-help-with-sorting-data">1. Factors help with sorting data</h5>
 
 <p>Say we are investigating an issue that affects people differently at stages of their life, and we have a variable for the stage of life that people are in – infants, toddlers, children, adolescents, adults, and seniors. If we try to sort them as strings, they will be sorted alphabetically, but if we turn them into factors, they can be sorted in the proper age order.</p>
@@ -164,7 +166,7 @@
 <h5 id="additional-notes">Additional notes:</h5>
 <ul>
   <li>If you do not specify factor levels, then factors are created from the data in alphabetical order.</li>
-  <li>If you would like to match the order of levels with the order of appearance in the data, then set levels as follows: <code class="highlight language-r" data-lang="r"><span class="n">factor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></code></li>
+  <li>If you would like to match the order of levels with the order of appearance in the data, then set levels as follows: <code class="highlighter-rouge">factor(data, levels = unique(data))</code></li>
 </ul>
 
 <h2 id="working-with-factors">Working with Factors</h2>
@@ -172,22 +174,22 @@
 <p>We can reorder factors with these functions (often useful for visualizations):</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_inorder</span><span class="p">()</span></code> orders factors in order of their appearance in the data</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_reorder</span><span class="p">()</span></code> orders factors based on other variables</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_relevel</span><span class="p">()</span></code> brings specified factors to the beginning of the list of factors</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_infreq</span><span class="p">()</span></code> orders factors based on its frequency</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_rev</span></code> reverses the order of factor levels</li>
+  <li><code class="highlighter-rouge">fct_inorder()</code> orders factors in order of their appearance in the data</li>
+  <li><code class="highlighter-rouge">fct_reorder()</code> orders factors based on other variables</li>
+  <li><code class="highlighter-rouge">fct_relevel()</code> brings specified factors to the beginning of the list of factors</li>
+  <li><code class="highlighter-rouge">fct_infreq()</code> orders factors based on its frequency</li>
+  <li><code class="highlighter-rouge">fct_rev</code> reverses the order of factor levels</li>
 </ul>
 
 <p>And we can modify factors with these functions:</p>
 
 <ul>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_recode</span><span class="p">()</span></code> changes the values of each factor level</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_collapse</span><span class="p">()</span></code> collapses many factor levels into fewer levels</li>
-  <li><code class="highlight language-r" data-lang="r"><span class="n">fct_lump</span><span class="p">()</span></code> lumps together the least or most common factor levels into an “other” category</li>
+  <li><code class="highlighter-rouge">fct_recode()</code> changes the values of each factor level</li>
+  <li><code class="highlighter-rouge">fct_collapse()</code> collapses many factor levels into fewer levels</li>
+  <li><code class="highlighter-rouge">fct_lump()</code> lumps together the least or most common factor levels into an “other” category</li>
 </ul>
 
-<p>We’ll explore examples of ordering and modifying factors using the <code class="highlight language-r" data-lang="r"><span class="n">gss_cat</span></code> dataset, a sample of categorical values from the General Social survey that comes from the <code class="highlight language-r" data-lang="r"><span class="n">forcats</span></code> package in the tidyverse. Here is a preview of the data:</p>
+<p>We’ll explore examples of ordering and modifying factors using the <code class="highlighter-rouge">gss_cat</code> dataset, a sample of categorical values from the General Social survey that comes from the <code class="highlighter-rouge">forcats</code> package in the tidyverse. Here is a preview of the data:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">head</span><span class="p">(</span><span class="n">gss_cat</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
 </span><span class="c1">#&gt; A tibble: 3 x 9</span><span class="w">
@@ -199,7 +201,7 @@
 
 <h3 id="examples-ordering-factors">Examples: Ordering Factors</h3>
 
-<p><strong>Order factors based on another variable when the factor is mapped to position</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_reorder</span><span class="p">()</span></code>:</p>
+<p><strong>Order factors based on another variable when the factor is mapped to position</strong> with <code class="highlighter-rouge">fct_reorder()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># summarize the data by each religion and how many hours of tv they watch</span><span class="w">
 </span><span class="n">relig_summary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -219,7 +221,7 @@
   <img src="/site/assets/documentation/02-21-factors-fct-reorder-0a5d9e64116b8e27f10a6693cd3ed6a6c9d8b6bf121ac5b214d02957b555f6ee.png" alt="Factor Reorder" class="zooming" data-rjs="/site/assets/documentation/02-21-factors-fct-reorder-0a5d9e64116b8e27f10a6693cd3ed6a6c9d8b6bf121ac5b214d02957b555f6ee.png" data-zooming-width="2395" data-zooming-height="1133" />
 </a></p>
 
-<p><strong>Order factors based on another variable when the factor is mapped to a non-position aesthetic</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_reorder2</span><span class="p">()</span></code>:</p>
+<p><strong>Order factors based on another variable when the factor is mapped to a non-position aesthetic</strong> with <code class="highlighter-rouge">fct_reorder2()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># summarize the data by age, marital status, and proportion of age with marital status</span><span class="w">
 </span><span class="n">by_age</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -238,7 +240,7 @@
   <img src="/site/assets/documentation/02-21-factors-fct-reorder2-ec5d7baa5687ccb82a0e7f09417eaa0446c1c48109fe8730ea66a9fb9256bd53.png" alt="Factor Reorder 2" class="zooming" data-rjs="/site/assets/documentation/02-21-factors-fct-reorder2-ec5d7baa5687ccb82a0e7f09417eaa0446c1c48109fe8730ea66a9fb9256bd53.png" data-zooming-width="2395" data-zooming-height="1133" />
 </a></p>
 
-<p><strong>Bring specified factors to the beginning of the list of factors</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_relevel</span><span class="p">()</span></code>:</p>
+<p><strong>Bring specified factors to the beginning of the list of factors</strong> with <code class="highlighter-rouge">fct_relevel()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># summarize the data by age and income</span><span class="w">
 </span><span class="n">rincome_summary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -257,7 +259,7 @@
   <img src="/site/assets/documentation/02-21-factors-fct-relevel-8e251f3826990f7c1ea2f08cb5bddb2b20f9f6c8619d4c755860a94c65828c97.png" alt="Factor Relevel" class="zooming" data-rjs="/site/assets/documentation/02-21-factors-fct-relevel-8e251f3826990f7c1ea2f08cb5bddb2b20f9f6c8619d4c755860a94c65828c97.png" data-zooming-width="2395" data-zooming-height="1133" />
 </a></p>
 
-<p><strong>Order factors based on its frequency</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_infreq</span><span class="p">()</span></code>:</p>
+<p><strong>Order factors based on its frequency</strong> with <code class="highlighter-rouge">fct_infreq()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># graph the different marital statuses by increasing frequency</span><span class="w">
 </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -270,7 +272,7 @@
 
 <h3 id="examples-modifying-factor-levels">Examples: Modifying Factor Levels</h3>
 
-<p><strong>Change the values of each level</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_recode</span><span class="p">()</span></code>:</p>
+<p><strong>Change the values of each level</strong> with <code class="highlighter-rouge">fct_recode()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># fct_recode() - change the values of each level</span><span class="w">
 </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -297,7 +299,7 @@
 </span><span class="c1">#&gt;  9 Democrat, weak         3690</span><span class="w">
 </span><span class="c1">#&gt; 10 Democrat, strong       3490</span></code></pre></figure>
 
-<p><strong>Collapse many specific levels into fewer levels</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_collapse</span><span class="p">()</span></code>:</p>
+<p><strong>Collapse many specific levels into fewer levels</strong> with <code class="highlighter-rouge">fct_collapse()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
 </span><span class="c1"># fct_collapse() - collapse levels</span><span class="w">
@@ -316,7 +318,7 @@
 </span><span class="c1">#&gt; 3 ind      8409</span><span class="w">
 </span><span class="c1">#&gt; 4 dem      7180</span></code></pre></figure>
 
-<p><strong>Lump together least or most common factor levels</strong> with <code class="highlight language-r" data-lang="r"><span class="n">fct_lump</span><span class="p">()</span></code>:</p>
+<p><strong>Lump together least or most common factor levels</strong> with <code class="highlighter-rouge">fct_lump()</code>:</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># fct_lump() - lumps groups togetherlumps together groups to make a plot or table simpler</span><span class="w">
 </span><span class="n">gss_cat</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
