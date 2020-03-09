@@ -4,7 +4,7 @@
 
 .article {
   display: block;
-  margin: 100px 0;
+  margin: 100px 0 35px;
 }
 
 .article-list {
@@ -152,21 +152,35 @@
 
 .article-content {
   display: block;
-  p,
-  ul,
-  ol,
+  p {
+    display: block;
+    margin-bottom: 25px;
+  }
   img,
   blockquote {
     display: block;
-    margin-bottom: 30px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  ul,
+  ol {
+    display: block;
+    margin-top: -4px;
+    margin-bottom: 25px;
   }
   h2,
   h3,
-  h4 {
+  h4,
+  h5 {
     display: block;
     margin-bottom: 10px;
     font-family: $sans-serif;
     color: $article-post-titles-color;
+  }
+  h6 {
+    display: block;
+    margin-bottom: 10px;
+    font-family: $sans-serif;
   }
   blockquote p {
     margin-bottom: 0;
@@ -219,4 +233,50 @@
     display: block;
     margin-top: -7px;
   }
+}
+
+
+// Footnotes
+// =============================================================================
+
+.footnote {
+    line-height: 1;
+    margin: 0 1px;
+}
+
+.footnotes {
+    font-size: .9em;
+    line-height: 1.5em;
+    color: $gray;
+}
+
+.footnotes {
+    &::before {
+        content: "";
+        background: $gray-light;
+        display: block;
+        height: 1px;
+        width: 15em;
+        margin: 4em 6em 1.5em 2.6rem;
+    }
+    li {
+        margin-bottom: 2em;
+        &:target {
+            border: $target-outline solid 1px;
+            box-shadow: 0 0 0 0.2em $target-shadow;
+            border-radius: .3em;
+            padding: .5em;
+            *:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.backbutton {
+  color: $gray;
+  border: $gray-light solid 1px;
+  border-radius: .3em;
+  padding: .2em;
+  font-size: .9em;
 }

@@ -27,7 +27,7 @@ $brand-warning: #f1c90b;
 // Grid
 
 $columns: 12;
-$max-width: 650px;
+$max-width: 925px;
 $gutter: 20px;
 $one-column: 100% / $columns;
 $negative-gutter: 0 - $gutter;
@@ -35,7 +35,7 @@ $negative-gutter: 0 - $gutter;
 // Font sizes
 
 $base-font-size: 16px;
-$base-line-height: 1.8;
+$base-line-height: 1.65;
 
 // Box sizes
 
@@ -45,3 +45,9 @@ $base-border-radius: 4px;
 // =============================================================================
 
 $base-transition-speed: .2s;
+
+// Footnotes
+// =============================================================================
+
+$target-outline: #FFADB6;
+$target-shadow: lighten($target-outline, 10%); 
