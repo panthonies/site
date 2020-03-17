@@ -16,7 +16,7 @@ layout: default
             {{ post.excerpt }}
           {% endif %}
         </p>
-        {% include article/info-footer.html post=post %}
+        {% include_cached article/info-footer.html post=post %}
       </li>
     {% endfor %}
   </ul>
@@ -24,5 +24,5 @@ layout: default
   <p class="article-empty">
     There are no posts in {{ page.slug }}.
   </p>
-{% include javascripts.html %}
+{% include_cached javascripts.html %}
 {% endif %}

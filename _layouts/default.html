@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
-{% include head.html %}
+{% include_cached head.html %}
 <body>
   <main>
     <div class="grid grid-centered">
       <div class="grid-cell">
-        {% include navigation.html %}
+        {% include_cached navigation.html %}
         {{ content }}
-        {% include footer.html %}
+        {% include_cached footer.html %}
       </div>
     </div>
   </main>
-  {% include javascripts.html %}
-  {% include mathjax.html %}
+  {% include_cached javascripts.html %}
+  {% include_cached mathjax.html %}
 </body>
 </html>

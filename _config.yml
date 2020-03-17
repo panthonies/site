@@ -2,10 +2,14 @@
 
 blog_theme: light # Or use dark
 name: Anthony Pan
-paginate: 25
-url: "localhost:4000"
-baseurl: "/site"
+url: "anthonypan.com"
+baseurl: ""
 
+pagination:
+  enabled: true
+  per_page: 20
+  permalink: /posts/page/:num/
+  indexpage: 'posts.html'
 
 # Optional settings
 
@@ -82,12 +86,11 @@ exclude:
   - .jekyll-cache
 plugins:
   - jekyll-assets
-  - jekyll-paginate
+  - jekyll-paginate-v2
   - jekyll-sitemap
   - jemoji
   - rouge
-  - jekyll_inline_highlight
-paginate_path: /posts/page/:num/
+  - jekyll-include-cache
 permalink: posts/:slug
 kramdown:
   footnote_backlink: "⤴"

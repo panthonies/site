@@ -1,28 +1,28 @@
 <!doctype html>
 <html lang="en">
-{% include head.html %}
+{% include_cached head.html %}
 <body>
   <main>
     <div class="grid grid-centered">
       <div class="grid-cell">
-        {% include navigation.html %}
+        {% include_cached navigation.html %}
         <article class="article {% if site.scrollappear_enabled %}scrollappear{% endif %}">
           <header class="article-header">
             <h1>{{ page.title }}</h1>
             <p>{{ page.description }}</p>
-            {% include article/info-footer.html post=page %}
+            {% include_cached article/info-footer.html post=page %}
           </header>
 
           <div class="article-content">
             {{ content }}
           </div>
-          <span class="backbutton"><a href="{{ 'about' | relative_url }}">←About</a></span>
+          <span class="backbutton"><a href="{{ '/' | relative_url }}">←About</a></span>
         </article>
-        {% include footer.html %}
+        {% include_cached footer.html %}
       </div>
     </div>
   </main>
-  {% include javascripts.html %}
-  {% include mathjax.html %}
+  {% include_cached javascripts.html %}
+  {% include_cached mathjax.html %}
 </body>
 </html>

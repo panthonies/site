@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
-{% include head.html %}
+{% include_cached head.html %}
 <body>
   <main>
     <div class="grid grid-centered">
       <div class="grid-cell">
-        {% include navigation.html %}
+        {% include_cached navigation.html %}
         <article class="article {% if site.scrollappear_enabled %}scrollappear{% endif %}">
           <header class="article-header">
             <h1>{{ page.title }}</h1>
             <p>{{ page.description }}</p>
-            {% include article/info-footer.html post=page %}
+            {% include_cached article/info-footer.html post=page %}
           </header>
 
           <div class="article-content">
@@ -35,11 +35,11 @@
             <noscript>Please enable JavaScript to view the comments.</noscript>
           {% endif %}
         </article>
-        {% include footer.html %}
+        {% include_cached footer.html %}
       </div>
     </div>
   </main>
-  {% include javascripts.html %}
-  {% include mathjax.html %}
+  {% include_cached javascripts.html %}
+  {% include_cached mathjax.html %}
 </body>
 </html>
