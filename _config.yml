@@ -4,14 +4,14 @@ blog_theme: light # Or use dark
 name: Anthony Pan
 paginate: 25
 url: "localhost:4000"
-baseurl: "/site"
+baseurl: ""
 
 
 # Optional settings
 
 about_enabled: true # Change to true if you wish to show an icon in the navigation that redirects to the about page
 discus_identifier:  # Add your Disqus identifier
-ga_analytics: # Add your GA Tracking Id
+ga_analytics: UA-160038909-1 # Add your GA Tracking Id
 local_fonts: false # Change to true if you wish to use local fonts
 rss_enabled: false # Change to false if not
 scrollappear_enabled: false # Change to false to disable
@@ -54,6 +54,8 @@ assets:
     - _assets/javascripts
     - _assets/stylesheets
     - _assets/yarn
+    - _assets/images/documentation
+    - _assets/images/books
     - pdf
 collections:
   my_tags:
@@ -89,3 +91,4 @@ paginate_path: /posts/page/:num/
 permalink: posts/:slug
 kramdown:
   footnote_backlink: "⤴"
+# incremental: true

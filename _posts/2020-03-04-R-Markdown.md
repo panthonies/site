@@ -12,7 +12,7 @@ This post provides a basic introduction to R Markdown.[^1] An R Markdown file co
 2. For collaborating with those who are interested in both the conclusions and how they were reached.
 3. For capturing the work you do and what you were thinking at the time.
 
-[^1]: This post is meant for a person who is looking for a refresher on R Markdown. The content in this post is based on chapters twenty-seven through thirty of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on R Markdown. The content in this post is based on chapters twenty-seven through thirty of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 
 #### Resources:

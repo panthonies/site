@@ -12,7 +12,7 @@ I'll start with some general tips & tricks that I find useful in RStudio before 
 * **cmd + shift + f10** restarts RStudio
 * **cmd + shift + s** reruns the current script
 
-[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapters seventeen through twenty of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapters seventeen through twenty of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 
 ## Pipes
@@ -58,7 +58,7 @@ mtcars %$%
 ---
 You should consider creating a function when you've copied and pasted a block of code more than twice. The aspects of functions that we'll dive into below are conditional execution, function arguments, and return values.[^2]
 
-[^2]: More complicated functions may warrant unit testing. For information regarding unit testing in R, see [the testthat package](http://r-pkgs.had.co.nz/tests.html).
+[^2]: More complicated functions may warrant unit testing. For information regarding unit testing in R, see [the testthat package](http://r-pkgs.had.co.nz/tests.html){:target="blank"}.
 
 #### Conditional Execution
 {% highlight R %}

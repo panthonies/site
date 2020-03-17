@@ -1,6 +1,17 @@
-1. Add support for LaTeX equations using MathJax and Kramdown
-	https://lyk6756.github.io/2016/11/25/write_latex_equations.html
-	https://haixing-hu.github.io/programming/2013/09/20/how-to-use-mathjax-in-jekyll-generated-github-pages/
+MathJax Reference:
+
+		Inline MathJax: \\(\mathbf{y} = A \mathbf{x}\\) or $$\cfrac{d}{dt}\cfrac{\partial L}{\partial \dot{q}} = \cfrac{\partial L}{\partial q}$$
+
+		Separate by a blank line to start math on a new line: 
+
+		$$\begin{equation} \label{eq1}
+		\begin{split}
+		A & = \frac{\pi r^2}{2} \\
+		 & = \frac{1}{2} \pi r^2
+		\end{split}
+		\end{equation}$$
+
+		[MathJax basic tutorial and reference](https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference)
 
 2. Add icons - water droplet, music, books.
 
@@ -48,3 +59,8 @@
 
 	Useful: collapsible sections in markdown
 	https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab
+
+{% comment %} 
+    These commments will not include inside the source.
+    <span class="backbutton"><a href="javascript:history.back()">←Back</a></span>
+{% endcomment %}

@@ -8,7 +8,7 @@ tags: [academic, r]
 
 In this post we'll be taking a look at several examples of data exploration using the `diamonds` dataset in the tidyverse library.[^1]
 
-[^1]: This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 {% highlight R %}
 ### load package

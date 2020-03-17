@@ -416,8 +416,8 @@ body {
   font-family: "Lato", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   font-weight: 400;
-  line-height: 1.8;
-  color: #615b5b;
+  line-height: 1.65;
+  color: #393636;
   background: #fff; }
 
 p {
@@ -435,7 +435,7 @@ h4,
 h5,
 h6 {
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
   text-rendering: optimizeLegibility; }
 
 h1 {
@@ -461,7 +461,8 @@ h5 {
   font-weight: 500; }
 
 h6 {
-  font-size: 16px; }
+  font-size: 16px;
+  font-weight: 400; }
 
 @media all and (max-width: 767px) {
   h1 {
@@ -473,14 +474,14 @@ h6 {
   h3 {
     font-size: 20px; } }
 a {
-  color: #615b5b;
+  color: #393636;
   text-decoration: underline;
   -webkit-transition: color 0.2s linear;
   transition: color 0.2s linear; }
   a:hover, a:active {
-    color: #393636; }
+    color: #121111; }
   a:focus {
-    color: #393636;
+    color: #121111;
     outline: none; }
 
 svg {
@@ -503,8 +504,8 @@ blockquote {
   font-size: 18px;
   font-style: italic;
   line-height: 1.6;
-  color: #615b5b;
-  border-left: 3px solid #615b5b; }
+  color: #393636;
+  border-left: 3px solid #393636; }
 
 hr {
   margin: 0;
@@ -538,7 +539,7 @@ img {
   border-top: 1px solid #ebeaea; }
   .footer p {
     font-size: 15px;
-    color: #ada8a8; }
+    color: #888181; }
   .footer a {
     text-decoration: none; }
 
@@ -613,7 +614,7 @@ img {
     vertical-align: bottom; }
 
 .grid-centered {
-  max-width: 910px;
+  max-width: 925px;
   margin-right: auto;
   margin-left: auto; }
 
@@ -669,7 +670,7 @@ img {
 
 .article {
   display: block;
-  margin: 100px 0; }
+  margin: 100px 0 35px; }
 
 .article-list {
   display: block;
@@ -693,7 +694,7 @@ img {
         font-size: 11px;
         font-weight: 600;
         letter-spacing: .1em;
-        color: #888181;
+        color: #615b5b;
         text-decoration: none;
         text-transform: uppercase;
         -webkit-transition: color 0.2s linear;
@@ -703,7 +704,7 @@ img {
           height: 16px;
           vertical-align: middle;
           margin: -2px 8px 0 8px;
-          fill: #888181; }
+          fill: #615b5b; }
         .article-list li.article-pagination a:hover svg {
           fill: #121111; }
         .article-list li.article-pagination a:hover {
@@ -732,7 +733,7 @@ img {
   display: block;
   margin: 12px 0 10px;
   font-size: 15px;
-  color: #615b5b; }
+  color: #393636; }
 
 .article-list-footer {
   display: block; }
@@ -740,12 +741,12 @@ img {
   .article-list-footer a {
     display: inline-block;
     font-size: 12px;
-    color: #ada8a8;
+    color: #888181;
     text-transform: uppercase;
     vertical-align: middle; }
   .article-list-footer a {
     margin-right: 7.5px;
-    color: #615b5b; }
+    color: #393636; }
     .article-list-footer a:hover {
       color: #121111; }
     .article-list-footer a:last-child {
@@ -762,7 +763,7 @@ img {
   display: block;
   margin: 100px 0;
   font-style: italic;
-  color: #ada8a8;
+  color: #888181;
   text-align: center; }
 
 .article-pagination-right {
@@ -777,26 +778,37 @@ img {
     display: block;
     margin: 12px 0 10px;
     font-size: 16px;
-    color: #615b5b; }
+    color: #393636; }
   .article-header a {
     text-decoration: none; }
 
 .article-content {
   display: block; }
-  .article-content p,
-  .article-content ul,
-  .article-content ol,
+  .article-content p {
+    display: block;
+    margin-bottom: 25px; }
   .article-content img,
   .article-content blockquote {
     display: block;
-    margin-bottom: 30px; }
+    margin-top: 0;
+    margin-bottom: 20px; }
+  .article-content ul,
+  .article-content ol {
+    display: block;
+    margin-top: -4px;
+    margin-bottom: 25px; }
   .article-content h2,
   .article-content h3,
-  .article-content h4 {
+  .article-content h4,
+  .article-content h5 {
     display: block;
     margin-bottom: 10px;
     font-family: "Lato", Helvetica, Arial, sans-serif;
     color: #121111; }
+  .article-content h6 {
+    display: block;
+    margin-bottom: 10px;
+    font-family: "Lato", Helvetica, Arial, sans-serif; }
   .article-content blockquote p {
     margin-bottom: 0; }
   .article-content img.emoji {
@@ -822,10 +834,10 @@ img {
       vertical-align: middle;
       -webkit-transition: fill 0.2s linear;
       transition: fill 0.2s linear;
-      fill: #ada8a8;
+      fill: #888181;
       width: 20px; }
     .article-share a:hover svg {
-      fill: #615b5b; }
+      fill: #393636; }
 
 @media all and (max-width: 767px) {
   .article-list-footer {
@@ -837,6 +849,51 @@ img {
   .article-list-tags {
     display: block;
     margin-top: -7px; } }
+.footnote {
+  line-height: 1;
+  margin: 0 1px; }
+
+.footnotes {
+  font-size: .9em;
+  line-height: 1.5em;
+  color: #615b5b; }
+
+.footnotes::before {
+  content: "";
+  background: #888181;
+  display: block;
+  height: 1px;
+  width: 15em;
+  margin: 4em 6em 1.5em 2.6rem; }
+.footnotes li {
+  margin-bottom: 2em; }
+  .footnotes li:target {
+    border: #FFADB6 solid 1px;
+    box-shadow: 0 0 0 0.2em #ffe0e3;
+    border-radius: .3em;
+    padding: .5em; }
+    .footnotes li:target *:last-child {
+      margin-bottom: 0; }
+
+.backbutton {
+  color: #615b5b;
+  border: #888181 solid 1px;
+  border-radius: .3em;
+  padding: .2em;
+  font-size: .9em; }
+
+.toc {
+  display: table;
+  background: #f9f9f9 none repeat scroll 0 0;
+  border: #ada8a8 solid 1px;
+  border-radius: .3em;
+  padding: 1em 2em 0em 1.2em;
+  width: auto;
+  margin-bottom: 2em;
+  color: #615b5b; }
+  .toc a {
+    color: #000; }
+
 .embed-responsive {
   position: relative;
   display: block;
@@ -886,12 +943,12 @@ img {
       margin-left: 0; }
     .header-links li a {
       font-size: 18px;
-      color: #393636;
+      color: #2c2a2a;
       cursor: pointer; }
       .header-links li a svg {
         width: 16px;
         height: 16px;
-        fill: #393636; }
+        fill: #2c2a2a; }
       .header-links li a:hover svg {
         fill: #121111; }
 
@@ -904,7 +961,7 @@ img {
     padding-right: 10px; }
     .header-tags li a {
       display: inline-block;
-      color: #393636;
+      color: #2c2a2a;
       text-decoration: none; }
       .header-tags li a:hover {
         color: #121111; }

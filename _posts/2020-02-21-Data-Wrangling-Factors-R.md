@@ -12,7 +12,7 @@ Factors are a data type designed to work with categorical variables, which have 
 
 For a one-page reference on manipulating factors, check out the [RStudio Factors Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-factors.pdf){:target="blank"}.
 
-[^1]: This post is meant for a person who is looking for a refresher on factors in R, and the content in this post is based on chapter fifteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on factors in R, and the content in this post is based on chapter fifteen of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 ##### 1. Factors help with sorting data
 
@@ -64,7 +64,7 @@ We can reorder factors with these functions (often useful for visualizations):
 * `fct_reorder()` orders factors based on other variables
 * `fct_relevel()` brings specified factors to the beginning of the list of factors
 * `fct_infreq()` orders factors based on its frequency
-* `fct_rev` reverses the order of factor levels
+* `fct_rev()` reverses the order of factor levels
 
 And we can modify factors with these functions:
 

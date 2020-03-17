@@ -8,7 +8,7 @@ tags: [academic, r]
 
 Iteration, like functions, serve to reduce the amount of duplication in code. In R, this comes in two flavors: imperative programming, such as for and while loops, and functional programming, which avoids changing-state data.[^1]
 
-[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapter twenty-one of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapter twenty-one of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 ## Imperative Programming: For Loops
 When creating for loops in R, it's important to allocate sufficient space for new objects using the `vector()` function. For example, we create a new object that computes the median of each column of a data frame:

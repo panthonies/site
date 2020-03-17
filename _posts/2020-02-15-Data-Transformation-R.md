@@ -6,7 +6,7 @@ thumb_image:
 tags: [academic, r]
 ---
 
-In this post we'll be taking a look at basic data transformation in R -- namely, six important R functions included in the [dplyr](http://dplyr.tidyverse.org) package:[^1]
+In this post we'll be taking a look at basic data transformation in R -- namely, six important R functions included in the [dplyr](http://dplyr.tidyverse.org){:target="blank"} package:[^1]
 
 [^1]: This post is meant for a person who is looking for a refresher on the very basics of the dplyr package (i.e., me when I inevitably forget how to summarize data). The content in this post is based on chapter five of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
@@ -19,7 +19,7 @@ In this post we'll be taking a look at basic data transformation in R -- namely,
 
 These functions will help you scratch the surface of manipulating datasets.
 
-**First things first:** Here is the [RStudio Data Transformation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-transformation.pdf), if that's what you're looking for.
+**First things first:** Here is the [RStudio Data Transformation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-transformation.pdf){target="blank"}, if that's what you're looking for.
 
 ### Prologue: The Pipe
 Before we get into the functions themselves, let's review an important part of R syntax: the pipe, `%>%`. The pipe symbol can be read as "then."
@@ -93,7 +93,7 @@ Keep reading for examples of these functions in action.
 
 ## Examples and R Code
 ---
-We'll be using two libraries: [tidyverse](https://www.tidyverse.org), which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.
+We'll be using two libraries: [tidyverse](https://www.tidyverse.org){:target="blank"}, which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.
 
 {% highlight R %}
 ### load packages

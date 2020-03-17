@@ -22,7 +22,7 @@ In a tidy dataset, each variable must have its own column, each observation must
 * For more details, see `vignette("tibble")`
 
 
-[^1]: The content in this post is based on chapters nine through thirteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
+[^1]: The content in this post is based on chapters nine through thirteen of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
 ## Importing Data
 ---
@@ -61,7 +61,7 @@ Parsing functions take a character vector and return a more specialized vector l
 * `parse_logical(), parse_integer()`
 * `parse_double(), parse_number()` -- potential problems with different grouping marks
 * `parse_character()` -- potential problems with non UTF-8 encoding; try `guess_encoding()`
-* `parse_date(), parse_time(), parse_datetime()` -- potential problems with formatting; [reference](https://r4ds.had.co.nz/data-import.html#readr-datetimes).
+* `parse_date(), parse_time(), parse_datetime()` -- potential problems with formatting; [reference](https://r4ds.had.co.nz/data-import.html#readr-datetimes){:target="blank"}.
 
 ## Managing Data in a Single Table
 ---

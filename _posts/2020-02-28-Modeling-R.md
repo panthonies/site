@@ -8,7 +8,7 @@ tags: [academic, r]
 
 This post provides an introduction to modeling in R without going into statistical details.[^1] We'll go over some examples of fitting models to data, and then examine the list-column data structure. The following libraries are used:
 
-[^1]: This post is meant for a person who is looking for a refresher on basic modeling in R. The content in this post is based on chapter twenty-two through twenty-five of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on basic modeling in R. The content in this post is based on chapter twenty-two through twenty-five of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 {% highlight R %}
 library("tidyverse")

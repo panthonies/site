@@ -6,13 +6,13 @@ thumb_image:
 tags: [academic, r]
 ---
 
-In an effort to reduce the amount of time that I spend searching the Internet for basic ggplot2 questions, I'm writing a brief overview of the very basics on the [grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.pdf) as a reference that I can come back to for a quick refresher.[^1]
+In an effort to reduce the amount of time that I spend searching the Internet for basic ggplot2 questions, I'm writing a brief overview of the very basics on the [grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.pdf){:target="blank"} as a reference that I can come back to for a quick refresher.[^1]
 
-[^1]: This post is meant for a person who has used ggplot2 in the past and is looking for a brief summary of the basics. The content in this post is based on chapter three of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would highly recommend reading in full if you have never used ggplot2 before.
+[^1]: This post is meant for a person who has used ggplot2 in the past and is looking for a brief summary of the basics. The content in this post is based on chapter three of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would highly recommend reading in full if you have never used ggplot2 before.
 
-**First things first:** The [RStudio ggplot2 Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-visualization.pdf){:target="blank"} most likely has everything you need to know, and the [Cookbook for R](http://www.cookbook-r.com/Graphs/) provides solutions to common problems. To be honest, you might just be here for these links.
+**First things first:** The [RStudio ggplot2 Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-visualization.pdf){:target="blank"} most likely has everything you need to know, and the [Cookbook for R](http://www.cookbook-r.com/Graphs/){:target="blank"} provides solutions to common problems. To be honest, you might just be here for these links.
 
-One last thing before we begin -- make sure that you have installed, updated, and loaded the [tidyverse](https://www.tidyverse.org) package. 
+One last thing before we begin -- make sure that you have installed, updated, and loaded the [tidyverse](https://www.tidyverse.org){:target="blank"} package. 
 
 {% highlight R %}
 ### install packages
@@ -55,7 +55,7 @@ Mappings define how your variables are mapped to visual properties on the graph.
 
 * `x`: the variable to map on the x-axis
 * `y`: the variable to map on the y-axis
-* `color/fill`: the [color](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) of the data on the graph
+* `color/fill`: the [color](http://sape.inf.usi.ch/quick-reference/ggplot2/colour){:target="blank"} of the data on the graph
 * `alpha`: the transparency of data on the graph (from 0, transparent to 1, opaque)
 * `shape`: the shape (numbers #1-20) of points on the graph
 * `size`: the size of points on the graphs (in mm)
@@ -67,7 +67,7 @@ Note: you can map additional variables to color, alpha, etc. in addition to x an
 Each type of geometric function has a different set of available mappings, which can be found in the help documentation (i.e. by typing `?geom_point`). See the end of this post for quick mapping references.
 
 #### Stat
-Stat, or statistical transformation, are used to transform the data before graphing it. Each geometric function has a default statistical transformation -- the most common example is bar graphs computing and displaying a count of a variable in the data.
+Stat, or statistical transformations, are used to transform the data before graphing it. Each geometric function has a default statistical transformation -- the most common example is bar graphs computing and displaying a count of a variable in the data.
 
 You may need to define a stat in these cases:
 * to override the default stat of a geometric function. For example, using `stat = "identity"` for `geom_bar` if you already have a frequency variable in the data.

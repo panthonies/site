@@ -9,30 +9,30 @@
 
   <meta property="og:title" content="Basic Data Exploration in R">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://localhost:4000/site/posts/data-exploration-r">
+  <meta property="og:url" content="http://localhost:4000/posts/data-exploration-r">
   <meta property="og:description" content="In which we examine some common practical examples of data exploration: observing variance and co-variance with histograms, boxplots, scatterplots, and heat maps.">
   <meta property="og:site_name" content="Anthony Pan">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:url" content="http://localhost:4000/site/posts/data-exploration-r">
+  <meta name="twitter:url" content="http://localhost:4000/posts/data-exploration-r">
   <meta name="twitter:title" content="Basic Data Exploration in R">
   <meta name="twitter:description" content="In which we examine some common practical examples of data exploration: observing variance and co-variance with histograms, boxplots, scatterplots, and heat maps.">
 
   
-    <meta property="og:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
-    <meta name="twitter:image" content="http://localhost:4000/site/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta property="og:image" content="http://localhost:4000/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="http://localhost:4000/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
   
 
-  <link href="http://localhost:4000/site/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+  <link href="http://localhost:4000/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
 
   
 
   
 
     
-      <link rel="icon" type="image/x-icon" href="/site/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
-      <link rel="apple-touch-icon" href="/site/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
-      <link rel="stylesheet" type="text/css" href="/site/assets/light-d68b82fbd03a428329c279f1b8abe8934ceaf1dd0b9c5eeeb2200125b07d2727.css">
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-a9fc964bae0eff58d5753446101afffa3ba3340308dfaeac900b709cb454a94f.css">
     
 
   
@@ -44,13 +44,13 @@
     <div class="grid grid-centered">
       <div class="grid-cell">
         <nav class="header-nav ">
-  <a href="/site/about" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <a href="/about" class="header-logo" title="Anthony Pan">Anthony Pan</a>
   <ul class="header-links">
     
       <li>
-        <a href="/site/about" title="About me">
+        <a href="/about" title="About me">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
-  <use href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/site/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
 </svg>
 
         </a>
@@ -71,9 +71,9 @@
     
     
       <li>
-        <a href="/site/" title="writing">
+        <a href="/posts/index" title="Blog">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
-  <use href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/site/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
 </svg>
 
         </a>
@@ -113,10 +113,10 @@
   <div class="article-list-tags">
     
       
-      <a href="/site/tag/academic" title="See all posts with tag 'academic'">academic</a>
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
     
       
-      <a href="/site/tag/r" title="See all posts with tag 'r'">r</a>
+      <a href="/tag/r" title="See all posts with tag 'r'">r</a>
     
   </div>
 </div>
@@ -141,8 +141,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">),</span><span class="w"> </span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.5</span><span class="p">)</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png">
-  <img src="/site/assets/documentation/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png" alt="Variance Histogram" class="zooming" data-rjs="/site/assets/documentation/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png">
+  <img src="/assets/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png" alt="Variance Histogram" class="zooming" data-rjs="/assets/02-16-variance-histogram-54f58d7f86cd85d670613d2b56a49040d814c4bf9553b71b21c1b7cecdae9792.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 2:</strong> Play with the binwidth of histograms to reveal different patterns in the data. In this example, we get a more accurate view of the distribution of carat.</p>
@@ -152,8 +152,8 @@
 </span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">),</span><span class="w"> </span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.1</span><span class="p">)</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png">
-  <img src="/site/assets/documentation/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png" alt="Variance Histogram Binwidth" class="zooming" data-rjs="/site/assets/documentation/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png">
+  <img src="/assets/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png" alt="Variance Histogram Binwidth" class="zooming" data-rjs="/assets/02-16-variance-histogram-binwidth-c30c9d4fb014a045ad65ed3792d3283e433d7a4a138c1c9d04b2536287db6b49.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 3:</strong> Play with the x-axis and y-axis limits to identify outliers. In this example, there are some very high values of the “x” variable, a measure of a diamond’s dimensions, which could indicate data entry errors.</p>
@@ -170,8 +170,8 @@
 </span><span class="n">diamonds2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diamonds</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">mutate</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png">
-  <img src="/site/assets/documentation/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png" alt="Variance Histogram Outliers" class="zooming" data-rjs="/site/assets/documentation/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png">
+  <img src="/assets/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png" alt="Variance Histogram Outliers" class="zooming" data-rjs="/assets/02-16-variance-outliers-e7038e8abadfdeed03c43fa58122c7dbfd8b9568f5f43c3033cfb9d7b1879516.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <h2 id="when-investigating-covariance-between-two-variables-ask">When investigating covariance between two variables, ask:</h2>
@@ -188,8 +188,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_freqpoly</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png">
-  <img src="/site/assets/documentation/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png" alt="Covariance Freqpoly Density" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png">
+  <img src="/assets/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png" alt="Covariance Freqpoly Density" class="zooming" data-rjs="/assets/02-16-covariance-freqpoly-density-5261f135f1589589d7a0e0810c18027d3aee2443d8c272a7669b98d7d89c16c1.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 2:</strong> Another way to visualize the relationship is to create a boxplot, order the variables, and flip the axes. This is illustrated with the relationship between car class and highway miles per gallon via the mpg dataset.</p>
@@ -198,8 +198,8 @@
   </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reorder</span><span class="p">(</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">FUN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">median</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">coord_flip</span><span class="p">()</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png">
-  <img src="/site/assets/documentation/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png" alt="Covariance Boxplot" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png">
+  <img src="/assets/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png" alt="Covariance Boxplot" class="zooming" data-rjs="/assets/02-16-covariance-boxplot-9da51cda4376ee8d1326a7ec295c1d36f58f72bdd1dc86339e29660c87cb623b.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 3:</strong> In cases where there are a lot of outliers, boxplots may not be as useful. Instead, we can use a letter value plot. Here we have a good view of the density of observations when relating cut and price of diamonds.</p>
@@ -207,8 +207,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_lv</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png">
-  <img src="/site/assets/documentation/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png" alt="Covariance LV Plot" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png">
+  <img src="/assets/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png" alt="Covariance LV Plot" class="zooming" data-rjs="/assets/02-16-covariance-lvplot-927aec788ccd51658d2d458245f3ab7422cb8dd712e6183ac0e34c5bdd88434e.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 4:</strong> The violin plot is another great way to compare density distributions among different categories. This is a different way to represent the data from the previous graph.</p>
@@ -216,8 +216,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_violin</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png">
-  <img src="/site/assets/documentation/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png" alt="Covariance Violin" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png">
+  <img src="/assets/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png" alt="Covariance Violin" class="zooming" data-rjs="/assets/02-16-covariance-violin-d0c2585a582671b66c60fe5920f0996ecb6b32ea1a08704201e5012714d81599.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <h3 id="case-2-two-categorical-variables">Case 2: Two Categorical Variables</h3>
@@ -227,8 +227,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_count</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png">
-  <img src="/site/assets/documentation/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png" alt="Covariance Count" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png">
+  <img src="/assets/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png" alt="Covariance Count" class="zooming" data-rjs="/assets/02-16-covariance-count-7b1b9b40fbc4bf07dc4d476113dffcb5d0f40177688c8cc6ea83fe14eaec787f.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 2:</strong> A heat map can also come in handy when comparing density of observations between two categorical variables. Again, we can see the distribution of observations between diamond cut and color.</p>
@@ -238,8 +238,8 @@
   </span><span class="n">ggplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
     </span><span class="n">geom_tile</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png">
-  <img src="/site/assets/documentation/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png" alt="Covariance Tile" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png">
+  <img src="/assets/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png" alt="Covariance Tile" class="zooming" data-rjs="/assets/02-16-covariance-tile-7c531cd8eed2905b2fe52e325ed29e1204621b8727a526efb1d58155304952b0.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <h3 id="case-3-two-continuous-variables">Case 3: Two Continuous Variables</h3>
@@ -249,8 +249,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">100</span><span class="p">)</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png">
-  <img src="/site/assets/documentation/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png" alt="Covariance Scatter" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png">
+  <img src="/assets/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png" alt="Covariance Scatter" class="zooming" data-rjs="/assets/02-16-covariance-scatter-37242cf24efa9a15a0213583bb2c8701d63696acb1d96a466511435f954b2362.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 2:</strong> We can also bin variables in two dimensions, using the fill color to represent frequency of observations.</p>
@@ -259,8 +259,8 @@
 </span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_hex</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png">
-  <img src="/site/assets/documentation/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png" alt="Covariance Hex" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png" data-zooming-width="2462" data-zooming-height="1762" />
+<p><a href="/assets/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png">
+  <img src="/assets/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png" alt="Covariance Hex" class="zooming" data-rjs="/assets/02-16-covariance-hex-a30e3c0725632533a4d12e94ded61f44f31700b76cd34d21bd9bf213e081cf61.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 3:</strong> Another option is to bin only one continuous variables so that it behaves like a categorical variable. Here, we bin carat.</p>
@@ -268,8 +268,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut_width</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="p">)))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png">
-  <img src="/site/assets/documentation/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png" alt="Covariance Cutwidth" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png">
+  <img src="/assets/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png" alt="Covariance Cutwidth" class="zooming" data-rjs="/assets/02-16-covariance-cutwidth-b6bba98e1b7a89e3ecb5abe87084eea79cf24dc74f2c6e57f6ff59b49f829b19.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 4:</strong> This is the same graph, except the width of the boxplot is proportional to the number of points.</p>
@@ -277,8 +277,8 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut_width</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="m">0.1</span><span class="p">)),</span><span class="w"> </span><span class="n">varwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png">
-  <img src="/site/assets/documentation/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png" alt="Covariance Varwidth" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png">
+  <img src="/assets/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png" alt="Covariance Varwidth" class="zooming" data-rjs="/assets/02-16-covariance-cutwidth-varwidth-b20475457ced45eb42abf204f1b98febf885526dbac213b1aeca50f7cfc8c8a9.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <p><strong>Example 5:</strong> This is again the same graph, but each box now contains approximately the same number of points.</p>
@@ -286,30 +286,32 @@
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smaller</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
   </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut_number</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">)))</span></code></pre></figure>
 
-<p><a href="/site/assets/documentation/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png">
-  <img src="/site/assets/documentation/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png" alt="Covariance Cutnumber" class="zooming" data-rjs="/site/assets/documentation/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png" data-zooming-width="2462" data-zooming-height="1058" />
+<p><a href="/assets/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png">
+  <img src="/assets/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png" alt="Covariance Cutnumber" class="zooming" data-rjs="/assets/02-16-covariance-cutnumber-bb997476d2ddf2359efa149d60d690a47b681110fd9e6e779b55c3417448f542.png" data-zooming-width="" data-zooming-height="" />
 </a></p>
 
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of <a href="https://r4ds.had.co.nz/index.html" target="blank">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund. <a href="#fnref:1" class="reversefootnote">⤴</a></p>
     </li>
   </ol>
 </div>
 
           </div>
+          <!--
           <div class="article-share">
             
             
-            <a href="https://twitter.com/home?status=Basic+Data+Exploration+in+R%20-%20http://localhost:4000/site/posts/data-exploration-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+            <a href="https://twitter.com/home?status=Basic+Data+Exploration+in+R%20-%20http://localhost:4000/posts/data-exploration-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
               <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
             </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/site/posts/data-exploration-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/data-exploration-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
               <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
             </a>
           </div>
-          <a href="javascript:history.back()">Back</a>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
           
         </article>
         <footer class="footer ">
@@ -325,17 +327,59 @@
     </div>
   </main>
   
-
-<script src="/site/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
-
-
-  <script src="/site/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
-
-
-
-
-<script src="/site/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
 
 
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
