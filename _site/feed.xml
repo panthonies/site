@@ -7,6 +7,38 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Linear Regression</title>
+        <description>Linear Regression is a simple approach for predicting a quantitative response, and is the foundation of many other types of statistical learning. It is especially convenient for establishing a the strength of relationships between specific variables to an output, and is easily interpretable.</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/linear-regression</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/linear-regression</guid>
+      </item>
+    
+      <item>
+        <title>ideas</title>
+        <description></description>
+        <pubDate>Tue, 21 Apr 2020 14:42:08 -0400</pubDate>
+        <link>http://localhost:4000/posts/ideas</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/ideas</guid>
+      </item>
+    
+      <item>
+        <title>An Introduction to Statistical Learning and Methods</title>
+        <description></description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/intro-statistical-learning</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/intro-statistical-learning</guid>
+      </item>
+    
+      <item>
+        <title>Getting Started with VS Code</title>
+        <description></description>
+        <pubDate>Wed, 18 Mar 2020 17:18:29 -0400</pubDate>
+        <link>http://localhost:4000/posts/getting-started-with-vscode</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/getting-started-with-vscode</guid>
+      </item>
+    
+      <item>
         <title>Five things I learned from my first job out of college</title>
         <description>I worked at a large technology company in a technical, customer-facing role for three years after I graduated from college. Here are the most important lessons I've taken from my experience.</description>
         <pubDate>Fri, 13 Mar 2020 00:00:00 -0400</pubDate>
@@ -52,38 +84,6 @@
         <pubDate>Fri, 28 Feb 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/posts/modeling-r</link>
         <guid isPermaLink="true">http://localhost:4000/posts/modeling-r</guid>
-      </item>
-    
-      <item>
-        <title>Programming in R: Iteration</title>
-        <description>In which we explore the basics of iteration through the lenses of functional and imperative programming by examining for loops, map functions, and more.</description>
-        <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/programming-r-2</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/programming-r-2</guid>
-      </item>
-    
-      <item>
-        <title>Programming in R: Pipes, Functions, and Vectors</title>
-        <description>In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.</description>
-        <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/programming-r-1</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/programming-r-1</guid>
-      </item>
-    
-      <item>
-        <title>Data Wrangling in R: Dates and Times</title>
-        <description>In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.</description>
-        <pubDate>Sat, 22 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/data-wrangling-date-time-r</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/data-wrangling-date-time-r</guid>
-      </item>
-    
-      <item>
-        <title>Data Wrangling in R: Factors</title>
-        <description>In which we review some basic information about factors, a type of data used work with categorical variables.</description>
-        <pubDate>Fri, 21 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/data-wrangling-factors-r</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/data-wrangling-factors-r</guid>
       </item>
     
   </channel>

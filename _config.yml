@@ -13,6 +13,7 @@ pagination:
 
 # Optional settings
 
+show_drafts: false # Set to false to hide posts in the drafts folder
 about_enabled: true # Change to true if you wish to show an icon in the navigation that redirects to the about page
 discus_identifier:  # Add your Disqus identifier
 ga_analytics: UA-160038909-1 # Add your GA Tracking Id

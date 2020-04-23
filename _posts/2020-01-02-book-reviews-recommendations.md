@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Book Reviews!"
-description: ""
+description: "No spoilers."
 thumb_image: 
 tags: [personal, books]
 ---
@@ -11,8 +11,9 @@ tags: [personal, books]
 ### Table of Contents 
 
 <details open>
-	<summary>Books I read in 2020:</summary><p markdown="block">
+	<summary style="cursor: pointer">Books I read in 2020:</summary><p markdown="block">
 
+* [*Why We're Polarized* -- Ezra Klein](#why-we're-polarized)
 * [*The Power* -- Naomi Alderman](#the-power)
 * <span style="background-color: #ffefc7">[*Winners Take All* -- Anand Giridharadas](#winners-take-all)</span>
 * [*The Poppy War* -- R. F. Kuang](#the-poppy-war)
@@ -24,13 +25,13 @@ tags: [personal, books]
 </p></details>
 
 <details>
-	<summary>Books I read in 2019 <small>[reviews in progress]</small>:</summary><p markdown="block">
+	<summary style="cursor: pointer">Books I read in 2019:</summary><p markdown="block">
 
 * <span style="background-color: #ffefc7">[*Catch and Kill* -- Ronan Farrow](#catch-and-kill)</span>
 * [*The Black Swan* -- Nassim Nicholas Taleb](#the-black-swan)
 * [*The Truth About Keeping Secrets* -- Savannah Brown](#the-truth-about-keeping-secrets)
 * [*Eyes to the Wind* -- Ady Barkan](#eyes-to-the-wind)
-* [*I Can't Make This Up* -- Kevin Hart](#i-can't-make-this-up)
+* [*I Can't Make This Up* -- Kevin Hart](#i-cant-make-this-up)
 * [*The Girl With All The Gifts* -- M. R. Carey](#the-girl-with-all-the-gifts)
 * <span style="background-color: #ffefc7">[*Bad Blood* -- John Carreyrou](#bad-blood)</span>
 * [*Becoming* -- Michelle Obama](#becoming)
@@ -40,6 +41,35 @@ tags: [personal, books]
 
 
 <!-- BEGIN CONTENT -->
+
+## Why We're Polarized
+###### **Ezra Klein (2020)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/52098718-why-we-re-polarized" target="_blank">
+		<img src="{% asset 'why-were-polarized.jpg' @path %}" alt="Why We're Polarized" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Politics*
+
+<span style="background-color: #d7e8f7">**TL;DR:** In an interesting analysis of the current moment in American history and politics, Vox co-founder Ezra Klein first builds a framework to understand systems of polarization before examining those systems at work in recent history.
+
+Since I think Ezra Klein is a thoughtful person and I also enjoy listening to his podcast, I decided to pick up his self-recorded audiobook of *Why We're Polarized* as a long-form podcast of sorts about polarization.
+
+In the first half of the book, Klein builds up a theory of polarization that references interesting psychology and sociology research, before delving into the history of how the political system of the United States has become more polarized in the past fifty years. Much of what he goes over is insightful and makes a lot of sense in the current political moment; a lot of it is also information that I've already been exposed to through the media that I regularly consume.
+
+A particularly interesting conclusion explored in the book is that our political identities have become mega-identites that consist of a compilation of our other identities (i.e. left: coffee-drinking, coastal dwelling, atheist, pro-choice, pro-marijuana legalization, etc.), and when an individual identity is threatened, it threatens our broader political identity. Instead of making a judgment about whether polarization is good or bad, Klein argues that it is here to stay and we should adapt our systems to better function under political polarization -- ideas like eliminating the filibuster and the electoral college, ranked choice voting, and being mindful of the identities that we inhabit. 
+
+Quick comment about the actual recording: Ezra Klein speaks quickly, which means this is hard to listen to on 1.5x or 2x speed -- I ended up listening at the actual pace, but it's a relatively short book and easy listen so I didn't mind much. It did take a while to get used to him strongly emphasizing parts of sentences to get his point across (moreso than other narrators), and chuckling to himself when reading something particularly surprising.
+
+Overall, I thought this was an insightful book that describes the current political moment thoughtfully and accurately. 
+
+
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
 
 ## The Power
 ###### **Naomi Alderman (2016)**
@@ -60,7 +90,7 @@ There are scenes of women standing up for themselves with their newfound power t
 
 I finished the book with a strange feeling of unresolved anxiety; the entire story builds up to a climax, but the climax is implied and never actually shown. The last couple of chapters are short and sparsely detailed, and there is a lot left open to interpretation (so much so that I went back and re-read the last couple of chapters immediately after finishing). I would have liked more details at the the end, and perhaps more detail about the history that was taught five-thousand years afterwards, but overall, this was an enjoyable and engrossing read. 
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -85,7 +115,7 @@ Young people are flocking to jobs in consulting, technology, and finance in orde
 
 Check out [this longer post I wrote](winners-take-all) for a summary of the book's main argument. I've included this as a recommended book because its ideas resonate with me, but to be honest, I'd recommend his speaking engagements or appearances on podcasts as a more concise, easier to digest medium of absorbing this information.
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -114,7 +144,7 @@ The prose is not the most beautiful that I've read, and there are so many charac
 
 That being said, I found the story completely addicting to read. I could hardly put it down, and I bought the second book immediately after finishing the first.
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -137,7 +167,7 @@ Both of these novels in this series don't shy away from the atrocities committed
 
 Kuang does a great job of pivoting the story toward a broader scope than the first book. The shortcomings I mentioned in my review of The Poppy War -- the prose and characterization -- are both improved upon in this book. I'm looking forward to reading the conclusion of the trilogy later this year, which I'm sure will raise the stakes even higher. The series' historical perspective is fascinating, and Kuang does a great job creating tense situations, high stakes, and a war story that is definitely worth following.
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -164,7 +194,7 @@ Misaki is such a strong character, and her story arc was immensely compelling an
 It only took me a couple of days to read The Sword of Kaigen because I just could not put it down. Definitely one of my favorite fantasy books of all time!
 
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -190,7 +220,7 @@ We follow Joan, a middle-schooler who has been hiding the power to control metal
 I did enjoy reading them and discovering interesting details about the world, but the story wasn't as fleshed out or mature as The Sword of Kaigen. If you're not into YA, then I wouldn't recommend reading these unless you really want to get a deeper dive into the world in The Sword of Kaigen. While I liked reading the Theonite series, the characters and story are only a fraction as compelling as M. L. Wang's later work in my opinion.
 
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -213,7 +243,7 @@ I'm not the biggest fan of self-help books in general. I tend to think that: 1. 
 
 That being said, I think this book is fine. It's a very light read, and if you're in a specific demographic -- young tech-adjacent person living in a big city and looking for an introduction to meditation -- I think you'll enjoy it. Otherwise, there aren't many lasting lessons that I took away from this book.
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
@@ -238,8 +268,204 @@ Plank argues for the gendered expectations holding both men and women back are b
 
 Listening to this book got me thinking about the impact that traditional masculinity has had on my own life. Would recommend for anyone interested in thinking critically about masculinity!
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
+---
+
+## Catch and Kill
+###### **Ronan Farrow (2019)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/46650277-catch-and-kill" target="_blank">
+		<img src="{% asset 'catch-and-kill.jpg' @path %}" alt="Catch and Kill" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, True Crime, Politics*
+
+<span style="background-color: #d7e8f7">**TL;DR:** Ronan Farrow recounts a disturbing tale in which his an investigation into the sexual misconduct of film producer Harvey Weinstein produces a stunning amount of evidence and attempts to conceal his crimes.
+
+In October 2017, two stories broke about Harvey Weinstein's sexual misconduct that catalyzed the #MeToo movement and changed the landscape of sexual harrassment in the world. The first was a [story by Jodi Cantor and Megan Twohey at the New York Times](https://www.nytimes.com/2017/10/05/us/harvey-weinstein-harassment-allegations.html), and the second was a [story by Ronan Farrow at The New Yorker](https://www.newyorker.com/news/news-desk/from-aggressive-overtures-to-sexual-assault-harvey-weinsteins-accusers-tell-their-stories).
+
+Ronan Farrow wrote Catch and Kill about his experience reporting on the story, and Jodi Cantor and Megan Twohey wrote [She Said](https://www.goodreads.com/book/show/44767249-she-said) about their own experience. From what I've read, She Said focuses more on the stories of women, the grueling process of being a reporter, and the importance of supporting journalists, while Catch and Kill focuses more on the danger of corporate influence on independent journalism. 
+
+This was a captivating read that really emphasizes the overwhelming amount of evidence of wrongdoing that surfaced against Harvey Weinstein, and the great lengths that those in power went to in order to conceal that evidence and prevent Farrow from publishing his story. Weinstein and his allies hired private investigators to track Farrow's movements, threatened women who talked with reporters, and made backhanded deals with large corporations while those around him turned a blind eye to his misconduct.
+
+Truly fascinating, compelling, and horrifying to read.
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## The Black Swan
+###### **Nassim Nicholas Taleb (2007)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/242472.The_Black_Swan" target="_blank">
+		<img src="{% asset 'the-black-swan.jpg' @path %}" alt="The Black Swan" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Economics, Business, Philosophy*
+
+<span style="background-color: #d7e8f7">**TL;DR:** This frustratingly dense and enlightening book centers around black swan events -- "improbable" events that "experts" cannot predict, but shape the world as we know it.
+
+This book explores our blindness to large, random deviations from the norm, which Taleb coins as "Black Swan" events. Let me just start by saying that it's not easy to read -- there are a lot of complex ideas, stories, metaphors, and references that are structured in a way that's not obvious upon first reading. Some might also object to his classification of experts who tend to not be actual experts (economists, traders, psychiatrists, college admissions officers, court judges, political scientists).
+
+However, this book creates a very intelligent and compelling framework for understanding uncertainty and the types of reasoning that lead us toward misunderstanding the world's largest events. I'm not going to attempt to summarize Taleb's full argument, but the basic structure of the book revolves around understanding the limits and mistakes around black swan events, prediction, and uncertainty.
+
+This is a book that deserves to be read, ruminated on, and re-read. Although this book is challenging in many ways, it convincingly articulates some of my own hesitancy about trusting predictions, contains a lot of smart ideas, and was overall rewarding to read. 
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## The Truth About Keeping Secrets
+###### **Savannah Brown (2019)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/39091679-the-truth-about-keeping-secrets" target="_blank">
+		<img src="{% asset 'ttaks.jpg' @path %}" alt="the-truth-about-keeping-secrets" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Young Adult Fiction, Mystery*
+
+<span style="background-color: #d7e8f7">**TL;DR:** A high school girl navigates life after losing her dad in a car crash, struggling to cope with grief, angst, and a nagging sense that her dad's death was not an accident. This is a well-written book with a satisfying story arc and climax.
+
+After stumbling upon a [deliciously existential video](https://www.youtube.com/watch?v=hi97EGoLmGE) from Savannah Brown on YouTube, I decided that I wanted to read more of what she has written. I listened to The Truth About Keeping Secrets as an audiobook, narrated by the author. 
+
+This is a young adult novel about about a high school girl named Sydney dealing with the grief and mystery of her father's unexpected death. Sydney is insecure and angsty, and has a feeling that her dad's death was not a simple accident. 
+
+There are a whole cast of typical high school characters -- the Most Popular Girl, the Rich Sporty Jock, the Childhood Friend, the Bully -- but these relationships and their struggles felt surprisingly authentic and enjoyable to read. The story is filled with tension that kept me guessing at what was going to happen, and it paid off with a dramatic climax.
+
+The prose was great (it makes sense that Savannah has a background in poetry), and the book was nice to listen to. I liked it!
+
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## Eyes to the Wind
+###### **Ady Barkan (2019)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/43822685-eyes-to-the-wind" target="_blank">
+		<img src="{% asset 'eyes-to-the-wind.jpg' @path %}" alt="Eyes to the Wind" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Memoir*
+
+<span style="background-color: #d7e8f7">**TL;DR:** Ady Barkan writes an inspiring story about his life as a lawyer and progressive activist, as well as his diagnosis with ALS and how living with his condition has shaped his activism.
+
+I don't remember how I first heard about Ady -- maybe it was through his viral video confronting then-Senator Jeff Flake on an airplane, or his appearance on a podcast that I listen to, or his activism for Medicare for All -- but his story was moving enough for me to read his memoir when it came out in late 2019. 
+
+Ady Barkan typed the beginning of his book with his own hands, but finished the book with the help of an assistant due to muscle atrophy from ALS. His determination to keep fighting for the issues he believes in in spite of ALS is inspiring to read.
+
+The content itself was more dense than I was expecting. Ady Barkan spends a significant portion of the book detailing his work as a lawyer and the slow pace at which progressive policies actually move forward. He then talks about the struggle of being diagnosed with ALS, how it reinforced his commitment to the issues that he has cared about for his entire life, and why he continues to fight for those causes.
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## I Can't Make This Up
+###### **Kevin Hart (2017)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/33347428-i-can-t-make-this-up" target="_blank">
+		<img src="{% asset 'i-cant-make-this-up.jpg' @path %}" alt="I can't make this up" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Memoir, Comedy*
+
+<span style="background-color: #d7e8f7">**TL;DR:** Kevin Hart is a funny dude who has worked very hard to get to where he is, and in this memoir, he shares life lessons and tells stories about his rough upbringing, personal troubles, and career trajectory with an entertaining honesty.
+
+I listened to this as an audiobook, and enjoyed Kevin Hart as a narrator. 
+
+He tells stories about his strict mother, his childhood dream of becoming a Nike Rep, the struggle of working his way up the comedy world, along with other stories that shaped his growth. There were funny and inspiring moments as well as difficult and disappointing moments, but they're held together by Kevin Hart's positive attitude and ability to shrug off any situation. 
+
+Would recommend if you like comedy, or if you just want an laid-back listen about a guy who's worked hard for his success.
+
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## The Girl With All the Gifts
+###### **M. R. Carey (2014)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/17235026-the-girl-with-all-the-gifts" target="_blank">
+		<img src="{% asset 'the-girl-with-all-the-gifts.jpg' @path %}" alt="The girl with all the gifts" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Science Fiction, Horror, Dystopia*
+
+<span style="background-color: #d7e8f7">**TL;DR:** In this gripping novel, Miss Justineau teaches a class of unusual students under draconian restrictions, but develops a special relationship with an intelligent girl named Melanie before both of their worlds are turned upside-down.
+
+The best way to experience this book is to go in blind, so if you're interested in reading a thrilling dystopian story that is both relationship-driven and action-packed, then this book is for you. Avoid any spoilers!
+
+Melanie, a brilliant and naive child, is our protagonist who loves her favorite teacher, Miss Justineau, more than anything else in her world. However, there are signs that not everything is as it should be from the very beginning: Melanie and her classmates are strapped into wheelchairs, strictly monitored, and kept in isolated cells at night. 
+
+Then several big things happen, and we're thrust into a journey of survival and science. The first act of this book is brilliant, but in my opinion it tapers off into a less satisfactory middle before ending with a bang.
+
+This is an original take on a traditional dystopian story that I enjoyed reading. 
+
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## Bad Blood
+###### **John Carreyrou (2018)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/37976541-bad-blood" target="_blank">
+		<img src="{% asset 'bad-blood.jpg' @path %}" alt="Bad Blood" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Business, Crime*
+
+<span style="background-color: #d7e8f7">**TL;DR:** One of the best non-fiction books I've read -- reporter John Carreyrou documents the rise and fall of Elizabeth Holmes and her blood testing company Theranos.
+
+This book is truly and utterly engaging from start to finish.
+
+Chronicling the rise and fall of the Silicon Valley startup Theranos, reporter John Carreyrou takes us on a true journey of almost unbelievable proportions.
+
+We follow along as CEO Elizabeth Holmes drops out of college and grows her company to be worth billions of dollars based on a technology that never worked. Along the way, she is backed by some of the most powerful and wealthy people in the world — including Rupert Murdoch, the Waltons (founders of Walmart), and former Secretaries of State Henry Kissinger and George Schultz— and is recognized by Forbes as the world’s youngest self-made female billionaire before falling from grace in 2015.
+
+I listened to this as an audiobook, and was captivated for the entire ride. 
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
+
+## Becoming
+###### **Michelle Obama (2018)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/38746485-becoming" target="_blank">
+		<img src="{% asset 'becoming.jpg' @path %}" alt="becoming" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Nonfiction, Memoir*
+
+<span style="background-color: #d7e8f7">**TL;DR:** In *Becoming*, Michelle Obama recounts her personal story with the intelligence and grace that we've come to love and respect from her.
+
+Of course, you have heard of this book. It’s been on signs at airports, all over social media, and in front of every bookstore for months.
+
+Michelle Obama is a fantastic role model, a dedicated public servant, and a caring mother — and we’re able to see this clearly while following her thought process throughout the book.
+
+From a childhood on the South Side of Chicago, to Stanford University and Harvard Law School, to her professional career and time in the White House, Mrs. Obama tells her story with honesty and openness that bespeaks her character.
+
+I find her story so compelling and inspiring because of the responsibility that she carries as one of the most powerful, well-known and widely-respected black woman in the United States, and the grace she holds while carrying that responsibility. Through all of her experience and success, Michelle Obama still writes with humility in Becoming.
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 {% comment %} <!--Add a new book review:
 
@@ -272,7 +498,7 @@ Listening to this book got me thinking about the impact that traditional masculi
 ... [sample text] ...<br>
 ... [sample text] ...<br>
 
-<span class="backbutton"><a href="#top">Return to top ⤴</a></span>
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
 
 ---
 
