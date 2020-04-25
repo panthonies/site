@@ -15,7 +15,7 @@ gem "uglifier"
 gem "rouge"
 gem 'liquid-c'
 gem "jekyll-include-cache"
-group :jekyll_plugins do
+#group :jekyll_plugins do
   # other plugins here
-  gem 'jekyll-stickyposts'
-end
+#  gem 'jekyll-stickyposts'
+#end

@@ -95,4 +95,4 @@ plugins:
 permalink: posts/:slug
 kramdown:
   footnote_backlink: "⤴"
-# incremental: true
+incremental: false

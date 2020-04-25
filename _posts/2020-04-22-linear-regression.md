@@ -198,6 +198,7 @@ In other words, given a value for K and a prediction point $$x_0$$, KNN regressi
 - KNN Regression suffers from the curse of dimensionality:
 	- more predictors (dimensions) means neighbors are farther from each other
 	- KNN performs poorly with lots of predictors
+	- in higher dimensions, KNN often performs worse than linear regression
 
 
 ---
