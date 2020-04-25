@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "An Introduction to Statistical Learning and Methods"
+title: "An Introduction to Statistical Learning"
 description: ""
 thumb_image: 
 tags: [academic]

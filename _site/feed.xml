@@ -7,6 +7,14 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Resampling Methods</title>
+        <description>.</description>
+        <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/resampling-methods</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/resampling-methods</guid>
+      </item>
+    
+      <item>
         <title>Classification</title>
         <description>Classification models are used to predict a categorical response. </description>
         <pubDate>Fri, 24 Apr 2020 00:00:00 -0400</pubDate>
@@ -76,14 +84,6 @@
         <pubDate>Fri, 28 Feb 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/posts/modeling-r</link>
         <guid isPermaLink="true">http://localhost:4000/posts/modeling-r</guid>
-      </item>
-    
-      <item>
-        <title>Programming in R: Iteration</title>
-        <description>In which we explore the basics of iteration through the lenses of functional and imperative programming by examining for loops, map functions, and more.</description>
-        <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/programming-r-2</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/programming-r-2</guid>
       </item>
     
   </channel>
