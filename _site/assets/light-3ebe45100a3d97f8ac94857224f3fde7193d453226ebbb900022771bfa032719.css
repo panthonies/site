@@ -797,6 +797,8 @@ img {
     display: block;
     margin-top: -4px;
     margin-bottom: 25px; }
+  .article-content .hi {
+    margin-bottom: 0px; }
   .article-content h2,
   .article-content h3,
   .article-content h4,
