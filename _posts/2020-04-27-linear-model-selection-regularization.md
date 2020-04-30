@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Linear Model Selection and Regularization"
-description: ""
+description: "An alternative fitting method to least squares, such as subset selection, shrinkage (ridge regression, lasso), and dimension reduction techniques (principle components analysis, partial least squares) can help prediction accuracy and model interpretability."
 thumb_image: 
 tags: [academic]
 ---
@@ -29,10 +29,14 @@ tags: [academic]
 
 ### I. Overview
 
-An alternative fitting method to least squares can help prediction accuracy and model interpretability.
+Why use an alternative fitting model to least squares?
+
 - Prediction Accuracy
   - If $$n$$ is not much larger than $$p$$, then least squares can have a lot of variability
-  - If $$p < n$$, then there is no longer a unique least squares coefficient estimate, and we must constrain or shrink the coefficients.
+  - If $$p < n$$, then there is no longer a unique least squares coefficient estimate, and we must constrain or shrink the coefficients
+
+- Model Interpretability
+  - Remove irrelevant variables with feature/variable selection
 
 <span class="boxheader">Alternatives to Least Squares</span>
 

@@ -7,19 +7,27 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Moving Beyond Linearity</title>
+        <description>Linear models can have significant limitations in terms of predictive power, because the limear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships.</description>
+        <pubDate>Tue, 28 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/moving-beyond-linearity</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/moving-beyond-linearity</guid>
+      </item>
+    
+      <item>
+        <title>Linear Model Selection and Regularization</title>
+        <description>An alternative fitting method to least squares, such as subset selection, shrinkage (ridge regression, lasso), and dimension reduction techniques (principle components analysis, partial least squares) can help prediction accuracy and model interpretability.</description>
+        <pubDate>Mon, 27 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/linear-model-selection-regularization</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/linear-model-selection-regularization</guid>
+      </item>
+    
+      <item>
         <title>Resampling Methods</title>
         <description>Resampling methods provide ways tools for model assessment (evaulate a model's performance) and model selection (optimally adjust model flexibility).</description>
         <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
         <link>http://localhost:4000/posts/resampling-methods</link>
         <guid isPermaLink="true">http://localhost:4000/posts/resampling-methods</guid>
-      </item>
-    
-      <item>
-        <title>Linear Model Selection and Regularization</title>
-        <description></description>
-        <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/posts/linear-model-selection-regularization</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/linear-model-selection-regularization</guid>
       </item>
     
       <item>
@@ -76,14 +84,6 @@
         <pubDate>Wed, 04 Mar 2020 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/posts/r-markdown</link>
         <guid isPermaLink="true">http://localhost:4000/posts/r-markdown</guid>
-      </item>
-    
-      <item>
-        <title>Notes on 'Winners Take All' by Anand Giridharadas</title>
-        <description>Winners Take All: The Elite Charade of Changing the World was published in 2018 and investigates how the global elite's efforts to change the world preserve the status quo and obscure their role in causing the problems they later seek to solve. In this post, I attempt to summarize his core argument.</description>
-        <pubDate>Tue, 03 Mar 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/winners-take-all</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/winners-take-all</guid>
       </item>
     
   </channel>
