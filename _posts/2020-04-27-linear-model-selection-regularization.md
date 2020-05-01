@@ -199,7 +199,7 @@ Then,
 - If $$g$$ is a **double-exponential (Laplace) distribution** with mean 0 and scale that is a function of $$\lambda$$, then the posterior mode for $$\beta$$ is given by the **lasso solution**.
   - However, note that the lasso solution is not the posterior mean, and the posterior mean doesn't yield a sparse coefficient vector.
 
-A visualization of the gaussian and double-exponentia distributions:[^3]
+A visualization of the gaussian and double-exponential distributions:[^3]
 
 <center>{% include image.html path="documentation/04-27-lasso-ridge-3.png"
                       path-detail="documentation/04-27-lasso-ridge-3.png"
