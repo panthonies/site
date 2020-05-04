@@ -2,19 +2,24 @@
 
 blog_theme: light # Or use dark
 name: Anthony Pan
-paginate: 25
-url: "localhost:4000"
-baseurl: "/site"
+url: "anthonypan.com"
+baseurl: ""
 
+pagination:
+  enabled: true
+  per_page: 20
+  permalink: /posts/page/:num/
+  indexpage: 'posts.html'
 
 # Optional settings
 
+show_drafts: false # Set to false to hide posts in the drafts folder
 about_enabled: true # Change to true if you wish to show an icon in the navigation that redirects to the about page
 discus_identifier:  # Add your Disqus identifier
-ga_analytics: # Add your GA Tracking Id
+ga_analytics: UA-160038909-1 # Add your GA Tracking Id
 local_fonts: false # Change to true if you wish to use local fonts
 rss_enabled: false # Change to false if not
-scrollappear_enabled: true # Change to false to disable
+scrollappear_enabled: false # Change to false to disable
 tag_nav_enabled: false # Change to true if you wish to show an additional 'tag-list' navigation below the header
 theme_toggle: false # Change to true if you wish to show an icon in the navigation for dynamic theme toggling
 social:
@@ -54,6 +59,8 @@ assets:
     - _assets/javascripts
     - _assets/stylesheets
     - _assets/yarn
+    - _assets/images/documentation
+    - _assets/images/books
     - pdf
 collections:
   my_tags:
@@ -77,12 +84,15 @@ exclude:
   - README.md
   - vendor/
   - yarn.lock
+  - .jekyll-cache
 plugins:
   - jekyll-assets
-  - jekyll-paginate
+  - jekyll-paginate-v2
   - jekyll-sitemap
   - jemoji
   - rouge
-  - jekyll_inline_highlight
-paginate_path: /posts/page/:num/
+  - jekyll-include-cache
 permalink: posts/:slug
+kramdown:
+  footnote_backlink: "⤴"
+incremental: false

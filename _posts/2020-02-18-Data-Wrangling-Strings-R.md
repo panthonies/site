@@ -14,48 +14,48 @@ The [RStudio String Manipulation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-she
 
 ### String Basics
 
-* {% ihighlight R %}str_length(){% endihighlight %} returns the number of characters in a string 
-* {% ihighlight R %}str_replace_na(){% endihighlight %} turns missing values (NA) into "NA" 
-* {% ihighlight R %}str_c(..., sep = ","){% endihighlight %} combines two or more strings with a specified separator
-* {% ihighlight R %}str_c(..., collapse = ", "{% endihighlight %} collapses a vector of strings into a single string with a specified separator
-* {% ihighlight R %}str_sub(){% endihighlight %} extracts or modifies subsets of a string by character position
-* {% ihighlight R %}str_sort(){% endihighlight %} sorts strings; specify locale if necessary
-* {% ihighlight R %}str_to_lower(), str_to_upper(), str_to_title(){% endihighlight %} changes cases; specify locale if necessary
+* `str_length()` returns the number of characters in a string 
+* `str_replace_na()` turns missing values (NA) into "NA" 
+* `str_c(..., sep = ",")` combines two or more strings with a specified separator
+* `str_c(..., collapse = ", "` collapses a vector of strings into a single string with a specified separator
+* `str_sub()` extracts or modifies subsets of a string by character position
+* `str_sort()` sorts strings; specify locale if necessary
+* `str_to_lower(), str_to_upper(), str_to_title()` changes cases; specify locale if necessary
 
 ## Regular Expressions - Basic Syntax
 ---
 #### Anchors
-* {% ihighlight R %}^{% endihighlight %} matches the start of a string
-* {% ihighlight R %}${% endihighlight %} matches the end of a string
+* `^` matches the start of a string
+* `$` matches the end of a string
 
 #### Character Matching
-* {% ihighlight R %}.{% endihighlight %} matches any character
-* {% ihighlight R %}\d{% endihighlight %} matches any digit
-* {% ihighlight R %}\s{% endihighlight %} matches any whitespace
-* {% ihighlight R %}[abc]{% endihighlight %} matches a, b, or c
-* {% ihighlight R %}[^abc]{% endihighlight %} matches anything except a, b, or c
+* `.` matches any character
+* `\d` matches any digit
+* `\s` matches any whitespace
+* `[abc]` matches a, b, or c
+* `[^abc]` matches anything except a, b, or c
 
-**Note:** In order to explicitly search for a metacharacter in a regular expression, {% ihighlight R %}^, $, ., \, etc...{%	endihighlight %}, you must add a backslash in front of it.
+**Note:** In order to explicitly search for a metacharacter in a regular expression, `^, $, ., \, etc...`, you must add a backslash in front of it.
 
 #### Repetition
-* {% ihighlight R %}?{% endihighlight %} is 0 or 1
-* {% ihighlight R %}+{% endihighlight %} is 1 or more
-* {% ihighlight R %}*{% endihighlight %} is 0 or more
-* {% ihighlight R %}{n}{% endihighlight %} is exactly n
-* {% ihighlight R %}{n,}{% endihighlight %} is n or more
-* {% ihighlight R %}{,m}{% endihighlight %} is at most m
-* {% ihighlight R %}{n,m}{% endihighlight %} is between n and m, inclusive
-* {% ihighlight R %}\1, \2{% endihighlight %} backreference previous text in parentheses and search for the same pattern
+* `?` is 0 or 1
+* `+` is 1 or more
+* `*` is 0 or more
+* `{n}` is exactly n
+* `{n,}` is n or more
+* `{,m}` is at most m
+* `{n,m}` is between n and m, inclusive
+* `\1, \2` backreference previous text in parentheses and search for the same pattern
 
-**Note:** By default, these are greedy and match the longest string possible; make them lazy by putting a {% ihighlight R %}?{% endihighlight %} after them.
+**Note:** By default, these are greedy and match the longest string possible; make them lazy by putting a `?` after them.
 
 ## Appling Regular Expressions in R
 
-It's important to note that in order for your regular expressions to work in R, you must add an additional backslash, {% ihighlight python %} \ {% endihighlight %}, to all existing backslashes in your expression. This is because backslashes have their own meaning in R strings.
+It's important to note that in order for your regular expressions to work in R, you must add an additional backslash, ` \ `, to all existing backslashes in your expression. This is because backslashes have their own meaning in R strings.
 
-You can also search for patterns using OR logic using the pipe: {% ihighlight R %}|{% endihighlight %}.
+You can also search for patterns using OR logic using the pipe: `|`.
 
-Let's go through some simple applications of regular expressions using the two libraries below. The two datasets that I will use as examples are {% ihighlight R %}words{% endihighlight %}, a character vector of 980 common words, and {% ihighlight R %}sentences{% endihighlight %}, a character vector of 720 sentences.
+Let's go through some simple applications of regular expressions using the two libraries below. The two datasets that I will use as examples are `words`, a character vector of 980 common words, and `sentences`, a character vector of 720 sentences.
 
 {% highlight R %}
 library("tidyverse") # contains stringr package
@@ -64,7 +64,7 @@ library("htmlwidgets") # contains str_view() function
 
 ### 1. Detecting Matches: **string_detect()**, **string_subset()**, and **string_count()**
 
-{% ihighlight R %}string_detect(){% endihighlight %} searches for a pattern in a string and returns TRUE or FALSE.
+`string_detect()` searches for a pattern in a string and returns TRUE or FALSE.
 
 {% highlight R %}
 # how many common words start with t?
@@ -86,7 +86,7 @@ df %>%
 #>4 tax     841
 {% endhighlight %}
 
-{% ihighlight R %}string_subset(){% endihighlight %} keeps strings matching a pattern.
+`string_subset()` keeps strings matching a pattern.
 
 {% highlight R %}
 # filter on words that end with x in a vector
@@ -94,7 +94,7 @@ str_subset(words, "x$")
 #>[1] "box" "sex" "six" "tax"
 {% endhighlight %}
 
-{% ihighlight R %}string_count(){% endihighlight %} counts the number of matches there are in a string.
+`string_count()` counts the number of matches there are in a string.
 
 {% highlight R %}
 # how many consonants and vowels are there in each word?
@@ -114,7 +114,7 @@ df %>%
 
 ### 2. Extracting Matches: **string_extract()** and **string_extract_all()**
 
-{% ihighlight R %}str_extract(), str_extract_all(){% endihighlight %} extracts the actual text of a match.
+`str_extract(), str_extract_all()` extracts the actual text of a match.
 
 {% highlight R %}
 ## find colors from a vector listed in "sentences" 
@@ -144,7 +144,7 @@ str_extract_all(more, color_match, simplify = TRUE)
 
 ### 3. Grouped Matches: **str_match()** and **str_match_all()**
 
-{% ihighlight R %}str_match() and str_match_all(){% endihighlight %} are very similar to the previous string extracting functions -- they extract a matching pattern from a vector, but also returns each individual component by returning a matric with one column for the complete match followed by one column for each group.
+`str_match() and str_match_all()` are very similar to the previous string extracting functions -- they extract a matching pattern from a vector, but also returns each individual component by returning a matric with one column for the complete match followed by one column for each group.
 
 {% highlight R %}
 # find "articles" and "nouns" in a vector of sentences
@@ -161,7 +161,7 @@ has_noun %>%
 #> ...
 {% endhighlight %} 
 
-{% ihighlight R %}extract(){% endihighlight %} does the same thing, but is especially useful for tibbles (as opposed to vectors). It will add additional columns to the tibble for each grouped match.
+`extract()` does the same thing, but is especially useful for tibbles (as opposed to vectors). It will add additional columns to the tibble for each grouped match.
 
 {% highlight R %}
 # find "articles" and "nouns" in a tibble with a column containing sentences
@@ -183,7 +183,7 @@ tibble(sentence = sentences) %>%
 
 ### 4. Replacing Matches: **str_replace()** and **str_replace_all()**
 
-{% ihighlight R %}str_replace(){% endihighlight %} will replace the first occurence of a match, while {% ihighlight R %}str_replace_all(){% endihighlight %} will replace all occurences.
+`str_replace()` will replace the first occurence of a match, while `str_replace_all()` will replace all occurences.
 
 {% highlight R %}
 # replacing the first match
@@ -198,7 +198,7 @@ str_replace_all(x, "[aeiou]", "-")
 
 ### 5. Splitting Matches: **str_split()**
 
-{% ihighlight R %}str_split(){% endihighlight %} will split strings based on a pattern.
+`str_split()` will split strings based on a pattern.
 
 {% highlight R %}
 ## splitting a string by words
@@ -213,11 +213,11 @@ sentences %>%
 
 ### 6. Finding the Positions of Matches: **str_locate()**, **str_locate_all()**
 
-{% ihighlight R %}str_locate(), str_locate_all(){% endihighlight %} return the starting and ending positions of each match. When none of the other functions do what you want, you may want to locate the positions of the matching patterns, then use {% ihighlight R %}str_sub(){% endihighlight %} to extract/modify them.
+`str_locate(), str_locate_all()` return the starting and ending positions of each match. When none of the other functions do what you want, you may want to locate the positions of the matching patterns, then use `str_sub()` to extract/modify them.
 
 ### ...A final note about regular expressions:
 
-In the examples above, the pattern matching string is automatically wrapped into a call to {% ihighlight R %}regex(){% endihighlight %}:
+In the examples above, the pattern matching string is automatically wrapped into a call to `regex()`:
 
 {% highlight R %}
 # The regular call:
@@ -226,7 +226,7 @@ str_detect(fruit, "banana")
 str_detect(fruit, regex("banana"))
 {% endhighlight %}
 
-We can explicitly call the {% ihighlight R %}regex(){% endihighlight %} function to **change case matching**, **search over multiple lines**, or **add comments for readability.**
+We can explicitly call the `regex()` function to **change case matching**, **search over multiple lines**, or **add comments for readability.**
 
 {% highlight R %}
 # create a regular expression that finds all of these bananas
@@ -239,9 +239,9 @@ str_view(bananas, regex("^banana # search for all bananas",
 
 ## Applying Pattern Matching Without Regular Expressions
 ---
-All of the functions that we've looked at to apply pattern matching via regular expressions by default. However, it is possible to override the pattern matching type by explicity specifying one of three functions in place of {% ihighlight R %}regex(){% endihighlight %}:
+All of the functions that we've looked at to apply pattern matching via regular expressions by default. However, it is possible to override the pattern matching type by explicity specifying one of three functions in place of `regex()`:
 
-1. {% ihighlight R %}fixed(){% endihighlight %} matches the exact specified sequence of bytes, ignoring all special regular expressions. It is much faster than regular expressions, but be careful with non-English data.
-2. {% ihighlight R %}coll(){% endihighlight %} compares strings using standard collation rules. This is useful for doing case insensitive matching, but is slower than the other functions.
-3. {% ihighlight R %}boundary(){% endihighlight %} can match boundaries, such as characters, words, or sentences.
+1. `fixed()` matches the exact specified sequence of bytes, ignoring all special regular expressions. It is much faster than regular expressions, but be careful with non-English data.
+2. `coll()` compares strings using standard collation rules. This is useful for doing case insensitive matching, but is slower than the other functions.
+3. `boundary()` can match boundaries, such as characters, words, or sentences.
 

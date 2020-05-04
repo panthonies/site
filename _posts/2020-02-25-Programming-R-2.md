@@ -8,10 +8,10 @@ tags: [academic, r]
 
 Iteration, like functions, serve to reduce the amount of duplication in code. In R, this comes in two flavors: imperative programming, such as for and while loops, and functional programming, which avoids changing-state data.[^1]
 
-[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapter twenty-one of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is looking for a refresher on basic programming in R, and the content in this post is based on chapter twenty-one of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 ## Imperative Programming: For Loops
-When creating for loops in R, it's important to allocate sufficient space for new objects using the {% ihighlight R %}vector(){% endihighlight %} function. For example, we create a new object that computes the median of each column of a data frame:
+When creating for loops in R, it's important to allocate sufficient space for new objects using the `vector()` function. For example, we create a new object that computes the median of each column of a data frame:
 
 {% highlight R %}
 output <- vector("double", ncol(df)) # 1. output: make sure to allocate sufficient space
@@ -21,9 +21,9 @@ for (i in seq_along(df)) {          # 2. sequence: how should the function itera
 {% endhighlight %}
 
 There are a couple of looping patterns worth noting:
-1. {% ihighlight R %}for (i in seq_along(xs)){% endihighlight %} loops over indices; this is the most common way to construct for loops.
-2. {% ihighlight R %}for (x in xs){% endihighlight %} loops over elements; this is useful if you only care about side effects like plots.
-3. {% ihighlight R %}for (nm in names(xs)){% endihighlight %} loops over names; this is useful if you only need names 
+1. `for (i in seq_along(xs))` loops over indices; this is the most common way to construct for loops.
+2. `for (x in xs)` loops over elements; this is useful if you only care about side effects like plots.
+3. `for (nm in names(xs))` loops over names; this is useful if you only need names 
 
 {% highlight R %}
 # using seq_along(), we can extract names and values of all indices
@@ -34,9 +34,9 @@ for (i in seq_along(x)) {
 {% endhighlight %}
 
 Most of the time, you will know what form the function output will take. However, if the length of the output is unknown, combine the data into a single object after the loop is complete:
-* When generating an unknown number of results, save vectors to a list and combine them into a single vector with {% ihighlight R %}unlist(){% endihighlight %}
-* When generating a long string, save outputs in a character vector and combine them into a single string with {% ihighlight R %}paste(output, collapse = ""){% endihighlight %}
-* When generating a big data frame, save output to a list and combine them into a single data frame with {% ihighlight R %}bind_rows(output){% endihighlight %}
+* When generating an unknown number of results, save vectors to a list and combine them into a single vector with `unlist()`
+* When generating a long string, save outputs in a character vector and combine them into a single string with `paste(output, collapse = "")`
+* When generating a big data frame, save output to a list and combine them into a single data frame with `bind_rows(output)`
 
 {% highlight R %}
 # sample a random number (1-100) of observations from a normal dist with different means
@@ -79,11 +79,11 @@ show_means(iris)
 ## Functional Programming: Map Functions
 Map functions automate the pattern of looping over a vector, applying a function to each piece, and returning a new vector that's the same length as the input. These functions are a part of the *purrr* package, which are implemented in C for speed. There is one map function for each type of output:
 
-* {% ihighlight R %}map(){% endihighlight %} makes a list
-* {% ihighlight R %}map_lgl(){% endihighlight %} makes a logical vector
-* {% ihighlight R %}map_int(){% endihighlight %} makes an integer vector
-* {% ihighlight R %}map_dbl(){% endihighlight %} makes a double vector
-* {% ihighlight R %}map_chr(){% endihighlight %} makes a character vector
+* `map()` makes a list
+* `map_lgl()` makes a logical vector
+* `map_int()` makes an integer vector
+* `map_dbl()` makes a double vector
+* `map_chr()` makes a character vector
 
 **Example 1:** The most basic case -- calculate the means of all columns of the *mtcars* dataset.
 
@@ -118,7 +118,7 @@ x %>% map_dbl(2)
 #### Dealing with mapping failures: **safely()**, **possibly()**, and **quietly()**
 If any one of the mapping operations fails, then an error message will be returned with no output. There are three ways to deal with failures:
 
-1. {% ihighlight R %}safely(){% endihighlight %} returns a modified version of a function that returns a list of two elements -- result and error.
+1. `safely()` returns a modified version of a function that returns a list of two elements -- result and error.
 
 {% highlight R %}
 x <- list(1, 10, "a")
@@ -140,7 +140,7 @@ x %>% map(safely(log))
 {% endhighlight %}
 
 {:start="2"}
-2. {% ihighlight R %}possibly(){% endihighlight %} always always succeeds, but gives a default value when there is an error.
+2. `possibly()` always always succeeds, but gives a default value when there is an error.
 
 {% highlight R %}
 x <- list(1, 10, "a")
@@ -150,7 +150,7 @@ x %>% map_dbl(possibly(log, NA_real_))
 {% endhighlight %}
 
 {:start="3"}
-3. {% ihighlight R %}quietly(){% endihighlight %} captures printed output, messages, and warnings instead of errors.
+3. `quietly()` captures printed output, messages, and warnings instead of errors.
 
 {% highlight R %}
 x <- list(1, -1)
@@ -170,7 +170,7 @@ x %>% map(quietly(log))
 {% endhighlight %}
 
 #### Map a function over multiple arguments: **map2()** and **pmap()**
-1. {% ihighlight R %}map2(){% endihighlight %} allows you to iterate along two related inputs in parallel. As an example, we can draw a random sample from the normal distribution with three different mean and standard deviation pairs:
+1. `map2()` allows you to iterate along two related inputs in parallel. As an example, we can draw a random sample from the normal distribution with three different mean and standard deviation pairs:
 
 {% highlight R %}
 mu <- list(1, 10, 100)
@@ -179,7 +179,7 @@ map2(mu, sigma, rnorm, n = 5) %>% str()
 {% endhighlight %}
 
 {:start="2"}
-2. {% ihighlight R %}pmap(){% endihighlight %}, on a similar note, iterates along a list of related inputs in parallel. If your arguments are the same length, it is best practice to store them in a data frame. For example, we can vary the mean, standard deviation, and the number of samples from a normal distribution:
+2. `pmap()`, on a similar note, iterates along a list of related inputs in parallel. If your arguments are the same length, it is best practice to store them in a data frame. For example, we can vary the mean, standard deviation, and the number of samples from a normal distribution:
 
 {% highlight R %}
 params <- tribble(
@@ -195,7 +195,7 @@ params %>%
 
 #### Map multiple functions with multiple sets of arguments: **invoke_map()**
 
-{% ihighlight R %}invoke_map(){% endihighlight %} can invoke different functions with multiple parameters. Use a data frame to make matching pairs easier. For example, we can generate samples from three different types of distributions with their own inputs:
+`invoke_map()` can invoke different functions with multiple parameters. Use a data frame to make matching pairs easier. For example, we can generate samples from three different types of distributions with their own inputs:
 
 {% highlight R %}
 sim <- tribble( # use a data frame to make matching pairs easier
@@ -210,9 +210,9 @@ sim %>%
 
 #### Walk: an alternative to map
 
-When you want to call a function for its side effects, such as printing output to the screen or saving files to disk, you can use the walk functions: {% ihighlight R %}walk(), walk2(), pwalk(){% endihighlight %}.
+When you want to call a function for its side effects, such as printing output to the screen or saving files to disk, you can use the walk functions: `walk(), walk2(), pwalk()`.
 
-For example, if you had a list of plots and a vector of file names, you can use the {% ihighlight R %}pwalk(){% endihighlight %} function to save each file to teh corresponding location on disk.
+For example, if you had a list of plots and a vector of file names, you can use the `pwalk()` function to save each file to teh corresponding location on disk.
 
 {% highlight R %}
 library(ggplot2)
@@ -232,11 +232,11 @@ There are a number of other functions in the *purrr* package that abstract over 
 
 #### Predicate functions check a condition, returning either TRUE or FALSE
 
-* {% ihighlight R %}keep(){% endihighlight %} keeps element where the predicate is true
-* {% ihighlight R %}discard(){% endihighlight %} discards elements where the predicate is false
-* {% ihighlight R %}some(){% endihighlight %} and {% ihighlight R %}every(){% endihighlight %} determines if the predicate is true for any or all of the elements
-* {% ihighlight R %}detect(){% endihighlight %} finds the first element where true, detect_index returns its position
-* {% ihighlight R %}head_while(){% endihighlight %} and {% ihighlight R %}tail_while(){% endihighlight %} take elements from the start r end of a vector while a predicate is true
+* `keep()` keeps element where the predicate is true
+* `discard()` discards elements where the predicate is false
+* `some()` and `every()` determines if the predicate is true for any or all of the elements
+* `detect()` finds the first element where true, detect_index returns its position
+* `head_while()` and `tail_while()` take elements from the start r end of a vector while a predicate is true
 
 {% highlight R %}
 # keep columns that are factors
@@ -272,7 +272,7 @@ x %>%
 
 #### Reduce and Accumulate use a binary function to simplify complex lists
 
-{% ihighlight R %}reduce(){% endihighlight %} takes a binary function -- a function with two primary inputs -- and applies it to a list until only one element is left.
+`reduce()` takes a binary function -- a function with two primary inputs -- and applies it to a list until only one element is left.
 
 {% highlight R %}
 # find the intersection of all vectors in a list
@@ -285,7 +285,7 @@ vs %>% reduce(intersect)
 #> [1]  1  3 10
 {% endhighlight %}
 
-{% ihighlight R %}accumulate(){% endihighlight %} is the same as reduce except it keeps all of the interim results.
+`accumulate()` is the same as reduce except it keeps all of the interim results.
 
 {% highlight R %}
 # accumulate the values of a random sampling from 1-10

@@ -14,21 +14,21 @@ In a tidy dataset, each variable must have its own column, each observation must
 
 ##### A quick detour to introduce **tibbles**, an improved type of data frame:
 * Tibbles only print the first 10 rows of data by default, and has stricter subsetting rules than data frames
-* Create a new tibble from individual vectors: {% ihighlight R %}tibble(){% endihighlight %}
-* Create a new tibble by doing data entry in code: {% ihighlight R %}tribble(){% endihighlight %}
-* Turn a data frame into a tibble: {% ihighlight R %}as_tibble(){% endihighlight %}
-* Turn a tibble into a data frame: {% ihighlight R %}as.data.frame(){% endihighlight %}
+* Create a new tibble from individual vectors: `tibble()`
+* Create a new tibble by doing data entry in code: `tribble()`
+* Turn a data frame into a tibble: `as_tibble()`
+* Turn a tibble into a data frame: `as.data.frame()`
 * Use backticks to refer to non-syntactic column names for tibbles
-* For more details, see {% ihighlight R %}vignette("tibble"){% endihighlight %}
+* For more details, see `vignette("tibble")`
 
 
-[^1]: The content in this post is based on chapters nine through thirteen of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
+[^1]: The content in this post is based on chapters nine through thirteen of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
 ## Importing Data
 ---
-There are a number of different functions to import different types of flat files into data frames, and they all work similarly -- we'll be using {% ihighlight R %}read_csv(){% endihighlight %} from the *readr* package, which is part of the tidyverse.
+There are a number of different functions to import different types of flat files into data frames, and they all work similarly -- we'll be using `read_csv()` from the *readr* package, which is part of the tidyverse.
 
-{% ihighlight R %}read_csv(){% endihighlight %} scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:
+`read_csv()` scans the first 1000 rows in the file and guesses what type of data each column is (logical, integer, double, number, time, date, and date-time). Most csv files can be read with variations of the following code:
 {% highlight R %}
 # skip the first two lines of the file, first processed row is not headings
 read_csv("filepath", skip = 2, col_names = FALSE)
@@ -37,12 +37,12 @@ read_csv("filepath", skip = 2, col_names = FALSE)
 read_csv("filepath", comment = "#", col_names = c("x", "y", "z"), na = ".")
 {% endhighlight %}
 
-However, if the first 1000 rows of a column is not representative of the whole dataset or if there are other parsing problems, identify the problem rows with {% ihighlight R %}problem(){% endihighlight %} and try the following:
+However, if the first 1000 rows of a column is not representative of the whole dataset or if there are other parsing problems, identify the problem rows with `problem()` and try the following:
 
-1. Specify the column types manually with the parameter {% ihighlight R %}col_types{% endihighlight %}
-2. Increase the number of lines to parse from 1000 with parameter {% ihighlight R %}guess_max{% endihighlight %}
-3. Import all columns as characters using {% ihighlight R %}col_types = cols(.default = col_character()){% endihighlight %}, then resolve the errors, possibly with {% ihighlight R %}type_convert(){% endihighlight %}
-4. Read the file into a character vector of lines, {% ihighlight R %}read_lines(){% endihighlight %} or a character vector of length one, {% ihighlight R %}read_file(){% endihighlight %}, and then use more advanced string parsing skills.
+1. Specify the column types manually with the parameter `col_types`
+2. Increase the number of lines to parse from 1000 with parameter `guess_max`
+3. Import all columns as characters using `col_types = cols(.default = col_character())`, then resolve the errors, possibly with `type_convert()`
+4. Read the file into a character vector of lines, `read_lines()` or a character vector of length one, `read_file()`, and then use more advanced string parsing skills.
 
 {% highlight R %}
 # Solution 1: Specify the column types manually with col_types
@@ -57,15 +57,15 @@ challenge <- read_csv(
 ##### But wait -- how does R parse data, and what can go wrong?
 Parsing functions take a character vector and return a more specialized vector like a logical, integer, or date. They make up the foundation of importing data, and are useful to understand for imports.
 
-* {% ihighlight R %}parse_factor(){% endihighlight %}
-* {% ihighlight R %}parse_logical(), parse_integer(){% endihighlight %}
-* {% ihighlight R %}parse_double(), parse_number(){% endihighlight %} -- potential problems with different grouping marks
-* {% ihighlight R %}parse_character(){% endihighlight %} -- potential problems with non UTF-8 encoding; try {% ihighlight R %}guess_encoding(){% endihighlight %}
-* {% ihighlight R %}parse_date(), parse_time(), parse_datetime(){% endihighlight %} -- potential problems with formatting; [reference](https://r4ds.had.co.nz/data-import.html#readr-datetimes).
+* `parse_factor()`
+* `parse_logical(), parse_integer()`
+* `parse_double(), parse_number()` -- potential problems with different grouping marks
+* `parse_character()` -- potential problems with non UTF-8 encoding; try `guess_encoding()`
+* `parse_date(), parse_time(), parse_datetime()` -- potential problems with formatting; [reference](https://r4ds.had.co.nz/data-import.html#readr-datetimes){:target="blank"}.
 
 ## Managing Data in a Single Table
 ---
-When some of the column names are *values* and not variable names, we can use {% ihighlight R %}pivot_longer(){% endihighlight %} to pivot the columns into a new pair of variables, for example:
+When some of the column names are *values* and not variable names, we can use `pivot_longer()` to pivot the columns into a new pair of variables, for example:
 {% highlight R %}
 preg <- tribble(
   ~pregnant, ~male, ~female,
@@ -85,7 +85,7 @@ preg %>%
 #> 4 no       female    12
 {% endhighlight %}
 
-When some of the observations are scattered across mutiple rows, we can use {% ihighlight R %}pivot_wider(){% endihighlight %} to move values into column names, for example:
+When some of the observations are scattered across mutiple rows, we can use `pivot_wider()` to move values into column names, for example:
 
 {% highlight R %}
 people <- tribble(
@@ -106,7 +106,7 @@ people %>%
 #>2 Saoirse Ronan        25     54
 {% endhighlight %}
 
-If needed, we can use {% ihighlight R %}separate(), unite(){% endihighlight %} to split columns and combine columns:
+If needed, we can use `separate(), unite()` to split columns and combine columns:
 
 {% highlight R %}
 people %>% 
@@ -118,9 +118,9 @@ people %>%
 
 Missing values can be **missing explicitly** with an NA flag, or **missing implicitly** if they're just not listed. In the following example, the 4th quarter of 2015 is explicity missing and the 1st quarter of 2016 is implicitly missing. 
 
-We can make both missing values explicit with {% ihighlight R %}pivot_wider{% endihighlight %} or {% ihighlight R %}complete(){% endihighlight %}, or make both missing values implicit with {% ihighlight R %}pivot_longer(..., values_drop_na = TRUE{% endihighlight %}
+We can make both missing values explicit with `pivot_wider` or `complete()`, or make both missing values implicit with `pivot_longer(..., values_drop_na = TRUE`
 
-Note: {% ihighlight R %}fill(){% endihighlight %} can be used to fill in missing values with the most recent non-missing value.
+Note: `fill()` can be used to fill in missing values with the most recent non-missing value.
 
 {% highlight R %}
 stocks <- tibble(
@@ -175,20 +175,20 @@ Combine data between related data by matching the unique identifier in your main
 
 1. Identify the variables that are the primary key in each table
 2. Check that none of the variables in the primary key are missing
-3. Check that the primary keys match foreign keys in another table with {% ihighlight R %}anti_join(){% endihighlight %}
+3. Check that the primary keys match foreign keys in another table with `anti_join()`
 
 #### **Mutating Joins:** Combine variables from two tables
-* {% ihighlight R %}inner join(x, y){% endihighlight %} - only matching values are kept
-* {% ihighlight R %}left_join(x, y){% endihighlight %}  - all x values are kept - MOST COMMON
-* {% ihighlight R %}right_join(x, y){% endihighlight %} - all y values are kept
-* {% ihighlight R %}full_join(x, y){% endihighlight %}  - all x and y values are kept
+* `inner join(x, y)` - only matching values are kept
+* `left_join(x, y)`  - all x values are kept - MOST COMMON
+* `right_join(x, y)` - all y values are kept
+* `full_join(x, y)`  - all x and y values are kept
 
 #### **Filtering Joins:** Affects observations, not variables
-* {% ihighlight R %}semi_join(x, y){% endihighlight %} - keeps all observations in x that have a match in y
-* {% ihighlight R %}anti_join(x, y){% endihighlight %} - drops all observations in x that have a match in y
+* `semi_join(x, y)` - keeps all observations in x that have a match in y
+* `anti_join(x, y)` - drops all observations in x that have a match in y
 
 #### **Set Operations:** Assumes both tables have the same variables
-* {% ihighlight R %}intersect(x, y){% endihighlight %} - return only observations in both x and y 
-* {% ihighlight R %}union(x, y){% endihighlight %}    - return unique observations in x and y
-* {% ihighlight R %}setdiff(x, y){% endihighlight %}   - return observations in x, but not in y
+* `intersect(x, y)` - return only observations in both x and y 
+* `union(x, y)`    - return unique observations in x and y
+* `setdiff(x, y)`   - return observations in x, but not in y
 

@@ -1,9 +1,9 @@
 <nav class="header-nav {% if site.scrollappear_enabled %}scrollappear{% endif %}">
-  <a href="{{ '/about' | relative_url }}" class="header-logo" title="{{ site.name }}">{{ site.name }}</a>
+  <a href="{{ '/' | relative_url }}" class="header-logo" title="{{ site.name }}">{{ site.name }}</a>
   <ul class="header-links">
     {% if site.about_enabled == true %}
       <li>
-        <a href="{{ 'about' | relative_url }}" title="About me">
+        <a href="{{ '/' | relative_url }}" title="About me">
           {% include svg-icon.html icon="about" %}
         </a>
       </li>
@@ -101,7 +101,7 @@
     {% endif %}
     {% if site.social.tumblr %}
       <li>
-        <a href="{{ '/' | relative_url }}" title="writing">
+        <a href="{{ '/' | relative_url }}posts/index" title="Blog">
           {% include svg-icon.html icon="writing" %}
         </a>
       </li>

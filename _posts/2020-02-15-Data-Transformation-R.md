@@ -6,23 +6,23 @@ thumb_image:
 tags: [academic, r]
 ---
 
-In this post we'll be taking a look at basic data transformation in R -- namely, six important R functions included in the [dplyr](http://dplyr.tidyverse.org) package:[^1]
+In this post we'll be taking a look at basic data transformation in R -- namely, six important R functions included in the [dplyr](http://dplyr.tidyverse.org){:target="blank"} package:[^1]
 
 [^1]: This post is meant for a person who is looking for a refresher on the very basics of the dplyr package (i.e., me when I inevitably forget how to summarize data). The content in this post is based on chapter five of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund, which I would recommend reading for a more thorough explanation.
 
-* {% ihighlight r %}filter(){% endihighlight %} - filter rows
-* {% ihighlight r %}arrange(){% endihighlight %} - order rows
-* {% ihighlight r %}select(){% endihighlight %} - select columns
-* {% ihighlight r %}mutate(){% endihighlight %} - transform and create variables
-* {% ihighlight r %}group_by(){% endihighlight %} - group data
-* {% ihighlight r %}summarize(){% endihighlight %} - summarize data
+* `filter()` - filter rows
+* `arrange()` - order rows
+* `select()` - select columns
+* `mutate()` - transform and create variables
+* `group_by()` - group data
+* `summarize()` - summarize data
 
 These functions will help you scratch the surface of manipulating datasets.
 
-**First things first:** Here is the [RStudio Data Transformation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-transformation.pdf), if that's what you're looking for.
+**First things first:** Here is the [RStudio Data Transformation Cheat Sheet]({{ site.baseurl }}/pdf/r-cheat-sheet-data-transformation.pdf){target="blank"}, if that's what you're looking for.
 
 ### Prologue: The Pipe
-Before we get into the functions themselves, let's review an important part of R syntax: the pipe, {% ihighlight R %}%>%{% endihighlight %}. The pipe symbol can be read as "then."
+Before we get into the functions themselves, let's review an important part of R syntax: the pipe, `%>%`. The pipe symbol can be read as "then."
 
 {% highlight R %}
 x %>% f(y) == f(x, y)
@@ -33,59 +33,59 @@ x %>% f(y) %>% g(z) == g(f(x, y), z)
 See the R code at the bottom for examples of the pipe in action, and my [post on programming in R](programming-r) for a deeper dive into pipes.
 
 ## Filter
-{% ihighlight R %}filter(){% endihighlight %} allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.
-* Filter with comparison operators: {% ihighlight R %}== , != , > , >= , < , <={% endihighlight %}
-* Filter with logical operators -- and, or not, and exclusive or: {% ihighlight R %}&, |, !, xor(){% endihighlight %}
-* Filter on rows where x is one of the values in vector y: {% ihighlight R %}x %in y{% endihighlight %}
-* Determine if a value is missing: {% ihighlight R %}is.na(){% endihighlight %}
-* Determine if numbers fall within an inclusive range: {% ihighlight R %}between(){% endihighlight %}
+`filter()` allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.
+* Filter with comparison operators: `== , != , > , >= , < , <=`
+* Filter with logical operators -- and, or not, and exclusive or: `&, |, !, xor()`
+* Filter on rows where x is one of the values in vector y: `x %in y`
+* Determine if a value is missing: `is.na()`
+* Determine if numbers fall within an inclusive range: `between()`
 
-Note: Don't forget De Morgan's law, {% ihighlight R %}!(x & y) == !x | !y , !(x | y) = !x & !y{% endihighlight %}
+Note: Don't forget De Morgan's law, `!(x & y) == !x | !y , !(x | y) = !x & !y`
 
 ## Arrange
-{% ihighlight R %}arrange(){% endihighlight %} allows you to re-order the rows of your dataset.
+`arrange()` allows you to re-order the rows of your dataset.
 * By default, arrange sorts your data in ascending order
-* Sort data in descending order with {% ihighlight R %}desc(){% endihighlight %}
+* Sort data in descending order with `desc()`
 * Missing values are placed at the end unless explicitly told otherwise
 
 ## Select
-{% ihighlight R %}select(){% endihighlight %} lets you zoom in on a subset of the data based on the names of columns. This is useful for narrowing data with many variables down to only the ones you care about. 
-* Select based on column name: {% ihighlight R %}starts_with(), ends_with(), contains(), matches(){% endihighlight %}
-* Select all columns between two columns, inclusive: {% ihighlight R %}(x:y){% endihighlight %}
-* Exclude columns from being selected: {% ihighlight R %}-{% endihighlight %}
-* Rename a variable without dropping the others: {% ihighlight R %}rename(){% endihighlight %} 
-* Reorder ceertain columns to the very beginning: {% ihighlight R %}select(){% endihighlight %} with {% ihighlight R %}everything(){% endihighlight %}
+`select()` lets you zoom in on a subset of the data based on the names of columns. This is useful for narrowing data with many variables down to only the ones you care about. 
+* Select based on column name: `starts_with(), ends_with(), contains(), matches()`
+* Select all columns between two columns, inclusive: `(x:y)`
+* Exclude columns from being selected: `-`
+* Rename a variable without dropping the others: `rename()` 
+* Reorder ceertain columns to the very beginning: `select()` with `everything()`
 
 ## Mutate
-{% ihighlight R %}mutate(){% endihighlight %} lets you add new columns that are functions of existing columns to the end of the table. 
-* Create columns with arithmatic operators, {% ihighlight R %}+, -, *, /, ^{% endihighlight %}, with aggregate functions, {% ihighlight R %}sum, mean{% endihighlight %}
-* Create columns with integer division, {% ihighlight R %}%/%{% endihighlight %}, and remainder ,{% ihighlight R %}%%{% endihighlight %}
-* Create columns with logs: {% ihighlight python %}log(x), log2(x), log10(x){% endihighlight %}
-* Create columns with offsets, such as leading and lagging values, i.e. {% ihighlight R %}x - lead(x), x != lag(x){% endihighlight %}
-* Create columns with cumulative and rolling aggregates: {% ihighlight R %}cumsum, cumprod, cummin, cummax, cummean{% endihighlight %}
-* Create columns with logical comparisons: {% ihighlight R %}<, >, ==, !={% endihighlight %}
-* Create columns with ranking functions: {% ihighlight R %}minrank, row_number, percent_rank, ntile{% endihighlight %}
-* Select the top or bottom entries in a group {% ihighlight R %}top_n(){% endihighlight %}
-* Only keep the new variables that you define with {% ihighlight R %}transmute(){% endihighlight %}
+`mutate()` lets you add new columns that are functions of existing columns to the end of the table. 
+* Create columns with arithmatic operators, `+, -, *, /, ^`, with aggregate functions, `sum, mean`
+* Create columns with integer division, `%/%`, and remainder ,`%%`
+* Create columns with logs: `log(x), log2(x), log10(x)`
+* Create columns with offsets, such as leading and lagging values, i.e. `x - lead(x), x != lag(x)`
+* Create columns with cumulative and rolling aggregates: `cumsum, cumprod, cummin, cummax, cummean`
+* Create columns with logical comparisons: `<, >, ==, !=`
+* Create columns with ranking functions: `minrank, row_number, percent_rank, ntile`
+* Select the top or bottom entries in a group `top_n()`
+* Only keep the new variables that you define with `transmute()`
 
 ## Group By
-{% ihighlight R %}group_by(){% endihighlight %} changes the scope of analysis from the complete dataset to individually defined groups.
+`group_by()` changes the scope of analysis from the complete dataset to individually defined groups.
 
-It is most useful when used with {% ihighlight R %}summarize(){% endihighlight %}, but it can also be used with {% ihighlight R %}mutate(){% endihighlight %} and {% ihighlight R %}filter(){% endihighlight %} -- for example, if you wanted to fine the worst members of each group, find all groups bigger than a threshold, or create group summary metrics.
+It is most useful when used with `summarize()`, but it can also be used with `mutate()` and `filter()` -- for example, if you wanted to fine the worst members of each group, find all groups bigger than a threshold, or create group summary metrics.
 
-Use {% ihighlight R %}ungroup(){% endihighlight %} to remove groupings.
+Use `ungroup()` to remove groupings.
 
 ## Summarize
-{% ihighlight R %}summarize(){% endihighlight %} collapses a data frame into a single row. If the data is grouped, then it summarizes by group.
-* Summarize by location: {% ihighlight R %}mean, median{% endihighlight %}
-* Summarize by spread: {% ihighlight R %}sd, IQR, mad{% endihighlight %}, (std. deviation, interquartile range, median absolute deviation)
-* Summarize by rank: {% ihighlight R %}min, max, quantile{% endihighlight %}
-* Summarize by position: {% ihighlight R %}first, nth, last{% endihighlight %}
-* Summarize by count: {% ihighlight R %}n(), sum(is.na(x)), n_distinct(x){% endihighlight %}
-* Use the {% ihighlight R %}na.rm{% endihighlight %} parameter for functions like mean to specify whether to remove missing values before computation. 
-* Use a count, {% ihighlight R %}n(){% endihighlight %}, when doing aggregation to prevent drawing conclusions from small amounts of data
-* Use the {% ihighlight R %}count(){% endihighlight %} function (with an optional weight variable) if you simply want a count
-* Use the {% ihighlight R %}count(){% endihighlight %} function to also find counts and proportions of logical values
+`summarize()` collapses a data frame into a single row. If the data is grouped, then it summarizes by group.
+* Summarize by location: `mean, median`
+* Summarize by spread: `sd, IQR, mad`, (std. deviation, interquartile range, median absolute deviation)
+* Summarize by rank: `min, max, quantile`
+* Summarize by position: `first, nth, last`
+* Summarize by count: `n(), sum(is.na(x)), n_distinct(x)`
+* Use the `na.rm` parameter for functions like mean to specify whether to remove missing values before computation. 
+* Use a count, `n()`, when doing aggregation to prevent drawing conclusions from small amounts of data
+* Use the `count()` function (with an optional weight variable) if you simply want a count
+* Use the `count()` function to also find counts and proportions of logical values
 
 #### ...The End!
 
@@ -93,7 +93,7 @@ Keep reading for examples of these functions in action.
 
 ## Examples and R Code
 ---
-We'll be using two libraries: [tidyverse](https://www.tidyverse.org), which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.
+We'll be using two libraries: [tidyverse](https://www.tidyverse.org){:target="blank"}, which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.
 
 {% highlight R %}
 ### load packages

@@ -6,9 +6,9 @@ thumb_image:
 tags: [academic, r]
 ---
 
-In this post we'll be taking a look at several examples of data exploration using the {% ihighlight R %}diamonds{% endihighlight %} dataset in the tidyverse library.[^1]
+In this post we'll be taking a look at several examples of data exploration using the `diamonds` dataset in the tidyverse library.[^1]
 
-[^1]: This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of [R for Data Science](https://r4ds.had.co.nz/index.html) by Hadley Wickham & Garrett Grolemund.
+[^1]: This post is meant for a person who is wondering how to apply basic knowledge of R to explore datasets. Its contents are based on chapter seven of [R for Data Science](https://r4ds.had.co.nz/index.html){:target="blank"} by Hadley Wickham & Garrett Grolemund.
 
 {% highlight R %}
 ### load package
@@ -43,7 +43,7 @@ ggplot(data = smaller) +
 
 **Example 3:** Play with the x-axis and y-axis limits to identify outliers. In this example, there are some very high values of the "x" variable, a measure of a diamond's dimensions, which could indicate data entry errors. 
 
-Note that in ggplot2, {% ihighlight R %}coord_cartesian(){% endihighlight %} keeps truncated values while {% ihighlight R %}xlim(), ylim(){% endihighlight %} discards them.
+Note that in ggplot2, `coord_cartesian()` keeps truncated values while `xlim(), ylim()` discards them.
 {% highlight R %}
 ggplot(diamonds) + 
   geom_histogram(mapping = aes(x = y), binwidth = 0.5) +
@@ -66,7 +66,7 @@ diamonds2 <- diamonds %>%
 * Does the relationship change if you look at subgroups of data?
 
 ### Case 1: A Categorical and a Continuous Variable
-**Example 1:** Use {% ihighlight R %}geom_freqpoly(){% endihighlight %} to overlay multiple histograms by density. Here we can see multiple histograms of carat, split by cut.
+**Example 1:** Use `geom_freqpoly()` to overlay multiple histograms by density. Here we can see multiple histograms of carat, split by cut.
 {% highlight R %}
 ggplot(data = smaller, mapping = aes(x = carat, color = cut)) +
   geom_freqpoly(binwidth = 0.1)
@@ -105,7 +105,7 @@ ggplot(diamonds) +
 
 ### Case 2: Two Categorical Variables
 
-**Example 1:** We can use {% ihighlight R %}geom_count{% endihighlight %} to map both categorical variables and display their frequency with the size of a point in a grid. In this example, we can see the distribution of observations between diamond cut and color. 
+**Example 1:** We can use `geom_count` to map both categorical variables and display their frequency with the size of a point in a grid. In this example, we can see the distribution of observations between diamond cut and color. 
 {% highlight R %}
 ggplot(data = diamonds) +
   geom_count(mapping = aes(x = cut, y = color))

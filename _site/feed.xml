@@ -4,86 +4,86 @@
     <title>Anthony Pan</title>
     <description></description>
     <link>http://localhost:4000</link>
-    <atom:link href="http://localhost:4000/site/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Programming in R: Iteration</title>
-        <description>In which we explore the basics of iteration through the lenses of functional and imperative programming by examining for loops, map functions, and more.</description>
-        <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/programming-r-2</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/programming-r-2</guid>
+        <title>Tree-Based Methods</title>
+        <description></description>
+        <pubDate>Fri, 01 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/tree-based-methods</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/tree-based-methods</guid>
       </item>
     
       <item>
-        <title>Programming in R: Pipes, Functions, and Vectors</title>
-        <description>In which we explore the basics of programming in R by examining common programming tools, data structures, and strategies to help effectively analyze data.</description>
-        <pubDate>Tue, 25 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/programming-r-1</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/programming-r-1</guid>
+        <title>Moving Beyond Linearity</title>
+        <description>Linear models can have significant limitations in terms of predictive power, because the limear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships.</description>
+        <pubDate>Thu, 30 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/moving-beyond-linearity</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/moving-beyond-linearity</guid>
       </item>
     
       <item>
-        <title>Data Wrangling in R: Dates and Times</title>
-        <description>In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.</description>
-        <pubDate>Sat, 22 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-wrangling-date-time-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-date-time-r</guid>
+        <title>Linear Model Selection and Regularization</title>
+        <description>An alternative fitting method to least squares, such as subset selection, shrinkage (ridge regression, lasso), and dimension reduction techniques (principle components analysis, partial least squares) can help prediction accuracy and model interpretability.</description>
+        <pubDate>Mon, 27 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/linear-model-selection-regularization</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/linear-model-selection-regularization</guid>
       </item>
     
       <item>
-        <title>Data Wrangling in R: Factors</title>
-        <description>In which we review some basic information about factors, a type of data used work with categorical variables.</description>
-        <pubDate>Fri, 21 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-wrangling-factors-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-factors-r</guid>
+        <title>Resampling Methods</title>
+        <description>Resampling methods provide ways tools for model assessment (evaulate a model's performance) and model selection (optimally adjust model flexibility).</description>
+        <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/resampling-methods</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/resampling-methods</guid>
       </item>
     
       <item>
-        <title>Data Wrangling in R: Strings</title>
-        <description>In which we dive into string manipulation, with a focus on regular expressions.</description>
-        <pubDate>Tue, 18 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-wrangling-strings-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-strings-r</guid>
+        <title>Classification</title>
+        <description>Classification models are used to predict a categorical response. </description>
+        <pubDate>Fri, 24 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/classification</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/classification</guid>
       </item>
     
       <item>
-        <title>High-Level Data Wrangling in R: Imports, Pivots, and Joins</title>
-        <description>In which we go over importing data into R, working with 'tidy data,' manipulating single tables, and joining related tables.</description>
-        <pubDate>Mon, 17 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-wrangling-high-level-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-wrangling-high-level-r</guid>
+        <title>Linear Regression</title>
+        <description>Linear Regression is a simple approach for predicting a quantitative response, and is the foundation of many other types of statistical learning. It is especially convenient for establishing a the strength of relationships between specific variables to an output, and is easily interpretable.</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/linear-regression</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/linear-regression</guid>
       </item>
     
       <item>
-        <title>Basic Data Exploration in R</title>
-        <description>In which we examine some common practical examples of data exploration: observing variance and co-variance with histograms, boxplots, scatterplots, and heat maps.</description>
-        <pubDate>Sun, 16 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-exploration-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-exploration-r</guid>
+        <title>An Introduction to Statistical Learning</title>
+        <description></description>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/intro-statistical-learning</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/intro-statistical-learning</guid>
       </item>
     
       <item>
-        <title>Basic Data Transformation in R</title>
-        <description>In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.</description>
-        <pubDate>Sat, 15 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-transformation-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-transformation-r</guid>
+        <title>Five things I learned from my first job out of college</title>
+        <description>I worked at a large technology company in a technical, customer-facing role for three years after I graduated from college. Here are the most important lessons I've taken from my experience.</description>
+        <pubDate>Fri, 13 Mar 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/five-things-i-learned</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/five-things-i-learned</guid>
       </item>
     
       <item>
-        <title>Basic Data Visualization in R</title>
-        <description>In which we review the fundamentals of creating graphs in R with ggplot2.</description>
-        <pubDate>Wed, 12 Feb 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/data-visualisation-r</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/data-visualisation-r</guid>
+        <title>A List of Favorites, circa 2017</title>
+        <description>On my previous personal site, I had a page with some of my favorite things at the time. Here are those things.</description>
+        <pubDate>Sun, 08 Mar 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/posts/favorites-circa-2017</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/favorites-circa-2017</guid>
       </item>
     
       <item>
-        <title>Index: Start Here</title>
-        <description>An introduction to this blog, and a list of all my posts.</description>
-        <pubDate>Wed, 01 Jan 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/site/posts/index</link>
-        <guid isPermaLink="true">http://localhost:4000/site/posts/index</guid>
+        <title>Graphing in R for Effective Communication</title>
+        <description>In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.</description>
+        <pubDate>Thu, 05 Mar 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/posts/graphics-for-communication-r</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/graphics-for-communication-r</guid>
       </item>
     
   </channel>

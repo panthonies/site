@@ -1,21 +1,87 @@
 <!doctype html>
 <html lang="en">
-{% include head.html %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{{ site.name }} | {{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="{{ page.url | absolute_url }}">
+  <meta name="twitter:title" content="{{ page.title | escape }}">
+  <meta name="twitter:description" content="{{ page.description }}">
+
+  {% if page.thumb_image %}
+    {% if page.thumb_image contains '://' %}
+      <meta property="og:image" content="{{ page.thumb_image }}">
+      <meta name="twitter:image" content="{{ page.thumb_image }}">
+    {% else %}
+      <meta property="og:image" content="{{ site.url }}{% asset '{{ page.thumb_image }}' @path %}">
+      <meta name="twitter:image" content="{{ site.url }}{% asset '{{ page.thumb_image }}' @path %}">
+    {% endif %}
+  {% else %}
+    <meta property="og:image" content="{{ site.url }}{% asset anthony-pan.jpg @path %}">
+    <meta name="twitter:image" content="{{ site.url }}{% asset anthony-pan.jpg @path %}">
+  {% endif %}
+
+  <link href="{{ 'feed.xml' | absolute_url }}" type="application/rss+xml" rel="alternate" title="{{ site.name }} Last 10 blog posts" />
+
+  {% if site.local_fonts %}
+    {% asset fonts.css %}
+  {% endif %}
+
+  {% if site.theme_toggle == true %}
+
+    {% if site.blog_theme == "light" %}
+      <link rel="icon" type="image/x-icon" href="{% asset favicon-light.ico @path %}">
+      <link rel="apple-touch-icon" href="{% asset apple-touch-icon-light.png @path %}">
+      <link rel="stylesheet" type="text/css" title="light" id="light" href="{% asset light.css @path%}">
+      <link rel="stylesheet" type="text/css" title="dark" id="dark" href="{% asset dark.css @path%}" disabled="true">
+    {% else %}
+      <link rel="icon" type="image/x-icon" href="{% asset favicon-dark.ico @path %}">
+      <link rel="apple-touch-icon" href="{% asset apple-touch-icon-dark.png @path %}">
+      <link rel="stylesheet" type="text/css" title="light" id="light" href="{% asset light.css @path%}">
+      <link rel="stylesheet" type="text/css" title="dark" id="dark" href="{% asset dark.css @path%}" disabled="false">
+    {% endif %}
+
+  {% else %}
+
+    {% if site.blog_theme == "light" %}
+      <link rel="icon" type="image/x-icon" href="{% asset favicon-light.ico @path %}">
+      <link rel="apple-touch-icon" href="{% asset apple-touch-icon-light.png @path %}">
+      {% asset light.css %}
+    {% else %}
+      <link rel="icon" type="image/x-icon" href="{% asset favicon-dark.ico @path %}">
+      <link rel="apple-touch-icon" href="{% asset apple-touch-icon-dark.png @path %}">
+      {% asset dark.css %}
+    {% endif %}
+
+  {% endif %}
+
+</head>
 <body>
   <main>
     <div class="grid grid-centered">
       <div class="grid-cell">
-        {% include navigation.html %}
+        {% include_cached navigation.html %}
         <article class="article {% if site.scrollappear_enabled %}scrollappear{% endif %}">
           <header class="article-header">
             <h1>{{ page.title }}</h1>
             <p>{{ page.description }}</p>
-            {% include article/info-footer.html post=page %}
+            {% include_cached article/info-footer.html post=page %}
           </header>
 
           <div class="article-content">
             {{ content }}
           </div>
+          <!--
           <div class="article-share">
             {% assign page_title = page.title | cgi_escape | truncate: 110 %}
             {% capture twitter-share-text %}{{ page_title }} - {{ page.url | absolute_url }}{% if site.social.twitter %} by @{{ site.social.twitter }}{% endif %}{% endcapture %}
@@ -26,17 +92,19 @@
               <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
             </a>
           </div>
-          <a href="javascript:history.back()">Back</a>
+          -->
+          <span class="backbutton"><a href="{{ '/' | relative_url }}posts/index">←Index</a></span>
           {% if site.discus_identifier %}
             <div id="disqus_thread" class="article-comments"></div>
             <script src="https://{{ site.discus_identifier }}.disqus.com/embed.js" async defer></script>
             <noscript>Please enable JavaScript to view the comments.</noscript>
           {% endif %}
         </article>
-        {% include footer.html %}
+        {% include_cached footer.html %}
       </div>
     </div>
   </main>
-  {% include javascripts.html %}
+  {% include_cached javascripts.html %}
+  {% include_cached mathjax.html %}
 </body>
 </html>

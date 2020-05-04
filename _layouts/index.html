@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{{ site.name }} | {{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+
+  <link href="{{ 'feed.xml' | absolute_url }}" type="application/rss+xml" rel="alternate" title="{{ site.name }} Last 10 blog posts" />
+
+  <link rel="icon" type="image/x-icon" href="{% asset favicon-light.ico @path %}">
+  <link rel="apple-touch-icon" href="{% asset apple-touch-icon-light.png @path %}">
+  {% asset light.css %}
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav">
+          <a href="{{ '/' | relative_url }}" class="header-logo" title="{{ site.name }}">{{ site.name }}</a>
+          <ul class="header-links">
+            {% if site.about_enabled == true %}
+              <li>
+                <a href="{{ '/' | relative_url }}" title="About me">
+                  {% include svg-icon.html icon="about" %}
+                </a>
+              </li>
+            {% endif %}
+            {% if site.social.linkedin %}
+              <li>
+                <a href="https://www.linkedin.com/in/{{ site.social.linkedin }}" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+                  {% include svg-icon.html icon="linkedin" %}
+                </a>
+              </li>
+            {% endif %}
+            {% if site.social.tumblr %}
+              <li>
+                <a href="{{ '/' | relative_url }}posts/index" title="Blog">
+                  {% include svg-icon.html icon="writing" %}
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <article class="article">
+          <header class="article-header">
+            <h1>{{ page.title }}</h1>
+            <p>{{ page.description }}</p>
+
+          </header>
+
+
+          <div class="article-content">
+            {{ content }}
+          </div>
+          <span class="backbutton"><a href="{{ '/' | relative_url }}">←About</a></span>
+        </article>
+        
+        <footer class="footer {% if site.scrollappear_enabled %}scrollappear{% endif %}">
+
+        <small class="pull-left"> &copy;2019 All rights reserved. 
+
+        <a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+        </small>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  {% if site.ga_analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_analytics }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site.ga_analytics }}');
+    </script>
+  {% endif %}
+
+  {% asset vendor.js %}
+
+  {% unless site.local_fonts %}
+    {% asset webfonts.js %}
+  {% endunless %}
+
+  {% asset application.js %}
+</body>
+</html>
