@@ -239,10 +239,10 @@ The first principle components vector is chosen from all combinations of predict
 - the first principle components score for the $$i$$th observation is the distance in the $$x$$-direction of the $$i$$th projection from 0, the mean point of all predictors.
 - all principle components vectors are orthogonal to each other
 
-The second principle component $$Z_2$$ is a linear combination of the variables that is uncorrelated with $Z_1$$ and has the largest variance, which means it must be orthogonal to the first principal component direction. Other principle components can be calculated in the same way.
+The second principle component $$Z_2$$ is a linear combination of the variables that is uncorrelated with $$Z_1$$ and has the largest variance, which means it must be orthogonal to the first principal component direction. Other principle components can be calculated in the same way.
 
 **Principle components regression**
-- assume that the directions in which $$X_1, ..., X_p$$ show the most variation are the dirrections that are associated with $$Y$$
+- assume that the directions in which $$X_1, ..., X_p$$ show the most variation are the directions that are associated with $$Y$$
 - using more principle components means lower bias, higher variance
 - this is NOT a feature selection method, since it combines all $$p$$ original features
 - closely related to ridge regression

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tree-Based Methods"
-description: ""
+description: "Decision trees, which divide the predictor space into regions, are simple and useful for interpretation. Their predictive power can be improved with bagging, random forests, and boosting."
 thumb_image: 
 tags: [academic]
 ---
@@ -18,8 +18,6 @@ tags: [academic]
 - [VII. Applications in R](#vii-applications-in-r)
 
 </div>
-
-
 
 ### I. Overview of Decision Trees
 
