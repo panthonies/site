@@ -12,7 +12,7 @@ tags: [academic]
 - [I. Overview of Decision Trees](#i-overview-of-decision-trees)
 - [II. Regression Trees](#ii-regression-trees)
 - [III. Classification Trees](#iii-classification-trees)
-- [IV. Methods: Bagging](#vi-method-bagging)
+- [IV. Methods: Bagging](#iv-method-bagging)
 - [V.  Methods: Random Forests](#v-method-random-forests)
 - [VI. Methods: Boosting](#vi-method-boosting)
 - [VII. Applications in R](#vii-applications-in-r)

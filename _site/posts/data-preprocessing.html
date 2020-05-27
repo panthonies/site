@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Data Pre-Processing</title>
+  <meta name="description" content="How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Data Pre-Processing">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/posts/data-preprocessing">
+  <meta property="og:description" content="How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://localhost:4000/posts/data-preprocessing">
+  <meta name="twitter:title" content="Data Pre-Processing">
+  <meta name="twitter:description" content="How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.">
+
+  
+    <meta property="og:image" content="http://localhost:4000/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="http://localhost:4000/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="http://localhost:4000/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Data Pre-Processing</h1>
+            <p>How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    May 12, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      9 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <div class="toc">
+  <h3 id="contents">Contents</h3>
+
+  <ul>
+    <li><a href="#i-data-pre-processing-unsupervised">I. Data Pre-Processing</a></li>
+    <li><a href="#ii-applications-in-r">II. Applications in R</a></li>
+  </ul>
+
+</div>
+
+<h3 id="i-data-pre-processing-unsupervised">I. Data Pre-Processing (Unsupervised)</h3>
+
+<p>When given a dataset, it’s important to make sure it’s in the best format for your chosen model.</p>
+
+<ul>
+  <li>If the data is <strong>skewed</strong> or has <strong>outliers</strong>, consider performing a transformation (i.e. Box Cox, spatial sign)</li>
+  <li>If the data has <strong>many predictors</strong>, consider feature extraction/dimension reduction methods (i.e. PCA)</li>
+  <li>If the data has <strong>missing values</strong>, consider imputation (i.e. k-nearest neighbors, bagging, mean/median, regression)</li>
+  <li>If the data has <strong>near-zero variance predictors</strong>, consider dropping those predictors</li>
+  <li>If the data has <strong>multicollinearity</strong>, consider dropping high-correlation variables</li>
+</ul>
+
+<h4 id="data-transformation-for-individual-predictors"><span class="boxheader">Data Transformation for Individual Predictors</span></h4>
+
+<p>For many models that are sensitive to scale, magnitude, and balance, it’s appropriate to transform individual predictors:</p>
+
+<ol>
+  <li><strong>Centering and scaling</strong> generally improve the numerical stability of some calculations and models, but can lead to a loss in interpretability.</li>
+  <li><strong>Transformations</strong> can resolve skewness in the data, which also leads to more stable models.</li>
+</ol>
+
+<p><strong>Skewness:</strong> A right-skewed distribution has a tail on the right, and a left-skewed distribution has a tail on the left.
+Considered skewed if the ratio of the highest value to the lowest value is greater than 20. Or use the sample skewness statistic, which becomes more positive with right skew and more negative with left skew:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\text {skewness } & = \frac {\sum (x_i - \bar x) ^ 3} {(n - 1) v^{3/2}} \\
+\text {where } v & = \frac {\sum (x_i - \bar x) ^ 2} {(n - 1)} 
+\end{align} %]]></script>
+
+<p><strong>The Box Cox family of transformations</strong> can determine the type of transformation for the sample data based on maximum likelihood to estimate <script type="math/tex">\lambda</script>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+x^* = \begin{cases}
+\frac{x^\lambda - 1}{\lambda} & \text{ if } \lambda \neq 0
+\log x \text{ if } \lambda = 0
+\end{cases} %]]></script>
+
+<p>The Box Cox method can identify the log transformation, square (<script type="math/tex">\lambda = 2</script>), square root (<script type="math/tex">\lambda = .5</script>), inverse (<script type="math/tex">\lambda = -1</script>), and others.</p>
+
+<h4 id="data-transformation-for-multiple-predictors"><span class="boxheader">Data Transformation for Multiple Predictors</span></h4>
+
+<p><strong>Outliers</strong></p>
+<ul>
+  <li>Make sure that suspected outliers are scientifically valid</li>
+  <li>Be careful when changing values especially when sample sizes are small.</li>
+  <li>Models that are resistant to outliers include tree-based classification models and support vector machines.</li>
+  <li>The <strong>spatial sign transformation</strong> can minimize the outlier problem by projecting the predictor values onto a multidimensional sphere, so that all samples are the same distance from the center of the sphere. Each sample is divided by its squared norm (make sure to center and scale prior to transformation):</li>
+</ul>
+
+<script type="math/tex; mode=display">x_{ij}^* = \frac{x_{ij}} {\sum_{j = 1}^P x_{ij}^2}</script>
+
+<p><strong>Data Reduction and Feature Extraction</strong> (aka Signal Extraction) 
+These methods reduce the data by generating a smaller set of predictors that captures a majority of the information in the original variables.</p>
+
+<ul>
+  <li>PCA captures the most variance possible and creates uncorrelated components. However, predictors should be transformed to fix any skew, then centered and scaled. Can be used in data exploration to see which predictors are associated with each component.</li>
+</ul>
+
+<h4 id="missing-values"><span class="boxheader">Missing Values</span></h4>
+
+<p>Missing data can be structurally missing, or the data was just not collected. Some tree-based models can specifically account for missing data. However, in other cases, missing data can be imputed.</p>
+
+<p>Note: if resampling to select tuning parameter values, imputation should be incorporated within the resampling.</p>
+
+<p>A popular method is <strong>K-nearest neighbor imputation</strong>:</p>
+<ul>
+  <li>Find the samples in the training set “closest” to the missing data point and average those nearby points for an estimate.</li>
+  <li>This ensures the imputed data is within the range of the training set values, but the entire training set is required every time a missing value needs to be imputed.</li>
+  <li>The number of neighbors and the method for determining closeness are both tuning parrameters, but this approach is fairly robust to the tuning parameters.</li>
+</ul>
+
+<h4 id="removing-predictors"><span class="boxheader">Removing Predictors</span></h4>
+
+<p>Advantages to removing predictors include:</p>
+<ul>
+  <li>Decreased computational time and complexity</li>
+  <li>If highly correlated, removing one predictor should not compromise model performance</li>
+  <li>Some models can be crippled by predictors with degenerate distributions</li>
+</ul>
+
+<p><strong>Near-Zero Variance Predictors</strong> are those that have no or very little information and can easily be discarded. It may be advantageous to remove these variables from the model. The rule of thumb for detecting  near-zero variance predictors is:</p>
+<ul>
+  <li>the fraction of unique values over the sample size is low (say 10%)</li>
+  <li>the ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say around 20)</li>
+</ul>
+
+<p><strong>Between-Predictor Correlations (Collinearity and Multicollinearity)</strong></p>
+<ul>
+  <li>PCA can be used to characterize the magnitude of the problem</li>
+  <li>Redundant predictors add more complexity than information to the model</li>
+  <li>Can lead to unstable models and performance in techniques like linear regression.</li>
+  <li>Diagnose multicollinearity for linear models with the variance inflation factor (VIF)</li>
+  <li>Alternatively, deal with the issue by removing the minimum number of predictors to ensure that all pairwise correlations are below a certain threshold:
+    <ol>
+      <li>Calculate the correlation matrix of the predictors</li>
+      <li>Determine the two predictors A and B associated with the largest absolute pairwise correlation</li>
+      <li>Determine the average correlation between A and the other variables, and do the same for B</li>
+      <li>If A has a larger average correlation, remove it; otherwise remove predictor B</li>
+      <li>Repeat 2-4 until no absolute correlations are above the threshold.</li>
+    </ol>
+  </li>
+</ul>
+
+<p>If we wanted a model particularly sensitive to collinearity, we can apply a threshold of .75 and eliminate the minimum number of predictors to achieve all pairwise correlations less than .75.</p>
+
+<h4 id="adding-predictors"><span class="boxheader">Adding Predictors</span></h4>
+
+<p>Dummy variables encode categorical predictors into different levels. Adding complex combinations of the data to simpler models may be preferred to models that generate complex, nonlinear relationships.</p>
+
+<p>One way to augment the prediction data with complex combinations of the data is calculate calculate the “class centroids” for classification models, and for each predictor, add the distance to each class centroid to the model (Forina et al. 2009).</p>
+
+<h4 id="binning-predictors"><span class="boxheader">Binning Predictors</span></h4>
+
+<p>There are many issues with manual binning of continuous data.</p>
+<ul>
+  <li>Limits the potential of complex relationships between predictor and outcomes</li>
+  <li>Loss of precision in predictions when predictors are categorized</li>
+  <li>Categorizing predictors can lead to a high rate of false positives</li>
+  <li>The perceived gain interpretability gained by manual categorization is usually offset by a significant loss in performance.</li>
+</ul>
+
+<p>Several models, such as classification/regression trees and multivariate adaptive regression splines, estimate cut points mathematically in the process of model building to maximize accuracy. This is different than manual binning.</p>
+
+<hr />
+<hr />
+<hr />
+<h3 id="ii-applications-in-r">II. Applications in R</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># preparation --------------------------------------------------------------</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">e1071</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">corrplot</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">AppliedPredictiveModeling</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">segmentationOriginal</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># extract training data, then cellID, class, and case</span><span class="w">
+</span><span class="n">segData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">segmentationOriginal</span><span class="p">,</span><span class="w"> </span><span class="n">Case</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Train"</span><span class="p">)</span><span class="w">
+</span><span class="n">cellID</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">segData</span><span class="o">$</span><span class="n">Cell</span><span class="w">
+</span><span class="n">class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">segData</span><span class="o">$</span><span class="n">Class</span><span class="w">
+</span><span class="n">case</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">segData</span><span class="o">$</span><span class="n">Case</span><span class="w">
+</span><span class="n">segData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">segData</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)]</span><span class="w">
+
+</span><span class="c1"># use only non- "Status" columns</span><span class="w">
+</span><span class="n">segData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">segData</span><span class="p">,</span><span class="w"> </span><span class="n">str_which</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">segData</span><span class="p">),</span><span class="w"> </span><span class="s2">"Status"</span><span class="p">,</span><span class="w"> </span><span class="n">negate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># skewness ----------------------------------------------------------------</span><span class="w">
+
+</span><span class="n">skewness</span><span class="p">(</span><span class="n">segData</span><span class="o">$</span><span class="n">AngleCh1</span><span class="p">)</span><span class="w"> </span><span class="c1"># one variable </span><span class="w">
+</span><span class="n">map_dbl</span><span class="p">(</span><span class="n">segData</span><span class="p">,</span><span class="w"> </span><span class="n">skewness</span><span class="p">)</span><span class="w"> </span><span class="c1"># across a data frame</span><span class="w">
+
+</span><span class="c1"># transformations ---------------------------------------------------------</span><span class="w">
+
+</span><span class="c1"># box cox transformation</span><span class="w">
+</span><span class="p">(</span><span class="n">Ch1AreaTrans</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">BoxCoxTrans</span><span class="p">(</span><span class="n">segData</span><span class="o">$</span><span class="n">AreaCh1</span><span class="p">))</span><span class="w"> </span><span class="c1"># one variable</span><span class="w">
+</span><span class="n">predict</span><span class="p">(</span><span class="n">Ch1AreaTrans</span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">segData</span><span class="o">$</span><span class="n">AreaCh1</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># principle components analysis</span><span class="w">
+</span><span class="n">pcaObject</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prcomp</span><span class="p">(</span><span class="n">segData</span><span class="p">,</span><span class="w"> </span><span class="n">center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">percentVariance</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pcaObject</span><span class="o">$</span><span class="n">sd</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">pcaObject</span><span class="o">$</span><span class="n">sd</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="w">
+
+</span><span class="n">head</span><span class="p">(</span><span class="n">pcaObject</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span><span class="w"> </span><span class="c1"># "x" stores transformed values of data</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">pcaObject</span><span class="o">$</span><span class="n">rotation</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">])</span><span class="w"> </span><span class="c1"># "rotation" stores the variable loadings</span><span class="w">
+
+</span><span class="c1"># PREPROCESS: box cox transformation, center, scale, and perform PCA</span><span class="w">
+</span><span class="c1"># note, order of transformation is: transform, center, scale, impute, feature extraction, spatial sign</span><span class="w">
+</span><span class="p">(</span><span class="n">trans</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">preProcess</span><span class="p">(</span><span class="n">segData</span><span class="p">,</span><span class="w">
+                    </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"BoxCox"</span><span class="p">,</span><span class="w"> </span><span class="s2">"center"</span><span class="p">,</span><span class="w"> </span><span class="s2">"scale"</span><span class="p">,</span><span class="w"> </span><span class="s2">"knnImpute"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pca"</span><span class="p">)))</span><span class="w">
+</span><span class="n">transformed_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span><span class="w"> </span><span class="n">segData</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1"># filter near-zero variance predictors ------------------------------------</span><span class="w">
+
+</span><span class="n">nearZeroVar</span><span class="p">(</span><span class="n">segData</span><span class="p">)</span><span class="w"> </span><span class="c1"># returns vector of integers for which columns should be removed</span><span class="w">
+
+
+</span><span class="c1"># correlations between predictors -----------------------------------------</span><span class="w">
+
+</span><span class="n">correlations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cor</span><span class="p">(</span><span class="n">segData</span><span class="p">)</span><span class="w">
+</span><span class="n">correlations</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">]</span><span class="w">
+</span><span class="n">corrplot</span><span class="p">(</span><span class="n">correlations</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"hclust"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># remove the min # predictors so that all pairwise correlations are below a threshold</span><span class="w">
+</span><span class="n">highCorr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">findCorrelation</span><span class="p">(</span><span class="n">correlations</span><span class="p">,</span><span class="w"> </span><span class="n">cutoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">)</span><span class="w">
+</span><span class="n">filteredSegData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">segData</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="n">highCorr</span><span class="p">]</span><span class="w">
+
+
+</span><span class="c1"># create a full set of dummy variables ------------------------------------</span><span class="w">
+</span><span class="c1"># recommended for tree-based models</span><span class="w">
+
+</span><span class="c1"># without interaction effect</span><span class="w">
+</span><span class="n">simpleMod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dummyVars</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Species</span><span class="p">,</span><span class="w">
+                       </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">,</span><span class="w">
+                       </span><span class="n">levelsOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># remove var name from the column name</span><span class="w">
+
+</span><span class="n">predict</span><span class="p">(</span><span class="n">simpleMod</span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span><span class="w"> </span><span class="c1"># assumes the effect of petal width is same for every species</span><span class="w">
+
+</span><span class="c1"># with interaction effect</span><span class="w">
+</span><span class="n">simpleMod_withInteraction</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dummyVars</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Species</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Petal.Width</span><span class="o">:</span><span class="n">Species</span><span class="p">,</span><span class="w">
+                                       </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">,</span><span class="w">
+                                       </span><span class="n">levelsOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># remove var name from the column name</span><span class="w">
+</span><span class="n">predict</span><span class="p">(</span><span class="n">simpleMod_withInteraction</span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">iris</span><span class="p">))</span><span class="w"> 
+
+
+</span><span class="c1"># all together -----------------------------------------------------------</span><span class="w">
+
+</span><span class="n">data</span><span class="p">(</span><span class="n">BloodBrain</span><span class="p">)</span><span class="w"> </span><span class="c1"># data = bbbDescr; outcome = logBBB</span><span class="w">
+
+</span><span class="n">bbbDescr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">bbbDescr</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="n">nearZeroVar</span><span class="p">(</span><span class="n">bbbDescr</span><span class="p">)]</span><span class="w"> </span><span class="c1"># remove 7 vars w/near zero variance</span><span class="w">
+
+</span><span class="n">corrplot</span><span class="p">(</span><span class="n">cor</span><span class="p">(</span><span class="n">bbbDescr</span><span class="p">),</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"hclust"</span><span class="p">)</span><span class="w">
+</span><span class="n">highCorr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">findCorrelation</span><span class="p">(</span><span class="n">cor</span><span class="p">(</span><span class="n">bbbDescr</span><span class="p">),</span><span class="w"> </span><span class="n">cutoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">)</span><span class="w">
+</span><span class="n">filteredbbbDescr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">bbbDescr</span><span class="p">[,</span><span class="w"> </span><span class="o">-</span><span class="n">highCorr</span><span class="p">]</span><span class="w"> </span><span class="c1"># remove 65 highly correlated vars</span><span class="w">
+
+</span><span class="p">(</span><span class="n">trans</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">preProcess</span><span class="p">(</span><span class="n">filteredbbbDescr</span><span class="p">,</span><span class="w">
+                     </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"BoxCox"</span><span class="p">,</span><span class="w"> </span><span class="s2">"center"</span><span class="p">,</span><span class="w"> </span><span class="s2">"scale"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pca"</span><span class="p">)))</span><span class="w">
+
+</span><span class="n">transformed_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span><span class="w"> </span><span class="n">filteredbbbDescr</span><span class="p">)</span><span class="w"> </span><span class="c1"># 30 variables explain 95% of variance</span></code></pre></figure>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Data+Pre-Processing%20-%20http://localhost:4000/posts/data-preprocessing" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/data-preprocessing" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2019 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

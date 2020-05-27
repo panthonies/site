@@ -20,7 +20,7 @@ His investigation into the people and worldview that preserve the power of the w
 	- In 2017, the **three** richest Americans held more wealth than the **bottom 50%** of the country.[^3]
 
 
-2. <span style = "color:black">There is more generosity in the U.S. than ever before.</span>
+2. <span style = "color:black">There is more generosity in the U.S. than ever before.</span> In the book, this is argued more anecdotally and less factually (i.e. we always hear big news stories about billionaires and foundations solving big problems), but I've also included some facts below.  
 
 	- In 2018, Americans gave **$427 billion** dollars to charity -- $292 billion from individuals, $76 billion from foundations, $40 billion from bequests, and $20 billion from corporations.[^4]
 	- **3/4** of global philanthropic foundations have been established in the last 25 years, with **60%** of its wealth concentrated in the U.S.[^5]

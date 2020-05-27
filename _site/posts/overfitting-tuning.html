@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Model Tuning and Overfitting</title>
+  <meta name="description" content="An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Model Tuning and Overfitting">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/posts/overfitting-tuning">
+  <meta property="og:description" content="An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="http://localhost:4000/posts/overfitting-tuning">
+  <meta name="twitter:title" content="Model Tuning and Overfitting">
+  <meta name="twitter:description" content="An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.">
+
+  
+    <meta property="og:image" content="http://localhost:4000/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="http://localhost:4000/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="http://localhost:4000/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Model Tuning and Overfitting</h1>
+            <p>An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    May 13, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      7 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <div class="toc">
+  <h3 id="contents">Contents</h3>
+
+  <ul>
+    <li><a href="#i-model-tuning">I. Model Tuning</a></li>
+    <li><a href="#ii-recommendations">II. Recommendations</a></li>
+    <li><a href="#iii-applications-in-r">III. Applications in R</a></li>
+  </ul>
+
+</div>
+
+<p><small>Note: Because I covered similar material in my <a href="resampling-methods">Resampling Methods</a> post, I won’t be going into great detail about the techniques described here.</small></p>
+
+<h3 id="i-model-tuning">I. Model Tuning</h3>
+
+<p>Behold! A nice picture of the parameter tuning process.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<center><a href="/assets/05-13-resampling-994553bd83f2590a695d0b072cb01a30d85e4ac1f343129af4010938de6adaae.png">
+  <img src="/assets/05-13-resampling-994553bd83f2590a695d0b072cb01a30d85e4ac1f343129af4010938de6adaae.png" alt="Model Tuning Overview" class="zooming" data-rjs="/assets/05-13-resampling-994553bd83f2590a695d0b072cb01a30d85e4ac1f343129af4010938de6adaae.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p><strong>Overfitting</strong> is when the model has learned the characteristics of a particular sample’s unique noise, and will have poor accuracy when predicting a new sample. Splitting the data into test and training sets or using resampling techniques to measure error mitigates the effect of overfitting.</p>
+
+<p><span class="boxheader">Data Splitting</span></p>
+
+<p>When <script type="math/tex">n</script> is not large, a strong case can be made for using cross-validation instead of splitting the data, which will allow the model to learn on more data points. Types of data splitting include:</p>
+
+<ul>
+  <li>A simple random sample of the data</li>
+  <li>Stratified random sampling of the data, for balanced outcomes in the test dataset</li>
+  <li>Maximum dissimilarity sampling: initialize the test set with a single sample, and allocate the most dissimilar unallocated sample (must specify a dissimilarity measure). Repeat until the target test set size is achieved.</li>
+</ul>
+
+<p><span class="boxheader">Resampling Techniques</span></p>
+
+<ul>
+  <li>K-fold cross-validation
+    <ul>
+      <li>In practice, <script type="math/tex">K=5</script> or <script type="math/tex">K=10</script> are commonly used.</li>
+      <li>A bigger <script type="math/tex">K</script> leads to lower bias and higher variance.</li>
+      <li>Generally has high variance compared to other validation methods.</li>
+      <li>Leave-one-out cross-validation is a special case where <script type="math/tex">K = n</script>.</li>
+    </ul>
+  </li>
+  <li>Repeated Training/Test Splits
+    <ul>
+      <li>AKA, “Monte Carlo Cross-Validation” or “Leave-group-out Cross-Validation”</li>
+      <li>Rule of thumb is to use around 75-80% of the data for training splits.</li>
+      <li>Use a large number of repetitions (say, 50 to 200+)</li>
+    </ul>
+  </li>
+  <li>Bootstrap error
+    <ul>
+      <li>Fit the model on a bootstrap sampling of the data, then predict the out-of-bag data points for an error estimate</li>
+      <li>In general, less uncertainty than k-fold CV and has similar bias to k-fold CV with <script type="math/tex">k \approx 2</script></li>
+      <li>On average, 63.2% of the data points are represented in the bootstrap sample.</li>
+      <li>An alternate “632 method” for estimating error is <script type="math/tex">.632 * \text{ Bootstrap Error Rate } + .368 * \text{ Apparent Error Rate}</script></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="ii-recommendations">II. Recommendations</h3>
+
+<p><strong>Choosing the final tuning parameters</strong>:</p>
+<ol>
+  <li>Choose the model associated with the numerically best performance estimates.</li>
+  <li>Choose the simplest model whose performance is within a single standard error of the numerically best value (one-standard-error method).</li>
+  <li>Choose the simplest model that is within a certain tolerance of the numerically best value (% decrease in performance from the numerically optimal value, <script type="math/tex">O</script>, can be calculated by <script type="math/tex">(X - O) / O</script>).</li>
+</ol>
+
+<p><strong>Data Splitting and Resampling</strong>:</p>
+<ul>
+  <li>For small datasets, use 10-fold cross validation.</li>
+  <li>No resampling method is uniformly better than another.</li>
+  <li>For large sample sizes, differences become less pronounced and computational efficiency becomes more important.</li>
+  <li>For choosing between models, consider using one of the bootstrap procedures since they have very low variance.</li>
+</ul>
+
+<p><strong>Choosing between models</strong>:</p>
+<ol>
+  <li>Start with the most flexible models (boosted trees, SVMs) to get a sense of the empirically optimum results.</li>
+  <li>Investigate simpler, more interpretable models (MARS, PLS, GAMs, Naïve Bayes).</li>
+  <li>Consider using the simplest model that reasonably approximates the performance of the more complex models.</li>
+</ol>
+
+<ul>
+  <li>Note: A paired t-test can be used to evaluate the hypothesis that the models have equivalent average accuracies</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iii-applications-in-r">III. Applications in R</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Data Splitting ----------------------------------------------------------</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">AppliedPredictiveModeling</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">twoClassData</span><span class="p">)</span><span class="w"> </span><span class="c1"># predictors; classes</span><span class="w">
+
+</span><span class="c1"># stratified random sampling</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">trainingRows</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createDataPartition</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.8</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">trainingRows</span><span class="p">)</span><span class="w">
+
+</span><span class="n">trainPredictors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predictors</span><span class="p">[</span><span class="n">trainingRows</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="n">trainClasses</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">classes</span><span class="p">[</span><span class="n">trainingRows</span><span class="p">]</span><span class="w">
+</span><span class="n">testPredictors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predictors</span><span class="p">[</span><span class="o">-</span><span class="n">trainingRows</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="n">testClasses</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">classes</span><span class="p">[</span><span class="o">-</span><span class="n">trainingRows</span><span class="p">]</span><span class="w">
+
+</span><span class="c1"># maximum dissimilarity sampling</span><span class="w">
+</span><span class="c1"># maxDissim()</span><span class="w">
+
+
+</span><span class="c1"># Resampling --------------------------------------------------------------</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># repeated training/test splits</span><span class="w">
+</span><span class="n">repeatedSplits</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createDataPartition</span><span class="p">(</span><span class="n">trainClasses</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.8</span><span class="p">,</span><span class="w"> </span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="n">str</span><span class="p">(</span><span class="n">repeatedSplits</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># indicators for 10-fold CV</span><span class="w">
+</span><span class="n">cvSplits</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createFolds</span><span class="p">(</span><span class="n">trainClasses</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">returnTrain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">str</span><span class="p">(</span><span class="n">cvSplits</span><span class="p">)</span><span class="w">
+
+</span><span class="n">fold1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cvSplits</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="w">
+</span><span class="n">cvPredictors1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trainPredictors</span><span class="p">[</span><span class="n">fold1</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="n">cvClasses1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trainClasses</span><span class="p">[</span><span class="n">fold1</span><span class="p">]</span><span class="w">
+
+
+
+</span><span class="c1"># Model Building ----------------------------------------------------------</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+
+</span><span class="n">trainPredictors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.matrix</span><span class="p">(</span><span class="n">trainPredictors</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="n">knnFit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">knn3</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainPredictors</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainClasses</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">))</span><span class="w">
+
+</span><span class="n">testPredictions</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">knnFit</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testPredictors</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"class"</span><span class="p">)</span><span class="w">
+</span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">testClasses</span><span class="p">,</span><span class="w"> </span><span class="n">testPredictions</span><span class="p">))</span><span class="w"> </span><span class="c1"># 66% accuracy</span><span class="w">
+
+
+
+</span><span class="c1"># Determining Tuning Parameters -------------------------------------------</span><span class="w">
+</span><span class="c1"># NOTE: the code in this section is an edited version of code from the 'chapters'</span><span class="w">
+</span><span class="c1"># directory of the AppliedPredictiveModeling package that is included  </span><span class="w">
+</span><span class="c1"># for reference/educational purposes only.</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">GermanCredit</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Assume we have completed some data pre-processing and split the </span><span class="w">
+</span><span class="c1">## data into GermanCreditTrain and GermanCreditTest training/test sets</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">kernlab</span><span class="p">)</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">231</span><span class="p">)</span><span class="w">
+</span><span class="n">sigDist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigest</span><span class="p">(</span><span class="n">Class</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GermanCreditTrain</span><span class="p">,</span><span class="w"> </span><span class="n">frac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">svmTuneGrid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.vector</span><span class="p">(</span><span class="n">sigDist</span><span class="p">)[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="p">(</span><span class="m">-2</span><span class="o">:</span><span class="m">7</span><span class="p">))</span><span class="w">
+
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1056</span><span class="p">)</span><span class="w">
+</span><span class="n">svmFit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="p">(</span><span class="n">Class</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w">
+                </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GermanCreditTrain</span><span class="p">,</span><span class="w">
+                </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"svmRadial"</span><span class="p">,</span><span class="w">
+                </span><span class="n">preProc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"center"</span><span class="p">,</span><span class="w"> </span><span class="s2">"scale"</span><span class="p">),</span><span class="w">
+                </span><span class="n">tuneGrid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">svmTuneGrid</span><span class="p">,</span><span class="w">
+                </span><span class="n">trControl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainControl</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"repeatedcv"</span><span class="p">,</span><span class="w"> 
+                                         </span><span class="n">repeats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+                                         </span><span class="n">classProbs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># note--different resampling methods in trainControl include:</span><span class="w">
+</span><span class="c1"># cv, LOOCV, LGOCV, boot, boot632</span><span class="w">
+
+
+</span><span class="c1">## Print the results</span><span class="w">
+
+</span><span class="n">svmFit</span><span class="w">
+
+</span><span class="c1">## A line plot of the average performance. The 'scales' argument is actually an </span><span class="w">
+</span><span class="c1">## argument to xyplot that converts the x-axis to log-2 units.</span><span class="w">
+
+</span><span class="n">plot</span><span class="p">(</span><span class="n">svmFit</span><span class="p">,</span><span class="w"> </span><span class="n">scales</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)))</span><span class="w">
+
+</span><span class="c1">## Test set predictions</span><span class="w">
+
+</span><span class="n">predictedClasses</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">svmFit</span><span class="p">,</span><span class="w"> </span><span class="n">GermanCreditTest</span><span class="p">)</span><span class="w">
+</span><span class="n">str</span><span class="p">(</span><span class="n">predictedClasses</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Use the "type" option to get class probabilities</span><span class="w">
+
+</span><span class="n">predictedProbs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">svmFit</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GermanCreditTest</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"prob"</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">predictedProbs</span><span class="p">)</span><span class="w">
+
+
+
+</span><span class="c1"># Choosing Between Models -------------------------------------------------</span><span class="w">
+</span><span class="c1"># continued from previous section</span><span class="w">
+
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1056</span><span class="p">)</span><span class="w">
+</span><span class="n">glmProfile</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="p">(</span><span class="n">Class</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w">
+                    </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GermanCreditTrain</span><span class="p">,</span><span class="w">
+                    </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"glm"</span><span class="p">,</span><span class="w">
+                    </span><span class="n">trControl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainControl</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"repeatedcv"</span><span class="p">,</span><span class="w"> 
+                                             </span><span class="n">repeats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">))</span><span class="w">
+</span><span class="n">glmProfile</span><span class="w">
+
+</span><span class="n">resamp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">resamples</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">SVM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">svmFit</span><span class="p">,</span><span class="w"> </span><span class="n">Logistic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glmProfile</span><span class="p">))</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">resamp</span><span class="p">)</span><span class="w">
+
+</span><span class="n">modelDifferences</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="n">resamp</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">modelDifferences</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## The actual paired t-test:</span><span class="w">
+</span><span class="n">modelDifferences</span><span class="o">$</span><span class="n">statistics</span><span class="o">$</span><span class="n">Accuracy</span></code></pre></figure>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Source Kuhn and Johnson, <em>Applied Predictive Modeling (2013)</em>, pg. 66 <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Model+Tuning+and+Overfitting%20-%20http://localhost:4000/posts/overfitting-tuning" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/overfitting-tuning" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2019 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

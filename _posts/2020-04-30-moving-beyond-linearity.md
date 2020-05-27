@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Moving Beyond Linearity"
-description: "Linear models can have significant limitations in terms of predictive power, because the limear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships."
+description: "Linear models can have significant limitations in terms of predictive power, because the linear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships."
 thumb_image: 
 tags: [academic]
 ---
@@ -141,7 +141,7 @@ For local regression, we compute the fit at a target point $$x_0$$ using only th
 ---
 ### V. Generalized Additive Models
 
-Generalized additive models (GAMs) provide a general framework for extending a standard linear model by allowing non-linear functinos of each of the variables while maintaining additivity.
+Generalized additive models (GAMs) provide a general framework for extending a standard linear model by allowing non-linear functions of each of the variables while maintaining additivity.
 
 **Pros:**
 - Allows fitting a non-linear $$f_j$$ to each $$X_j$$ to model non-linear relationships. This means we don't have to try transformations on every variable

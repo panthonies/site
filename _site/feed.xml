@@ -7,8 +7,56 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Tree-Based Methods</title>
+        <title>Regression Techniques for Predictive Modeling</title>
+        <description>Buckle up! This is going to be a long one.</description>
+        <pubDate>Mon, 18 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/apm-regression</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/apm-regression</guid>
+      </item>
+    
+      <item>
+        <title>Model Tuning and Overfitting</title>
+        <description>An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.</description>
+        <pubDate>Wed, 13 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/overfitting-tuning</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/overfitting-tuning</guid>
+      </item>
+    
+      <item>
+        <title>Data Pre-Processing</title>
+        <description>How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.</description>
+        <pubDate>Tue, 12 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/data-preprocessing</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/data-preprocessing</guid>
+      </item>
+    
+      <item>
+        <title>Introduction and Overview of Content</title>
         <description></description>
+        <pubDate>Mon, 11 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/intro-predictive-modeling</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/intro-predictive-modeling</guid>
+      </item>
+    
+      <item>
+        <title>Unsupervised Learning</title>
+        <description>In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).</description>
+        <pubDate>Mon, 04 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/unsupervised-learning</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/unsupervised-learning</guid>
+      </item>
+    
+      <item>
+        <title>Support Vector Machines</title>
+        <description>Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.</description>
+        <pubDate>Sat, 02 May 2020 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000/posts/support-vector-machines</link>
+        <guid isPermaLink="true">http://localhost:4000/posts/support-vector-machines</guid>
+      </item>
+    
+      <item>
+        <title>Tree-Based Methods</title>
+        <description>Decision trees, which divide the predictor space into regions, are simple and useful for interpretation. Their predictive power can be improved with bagging, random forests, and boosting.</description>
         <pubDate>Fri, 01 May 2020 00:00:00 -0400</pubDate>
         <link>http://localhost:4000/posts/tree-based-methods</link>
         <guid isPermaLink="true">http://localhost:4000/posts/tree-based-methods</guid>
@@ -16,7 +64,7 @@
     
       <item>
         <title>Moving Beyond Linearity</title>
-        <description>Linear models can have significant limitations in terms of predictive power, because the limear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships.</description>
+        <description>Linear models can have significant limitations in terms of predictive power, because the linear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships.</description>
         <pubDate>Thu, 30 Apr 2020 00:00:00 -0400</pubDate>
         <link>http://localhost:4000/posts/moving-beyond-linearity</link>
         <guid isPermaLink="true">http://localhost:4000/posts/moving-beyond-linearity</guid>
@@ -36,54 +84,6 @@
         <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
         <link>http://localhost:4000/posts/resampling-methods</link>
         <guid isPermaLink="true">http://localhost:4000/posts/resampling-methods</guid>
-      </item>
-    
-      <item>
-        <title>Classification</title>
-        <description>Classification models are used to predict a categorical response. </description>
-        <pubDate>Fri, 24 Apr 2020 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/posts/classification</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/classification</guid>
-      </item>
-    
-      <item>
-        <title>Linear Regression</title>
-        <description>Linear Regression is a simple approach for predicting a quantitative response, and is the foundation of many other types of statistical learning. It is especially convenient for establishing a the strength of relationships between specific variables to an output, and is easily interpretable.</description>
-        <pubDate>Wed, 22 Apr 2020 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/posts/linear-regression</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/linear-regression</guid>
-      </item>
-    
-      <item>
-        <title>An Introduction to Statistical Learning</title>
-        <description></description>
-        <pubDate>Tue, 21 Apr 2020 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/posts/intro-statistical-learning</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/intro-statistical-learning</guid>
-      </item>
-    
-      <item>
-        <title>Five things I learned from my first job out of college</title>
-        <description>I worked at a large technology company in a technical, customer-facing role for three years after I graduated from college. Here are the most important lessons I've taken from my experience.</description>
-        <pubDate>Fri, 13 Mar 2020 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/posts/five-things-i-learned</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/five-things-i-learned</guid>
-      </item>
-    
-      <item>
-        <title>A List of Favorites, circa 2017</title>
-        <description>On my previous personal site, I had a page with some of my favorite things at the time. Here are those things.</description>
-        <pubDate>Sun, 08 Mar 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/favorites-circa-2017</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/favorites-circa-2017</guid>
-      </item>
-    
-      <item>
-        <title>Graphing in R for Effective Communication</title>
-        <description>In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.</description>
-        <pubDate>Thu, 05 Mar 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/posts/graphics-for-communication-r</link>
-        <guid isPermaLink="true">http://localhost:4000/posts/graphics-for-communication-r</guid>
       </item>
     
   </channel>

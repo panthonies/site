@@ -70,33 +70,50 @@ where $$I(y_i \neq \hat y_i)$$ is an indicator variable that equals 1 if the pre
 ---
 ### II. Methods
 
-Details will be covered in later posts.
+Details are covered in the linked posts.
 
-- **Regression:** Predicting or explaining a continuous (quantitative) output
-	- Linear Regression with stepwise selection
-	- Ridge Regression
-	- Lasso
-	- Principle Components Regression
-	- Partial Least Squares
-	- Non-Linear Additive Models
+###### **[Regression](linear-regression):** Predicting or explaining a continuous (quantitative) output
+- Simple Linear Regression
+- Multiple Linear Regression
+- K-Nearest Neighbors Regression
 
-- **Classification:** Predicting or explaining a categorical (qualitative) output
-	- Logistic Regression
-	- Linear Discriminant Analysis
-	- K-Nearest Neighbors
-	- Support Vector Machines
+###### **[Classification](classification):** Predicting or explaining a categorical (qualitative) output
+- K-Nearest Neighbors
+- Logistic Regression
+- Linear Discriminant Analysis
+- Quadratic Discriminant Analysis
 
-- **Resampling Methods:** Techniques that produce more accurate models
-	- Cross validation
-	- Bootstrap
+###### **[Resampling Methods](resampling-methods):** Techniques that produce more accurate models
+- Cross validation
+- Bootstrap
 
-- **Tree-based Methods:** Stratifying or segmenting the predcitor space into regions
-	- Bagging
-	- Boosting
-	- Random Forests
+###### **[Linear Model Selection and Regularization](linear-model-selection-regularization):** Subset selection, shrinkage, and dimension reduction techniques
+- Linear Regression with forward, backward, and best subset selection
+- L2 Regularization (Ridge Regression)
+- L1 Regularization (Lasso)
+- Principle Components Regression
+- Partial Least Squares
 
-- **Clustering:** Grouping individuals according to observed characteristics
-	- Principle Components Analysis
-	- K-means Clustering
-	- Hierarchical Clustering
+###### **[Moving Beyond Linearity](moving-beyond-linearity):** Removing the linearity assumption
+- Polynomial Regression and Step Functions
+- Regression Splines
+- Smoothing Splines
+- Local Regression
+- Generalized Additive Models
+
+###### **[Tree-based Methods](tree-based-methods):** Stratifying or segmenting the predcitor space into regions
+- Regression and Classification Trees
+- Bagging
+- Random Forests
+- Boosting
+
+###### **[Support Vector Machines](support-vector-machines):**
+- Maximal Margin Classifier
+- Support Vector Classifier
+- Support Vector Machines (linear, polynomial, and radial kernel)
+
+###### **[Unsupervised Learning](unsupervised-learning):** finding subgroups among variables, or grouping individuals according to observed characteristics
+- Principle Components Analysis
+- K-means Clustering
+- Hierarchical Clustering
 
