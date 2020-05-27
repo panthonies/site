@@ -96,7 +96,7 @@ We can choose the optimal model either by estimate the test error *indirectly* b
   - Larger is better.
 
 Note: These formulas are all for linear least squares, and can be generalized for additional model types.
-m
+
 **Cross Validation or validation set error:**
 - Makes fewer assumptions about the underlying model, and can be used when the number of predictors is unknown, or $$\hat \sigma^2$$ cannot be estimated.
 - One Standard Error Rule: choose the smallest model for which the estimated test MSE is within one standard error of the lowest point on the curve.
