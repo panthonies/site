@@ -22,6 +22,9 @@ tags: [academic]
                       alt="XXXXXX" %}
 
 
+[^1]: Source: Authors, *Title* (Year), pg. XXX
+
+
 ---
 ---
 ---
