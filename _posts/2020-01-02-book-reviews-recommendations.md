@@ -13,6 +13,7 @@ tags: [personal, books]
 <details open>
 	<summary style="cursor: pointer">Books I read in 2020:</summary><p markdown="block">
 
+* <span style="background-color: #ffefc7">[*The Fifth Season* -- N.K. Jemisin](#the-fifth-season)</span>
 * [*Why We're Polarized* -- Ezra Klein](#why-we're-polarized)
 * [*The Power* -- Naomi Alderman](#the-power)
 * <span style="background-color: #ffefc7">[*Winners Take All* -- Anand Giridharadas](#winners-take-all)</span>
@@ -41,6 +42,29 @@ tags: [personal, books]
 
 
 <!-- BEGIN CONTENT -->
+
+## The Fifth Season
+###### **N.K. Jemisin (2015)**
+
+<figure style="float: right; width: 300px; margin-left: 40px; margin-bottom: 6px"> 
+	<a href="https://www.goodreads.com/book/show/19161852-the-fifth-season" target="_blank">
+		<img src="{% asset 'the-fifth-season.jpg' @path %}" alt="the-fifth-season" style="border: #ccc 2px solid">
+	</a> 
+</figure>
+
+*Categories: Fantasy, Science Fiction*
+
+<span style="background-color: #d7e8f7">**TL;DR:** The Fifth Season is a masterpiece of worldbuilding, chronicling the story of three point-of-view characters who are orogenes -- humans who have an additional sense that allows them to move stone -- and their journey in an unjust world. 
+
+I really enjoyed this book for its interesting worldbuilding, unconventional main characters, and complex social structures that mirror those of our own world. 
+
+The setting is a one-continent planet called the Stillness that is plagued by seismic activity and "Fifth Seasons:" massive events that lead to extended periods of life-threatening circumstances that forces society to constantly be prepared for the worst. In this world, there are a minority of people called orogenes who have an innate ability to control their environment, but because of their destructive potential, they have become outcasts, hunted down and sent to a special facility for training.
+
+The story is told very well, and information is given in a much more subtle manner than many other fantasy books (no spoon-feeding here, and as a bonus, you'll learn lots of different ways to describe rocks). This has quickly become one of my favorites!
+
+<span class="backbutton"><a href="#table-of-contents">Return to top ⤴</a></span>
+
+---
 
 ## Why We're Polarized
 ###### **Ezra Klein (2020)**
