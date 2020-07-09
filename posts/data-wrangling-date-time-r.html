@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Data Wrangling in R: Dates and Times</title>
+  <meta name="description" content="In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Data Wrangling in R: Dates and Times">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/data-wrangling-date-time-r">
+  <meta property="og:description" content="In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/data-wrangling-date-time-r">
+  <meta name="twitter:title" content="Data Wrangling in R: Dates and Times">
+  <meta name="twitter:description" content="In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Data Wrangling in R: Dates and Times</h1>
+            <p>In which we review basic information about dates and times, including how to create them, how they are represented, and what you can do with them.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    February 22, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      7 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/tag/r" title="See all posts with tag 'r'">r</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <p>Here we’ll review the creation of dates and times, the components that make up dates and times, time spans, and time zones in R.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> See the <a href="/pdf/r-cheat-sheet-datetime.pdf" target="blank">RStudio Dates and Times Cheat Sheet</a> for a condensed reference.</p>
+
+<p>There are three types of data that refer to an instant in time: <strong>dates</strong>, <strong>times</strong>, and <strong>date-times</strong>. You can retrieve the current date with <code class="highlighter-rouge">date()</code> and the current date-time with <code class="highlighter-rouge">now()</code>.</p>
+
+<p>We will use the following three packages in this post:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"lubridate"</span><span class="p">)</span><span class="w"> </span><span class="c1"># use this when working with date/times</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"nycflights13"</span><span class="p">)</span><span class="w"> </span><span class="c1"># example data set of flights leaving from NYC in 2013</span></code></pre></figure>
+
+<h2 id="creating-dates-and-times">Creating Dates and Times</h2>
+<hr />
+
+<h5 id="1-create-dates-and-times-from-strings">1. Create dates and times from strings</h5>
+
+<p>Use a function containing <code class="highlighter-rouge">y, m, d</code> and <code class="highlighter-rouge">h, m, s</code> to turn a string or series of numbers into a date or date-time.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ymd</span><span class="p">(</span><span class="s2">"2020-02-22"</span><span class="p">)</span><span class="w"> </span><span class="c1"># numbers in quotes. any combo of ymd will work</span><span class="w">
+</span><span class="n">mdy</span><span class="p">(</span><span class="m">02222020</span><span class="p">)</span><span class="w"> </span><span class="c1"># unquoted, non-delimited numbers will also work</span><span class="w">
+</span><span class="n">ymd_hms</span><span class="p">(</span><span class="s2">"2020-02-22 13:05:59"</span><span class="p">)</span><span class="w"> </span><span class="c1"># add combos of _hms to include time</span><span class="w">
+</span><span class="n">ymd_h</span><span class="p">(</span><span class="m">2020022213</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"EST"</span><span class="p">)</span><span class="w"> </span><span class="c1"># supply timezone with tz</span></code></pre></figure>
+
+<h5 id="2-create-dates-and-times-from-other-types-of-data">2. Create dates and times from other types of data</h5>
+
+<p>Use <code class="highlighter-rouge">as_date()</code> and <code class="highlighter-rouge">as_time()</code> to convert an object to a date or a date-time.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">as_date</span><span class="p">(</span><span class="n">now</span><span class="p">())</span><span class="w"> </span><span class="c1"># change a date-time to a date</span><span class="w">
+</span><span class="n">as_datetime</span><span class="p">(</span><span class="n">today</span><span class="p">())</span><span class="w"> </span><span class="c1"># change a date to a date-time</span></code></pre></figure>
+
+<h5 id="3-create-dates-and-times-from-components-spread-across-multiple-columns-in-a-table">3. Create dates and times from components spread across multiple columns in a table</h5>
+
+<p>Use <code class="highlighter-rouge">make_datetime()</code> to create a date-time if your data is spread out across multiple columns in a table. For example, in the nycflights13 dataset, there are separate columns for year, month, day, departure hour, and departure minute. We can create a new date-time column for departure time, and use this new column to visualize the distribution of flights on any day.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">flights_dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">,</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="n">minute</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">departure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">,</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="n">minute</span><span class="p">))</span><span class="w"> </span><span class="c1"># create column</span><span class="w">
+
+</span><span class="n">flights_dt</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">departure</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ymd</span><span class="p">(</span><span class="m">20130102</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># filter on January 1st</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1"># graph departure date-time </span><span class="w">
+    </span><span class="n">geom_freqpoly</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">departure</span><span class="p">),</span><span class="w"> </span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">600</span><span class="p">)</span><span class="w"> </span><span class="c1"># 600 seconds = 10 minutes</span></code></pre></figure>
+
+<p><a href="/assets/02-22-date-time-make-datetime-97ec0b531d0511fb9d04ef8162547c19722cbd8c86c241ee2509b5f611ca7fb0.png">
+  <img src="/assets/02-22-date-time-make-datetime-97ec0b531d0511fb9d04ef8162547c19722cbd8c86c241ee2509b5f611ca7fb0.png" alt="Make Date-Time" class="zooming" data-rjs="/assets/02-22-date-time-make-datetime-97ec0b531d0511fb9d04ef8162547c19722cbd8c86c241ee2509b5f611ca7fb0.png" data-zooming-width="" data-zooming-height="" />
+</a></p>
+
+<h2 id="retrieve-and-edit-date-and-time-components">Retrieve and Edit Date and Time Components</h2>
+<hr />
+<p>Retrieve date and time components from a date or date-time with the following functions:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">year()</code> returns the year</li>
+  <li><code class="highlighter-rouge">month(..., label = TRUE)</code> returns the month; set label = TRUE to return abbreviated month name</li>
+  <li><code class="highlighter-rouge">wday(..., label = TRUE, abbr = FALSE)</code> returns the day of the week; set abbr = FALSE to return full name</li>
+  <li><code class="highlighter-rouge">mday()</code> returns the day of the month</li>
+  <li><code class="highlighter-rouge">yday()</code> returns the day of the year</li>
+  <li><code class="highlighter-rouge">hour()</code> returns the hour</li>
+  <li><code class="highlighter-rouge">minute()</code> returns the minute</li>
+  <li><code class="highlighter-rouge">second</code> returns the second</li>
+</ul>
+
+<p>Edit date and time components with the following functions:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">update(&lt;DATE&gt;, year = ..., month = ..., mday = ..., hour = ...)</code> updates dates manually</li>
+  <li><code class="highlighter-rouge">round_date()</code> rounds to the nearest specified unit (minute, hour, day, week, month, year, etc.)</li>
+  <li><code class="highlighter-rouge">floor_date()</code> rounds down to the nearest specified unit</li>
+  <li><code class="highlighter-rouge">ceiling_date()</code> rounds up to the nearest specified unit</li>
+</ul>
+
+<p><strong>Tip:</strong> Set larger components of a date to a constant to explore patterns in the smaller components. For example, in nycflights13, we can set the flight day to a constant to view the distribution of flights across the course of the day for every day of the year:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># graph the distribution of flights throughout the day for every day of the year</span><span class="w">
+</span><span class="n">flights_dt</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">dep_hour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="n">dep_time</span><span class="p">,</span><span class="w"> </span><span class="n">yday</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">dep_hour</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_freqpoly</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">300</span><span class="p">)</span><span class="w"> </span><span class="c1"># 300 seconds = 5 minutes</span></code></pre></figure>
+
+<p><a href="/assets/02-22-date-time-set-53eb9b09d5f0321f7b1223e92411e941ac272d63ee5e458a224ac3aa0d005cfc.png">
+  <img src="/assets/02-22-date-time-set-53eb9b09d5f0321f7b1223e92411e941ac272d63ee5e458a224ac3aa0d005cfc.png" alt="Set Components of Date Time" class="zooming" data-rjs="/assets/02-22-date-time-set-53eb9b09d5f0321f7b1223e92411e941ac272d63ee5e458a224ac3aa0d005cfc.png" data-zooming-width="" data-zooming-height="" />
+</a></p>
+
+<h2 id="time-spans-durations-periods-and-intervals">Time Spans: Durations, Periods and Intervals</h2>
+<hr />
+<p>If you subtract two dates in R regularly, you get a “<em>difftime</em>” object that records a time span in seconds, minutes, hours, days, or weeks, which isn’t great because the units aren’t consistent. Time spans are better measured in these three ways:</p>
+
+<ol>
+  <li>Durations, which represent an exact number of seconds</li>
+  <li>Periods, which represent human units of time, i.e. weeks, months, and years</li>
+  <li>Intervals, which are durations with a starting and ending point</li>
+</ol>
+
+<h5 id="1-durations">1. Durations</h5>
+
+<p>Durations measure time in seconds. They can be added to each other, multiplied by a constant, and added or subtracted from dates and times.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># convert age to duration</span><span class="w">
+</span><span class="n">my_age</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">today</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ymd</span><span class="p">(</span><span class="m">19940101</span><span class="p">)</span><span class="w">
+</span><span class="n">my_age</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.duration</span><span class="p">(</span><span class="n">my_age</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1"># use d* functions to calculate duration in seconds, minutes, hours, days, weeks, years</span><span class="w">
+</span><span class="n">dseconds</span><span class="p">(</span><span class="m">15</span><span class="p">)</span><span class="w">
+</span><span class="n">dminutes</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1"># multiplied by a constant</span><span class="w">
+</span><span class="n">dhours</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">))</span><span class="w">
+</span><span class="n">ddays</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="n">dweeks</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dyears</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># can be added and multiplied</span><span class="w">
+</span><span class="n">tomorrow</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">today</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ddays</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># can be added and subtracted from days</span></code></pre></figure>
+
+<p>Note: When adding or subtracting durations to dates, be aware of time discrepancies such as daylight savings time.</p>
+
+<h5 id="2-periods">2. Periods</h5>
+
+<p>Periods measure time in human units, such as weeks and months. This takes into account time discrepancies such as daylight savings time with adding or subtracting from dates or times.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># calculate periods in seconds, minutes, hours, days, months, weeks, years</span><span class="w">
+</span><span class="n">seconds</span><span class="p">(</span><span class="m">15</span><span class="p">)</span><span class="w">
+</span><span class="n">minutes</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="w">
+</span><span class="n">hours</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">24</span><span class="p">))</span><span class="w">
+</span><span class="n">months</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">)</span><span class="w">
+</span><span class="n">days</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weeks</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="c1"># can be added and multiplied</span><span class="w">
+</span><span class="n">ymd</span><span class="p">(</span><span class="s2">"2020-02-22"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">years</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># can be added and subtracted from dates</span></code></pre></figure>
+
+<h5 id="3-intervals">3. Intervals</h5>
+
+<p>Intervals are durations with starting an ending points, and are represented by <code class="highlighter-rouge">%--%</code>. They are useful when trying to determine how long a specific period is, sice you want to include all time discrepancies for that period.</p>
+
+<p>For example, you may want to know the number of days between today and the same day next year – this calculation depends on whether it’s a leap year or not, so we should use intervals.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># how many days in the interval between today and next year?</span><span class="w">
+</span><span class="n">next_year</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">today</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">years</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="n">today</span><span class="p">()</span><span class="w"> </span><span class="o">%--%</span><span class="w"> </span><span class="n">next_year</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ddays</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># use regular division for duration in an interval </span><span class="w">
+</span><span class="p">(</span><span class="n">today</span><span class="p">()</span><span class="w"> </span><span class="o">%--%</span><span class="w"> </span><span class="n">next_year</span><span class="p">)</span><span class="w"> </span><span class="o">%/%</span><span class="w"> </span><span class="n">days</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># use integer division for periods in an interval </span></code></pre></figure>
+
+<h2 id="time-zones">Time Zones</h2>
+<hr />
+<p>Time zones are complicated, but here are a couple of basic functions that are useful to know:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Sys.timezone()</code> returns the time zone of your workstation, according to R</li>
+  <li><code class="highlighter-rouge">with_tz(&lt;DATETIME&gt;, tzone = "America/Detroit")</code> changes time zone while keeping the instant in time</li>
+  <li><code class="highlighter-rouge">force_tz(&lt;DATETIME&gt;, tzone = "America/Detroit")</code> changes time zone and changes the instant in time</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>This post is meant for a person who is looking for a refresher on dates and times in R, and the content in this post is based on chapter sixteen of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund. <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Data+Wrangling+in+R:+Dates+and+Times%20-%20anthonypan.com/posts/data-wrangling-date-time-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/data-wrangling-date-time-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

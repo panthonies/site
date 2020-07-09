@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="https://www.w3.org/2005/Atom" xmlns:dc="https://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>Anthony Pan</title>
+    <description></description>
+    <link>anthonypan.com</link>
+    <atom:link href="anthonypan.com/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>Regression Techniques for Predictive Modeling</title>
+        <description>Buckle up! This is going to be a long one.</description>
+        <pubDate>Mon, 18 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/apm-regression</link>
+        <guid isPermaLink="true">anthonypan.com/posts/apm-regression</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Model Tuning and Overfitting</title>
+        <description>An overview of the model tuning process, including data splitting, resampling techniques, and recommendations for choosing parameters and models.</description>
+        <pubDate>Wed, 13 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/overfitting-tuning</link>
+        <guid isPermaLink="true">anthonypan.com/posts/overfitting-tuning</guid>
+      </item>
+    
+      <item>
+        <title>Data Pre-Processing</title>
+        <description>How the predictors are encoded, called feature engineering, has a significant impact on model performance (i.e. predictor combinations, ratios, etc). This post covers unsupervised approaches to data pre-processing.</description>
+        <pubDate>Tue, 12 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/data-preprocessing</link>
+        <guid isPermaLink="true">anthonypan.com/posts/data-preprocessing</guid>
+      </item>
+    
+      <item>
+        <title>Introduction and Overview of Content</title>
+        <description></description>
+        <pubDate>Mon, 11 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/intro-predictive-modeling</link>
+        <guid isPermaLink="true">anthonypan.com/posts/intro-predictive-modeling</guid>
+      </item>
+    
+      <item>
+        <title>Unsupervised Learning</title>
+        <description>In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).</description>
+        <pubDate>Mon, 04 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/unsupervised-learning</link>
+        <guid isPermaLink="true">anthonypan.com/posts/unsupervised-learning</guid>
+      </item>
+    
+      <item>
+        <title>Support Vector Machines</title>
+        <description>Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.</description>
+        <pubDate>Sat, 02 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/support-vector-machines</link>
+        <guid isPermaLink="true">anthonypan.com/posts/support-vector-machines</guid>
+      </item>
+    
+      <item>
+        <title>Tree-Based Methods</title>
+        <description>Decision trees, which divide the predictor space into regions, are simple and useful for interpretation. Their predictive power can be improved with bagging, random forests, and boosting.</description>
+        <pubDate>Fri, 01 May 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/tree-based-methods</link>
+        <guid isPermaLink="true">anthonypan.com/posts/tree-based-methods</guid>
+      </item>
+    
+      <item>
+        <title>Moving Beyond Linearity</title>
+        <description>Linear models can have significant limitations in terms of predictive power, because the linear assumption can be a poor assumption. Methods such as polynomial regression, step functions, regression and smoothing splines, local regression, and generalized additive models can help us flexibly model non-linear relationships.</description>
+        <pubDate>Thu, 30 Apr 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/moving-beyond-linearity</link>
+        <guid isPermaLink="true">anthonypan.com/posts/moving-beyond-linearity</guid>
+      </item>
+    
+      <item>
+        <title>Linear Model Selection and Regularization</title>
+        <description>An alternative fitting method to least squares, such as subset selection, shrinkage (ridge regression, lasso), and dimension reduction techniques (principle components analysis, partial least squares) can help prediction accuracy and model interpretability.</description>
+        <pubDate>Mon, 27 Apr 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/linear-model-selection-regularization</link>
+        <guid isPermaLink="true">anthonypan.com/posts/linear-model-selection-regularization</guid>
+      </item>
+    
+      <item>
+        <title>Resampling Methods</title>
+        <description>Resampling methods provide ways tools for model assessment (evaulate a model's performance) and model selection (optimally adjust model flexibility).</description>
+        <pubDate>Sat, 25 Apr 2020 00:00:00 -0400</pubDate>
+        <link>anthonypan.com/posts/resampling-methods</link>
+        <guid isPermaLink="true">anthonypan.com/posts/resampling-methods</guid>
+      </item>
+    
   </channel>
 </rss>

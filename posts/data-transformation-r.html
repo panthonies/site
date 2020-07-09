@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Basic Data Transformation in R</title>
+  <meta name="description" content="In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Basic Data Transformation in R">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/data-transformation-r">
+  <meta property="og:description" content="In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/data-transformation-r">
+  <meta name="twitter:title" content="Basic Data Transformation in R">
+  <meta name="twitter:description" content="In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Basic Data Transformation in R</h1>
+            <p>In which we review the fundamentals of transforming data in R, using six key functions in the dplyr package: filter, arrange, select, mutate, summarize, and group by.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    February 15, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      13 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/tag/r" title="See all posts with tag 'r'">r</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <p>In this post we’ll be taking a look at basic data transformation in R – namely, six important R functions included in the <a href="http://dplyr.tidyverse.org" target="blank">dplyr</a> package:<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<ul>
+  <li><code class="highlighter-rouge">filter()</code> - filter rows</li>
+  <li><code class="highlighter-rouge">arrange()</code> - order rows</li>
+  <li><code class="highlighter-rouge">select()</code> - select columns</li>
+  <li><code class="highlighter-rouge">mutate()</code> - transform and create variables</li>
+  <li><code class="highlighter-rouge">group_by()</code> - group data</li>
+  <li><code class="highlighter-rouge">summarize()</code> - summarize data</li>
+</ul>
+
+<p>These functions will help you scratch the surface of manipulating datasets.</p>
+
+<p><strong>First things first:</strong> Here is the <a href="/pdf/r-cheat-sheet-data-transformation.pdf">RStudio Data Transformation Cheat Sheet</a>{target=”blank”}, if that’s what you’re looking for.</p>
+
+<h3 id="prologue-the-pipe">Prologue: The Pipe</h3>
+<p>Before we get into the functions themselves, let’s review an important part of R syntax: the pipe, <code class="highlighter-rouge">%&gt;%</code>. The pipe symbol can be read as “then.”</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w">
+</span><span class="n">...</span></code></pre></figure>
+
+<p>See the R code at the bottom for examples of the pipe in action, and my <a href="programming-r">post on programming in R</a> for a deeper dive into pipes.</p>
+
+<h2 id="filter">Filter</h2>
+<p><code class="highlighter-rouge">filter()</code> allows for subsetting observations based on their values. In other words, you can filter the rows in your dataset.</p>
+<ul>
+  <li>Filter with comparison operators: <code class="highlighter-rouge">== , != , &gt; , &gt;= , &lt; , &lt;=</code></li>
+  <li>Filter with logical operators – and, or not, and exclusive or: <code class="highlighter-rouge">&amp;, |, !, xor()</code></li>
+  <li>Filter on rows where x is one of the values in vector y: <code class="highlighter-rouge">x %in y</code></li>
+  <li>Determine if a value is missing: <code class="highlighter-rouge">is.na()</code></li>
+  <li>Determine if numbers fall within an inclusive range: <code class="highlighter-rouge">between()</code></li>
+</ul>
+
+<p>Note: Don’t forget De Morgan’s law, <code class="highlighter-rouge">!(x &amp; y) == !x | !y , !(x | y) = !x &amp; !y</code></p>
+
+<h2 id="arrange">Arrange</h2>
+<p><code class="highlighter-rouge">arrange()</code> allows you to re-order the rows of your dataset.</p>
+<ul>
+  <li>By default, arrange sorts your data in ascending order</li>
+  <li>Sort data in descending order with <code class="highlighter-rouge">desc()</code></li>
+  <li>Missing values are placed at the end unless explicitly told otherwise</li>
+</ul>
+
+<h2 id="select">Select</h2>
+<p><code class="highlighter-rouge">select()</code> lets you zoom in on a subset of the data based on the names of columns. This is useful for narrowing data with many variables down to only the ones you care about.</p>
+<ul>
+  <li>Select based on column name: <code class="highlighter-rouge">starts_with(), ends_with(), contains(), matches()</code></li>
+  <li>Select all columns between two columns, inclusive: <code class="highlighter-rouge">(x:y)</code></li>
+  <li>Exclude columns from being selected: <code class="highlighter-rouge">-</code></li>
+  <li>Rename a variable without dropping the others: <code class="highlighter-rouge">rename()</code></li>
+  <li>Reorder ceertain columns to the very beginning: <code class="highlighter-rouge">select()</code> with <code class="highlighter-rouge">everything()</code></li>
+</ul>
+
+<h2 id="mutate">Mutate</h2>
+<p><code class="highlighter-rouge">mutate()</code> lets you add new columns that are functions of existing columns to the end of the table.</p>
+<ul>
+  <li>Create columns with arithmatic operators, <code class="highlighter-rouge">+, -, *, /, ^</code>, with aggregate functions, <code class="highlighter-rouge">sum, mean</code></li>
+  <li>Create columns with integer division, <code class="highlighter-rouge">%/%</code>, and remainder ,<code class="highlighter-rouge">%%</code></li>
+  <li>Create columns with logs: <code class="highlighter-rouge">log(x), log2(x), log10(x)</code></li>
+  <li>Create columns with offsets, such as leading and lagging values, i.e. <code class="highlighter-rouge">x - lead(x), x != lag(x)</code></li>
+  <li>Create columns with cumulative and rolling aggregates: <code class="highlighter-rouge">cumsum, cumprod, cummin, cummax, cummean</code></li>
+  <li>Create columns with logical comparisons: <code class="highlighter-rouge">&lt;, &gt;, ==, !=</code></li>
+  <li>Create columns with ranking functions: <code class="highlighter-rouge">minrank, row_number, percent_rank, ntile</code></li>
+  <li>Select the top or bottom entries in a group <code class="highlighter-rouge">top_n()</code></li>
+  <li>Only keep the new variables that you define with <code class="highlighter-rouge">transmute()</code></li>
+</ul>
+
+<h2 id="group-by">Group By</h2>
+<p><code class="highlighter-rouge">group_by()</code> changes the scope of analysis from the complete dataset to individually defined groups.</p>
+
+<p>It is most useful when used with <code class="highlighter-rouge">summarize()</code>, but it can also be used with <code class="highlighter-rouge">mutate()</code> and <code class="highlighter-rouge">filter()</code> – for example, if you wanted to fine the worst members of each group, find all groups bigger than a threshold, or create group summary metrics.</p>
+
+<p>Use <code class="highlighter-rouge">ungroup()</code> to remove groupings.</p>
+
+<h2 id="summarize">Summarize</h2>
+<p><code class="highlighter-rouge">summarize()</code> collapses a data frame into a single row. If the data is grouped, then it summarizes by group.</p>
+<ul>
+  <li>Summarize by location: <code class="highlighter-rouge">mean, median</code></li>
+  <li>Summarize by spread: <code class="highlighter-rouge">sd, IQR, mad</code>, (std. deviation, interquartile range, median absolute deviation)</li>
+  <li>Summarize by rank: <code class="highlighter-rouge">min, max, quantile</code></li>
+  <li>Summarize by position: <code class="highlighter-rouge">first, nth, last</code></li>
+  <li>Summarize by count: <code class="highlighter-rouge">n(), sum(is.na(x)), n_distinct(x)</code></li>
+  <li>Use the <code class="highlighter-rouge">na.rm</code> parameter for functions like mean to specify whether to remove missing values before computation.</li>
+  <li>Use a count, <code class="highlighter-rouge">n()</code>, when doing aggregation to prevent drawing conclusions from small amounts of data</li>
+  <li>Use the <code class="highlighter-rouge">count()</code> function (with an optional weight variable) if you simply want a count</li>
+  <li>Use the <code class="highlighter-rouge">count()</code> function to also find counts and proportions of logical values</li>
+</ul>
+
+<h4 id="the-end">…The End!</h4>
+
+<p>Keep reading for examples of these functions in action.</p>
+
+<h2 id="examples-and-r-code">Examples and R Code</h2>
+<hr />
+<p>We’ll be using two libraries: <a href="https://www.tidyverse.org" target="blank">tidyverse</a>, which contains the dplyr package, and nycflights13, a data frame that contains all flights that departed from New York City in 2013.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### load packages</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">nycflights13</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># tip: use the pipe %&gt;% to write more efficient code</span><span class="w">
+</span><span class="c1"># investigate the relationship between the distance and average delay for each location</span><span class="w">
+</span><span class="n">delays</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># group by flight destination</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">avg_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">distance</span><span class="p">),</span><span class="w"> </span><span class="c1"># and then summarize by the average distance,</span><span class="w">
+            </span><span class="n">avg_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="c1"># the average delay,</span><span class="w">
+            </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># and the number of times it happened </span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="c1"># filter the summary only if the destination was flown to &gt;20 times</span><span class="w">
+</span><span class="c1"># then we plot the average flight delay by average distance flown</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delays</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avg_distance</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avg_delay</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># tip: include a count, n(), when doing aggregation </span><span class="w">
+</span><span class="c1"># this way you don't draw conclusions from small amounts of data</span><span class="w">
+</span><span class="c1"># example: create a data set of not cancelled flights</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">dep_delay</span><span class="p">),</span><span class="w"> </span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">))</span><span class="w">
+</span><span class="c1"># create a summarized data set of average delays</span><span class="w">
+</span><span class="n">delays</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">tailnum</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">summarise</span><span class="p">(</span><span class="w">
+    </span><span class="n">delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">()</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="c1"># graph only average delays where the total delays happened over 25 times</span><span class="w">
+</span><span class="c1"># we see that the delays have less variance</span><span class="w">
+</span><span class="n">delays</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delay</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">10</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># tip: use the count() function with an optional weight variable</span><span class="w">
+</span><span class="c1"># count the total # miles a plane flew</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">(</span><span class="n">tailnum</span><span class="p">,</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distance</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># tip: count() can be used to find counts and proportions of logical values</span><span class="w">
+</span><span class="c1"># how many flighs left before 5am?</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">(</span><span class="n">early_flights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">dep_time</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">500</span><span class="p">))</span><span class="w">
+</span><span class="c1"># what proportion of flights are delayed more than an hour?</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">(</span><span class="n">big_delays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">arr_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">60</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># tip: groups of multiple variables can be summarized individually</span><span class="w">
+</span><span class="c1"># can be used for sums, but be careful of weighting means and variances</span><span class="w">
+</span><span class="n">daily</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">flights</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="n">per_day</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">summarize</span><span class="p">(</span><span class="n">daily</span><span class="p">,</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">()))</span><span class="w">
+</span><span class="p">(</span><span class="n">per_month</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">summarize</span><span class="p">(</span><span class="n">per_day</span><span class="p">,</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">flights</span><span class="p">)))</span><span class="w">
+</span><span class="p">(</span><span class="n">per_year</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">summarize</span><span class="p">(</span><span class="n">per_month</span><span class="p">,</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">flights</span><span class="p">)))</span><span class="w">
+
+</span><span class="c1"># tip: use ungroup() to remove groupings</span><span class="w">
+</span><span class="c1"># ungroup the grouped flights and display the total number of flights</span><span class="w">
+</span><span class="n">daily</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">ungroup</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">flights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="w">
+
+</span><span class="c1"># exercise: is the prop of cancelled flights per day related to the average delay?</span><span class="w">
+</span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">day</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">cancelled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">dep_delay</span><span class="p">)),</span><span class="w">
+            </span><span class="n">mean_dep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">dep_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">),</span><span class="w">
+            </span><span class="n">mean_arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cancelled</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean_dep</span><span class="p">),</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean_arr</span><span class="p">),</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Avg delay per day"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cancelled flights p day"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># tip: grouping can also be used with filter() and mutate()</span><span class="w">
+</span><span class="c1"># find the worst members of each group, </span><span class="w">
+</span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">
+</span><span class="c1"># or find all groups bigger than a threshold</span><span class="w">
+</span><span class="n">popular_dests</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">n</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">365</span><span class="p">)</span><span class="w">
+</span><span class="c1"># and then standardize to compute per group metrics (usually you will avoid)</span><span class="w">
+</span><span class="c1"># fun fact: functions that work in grouped mutates and filters are window functions</span><span class="w">
+</span><span class="c1"># vignette("window-functions") for more info</span><span class="w">
+</span><span class="n">popular_dests</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">arr_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">prop_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr_delay</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">select</span><span class="p">(</span><span class="n">year</span><span class="o">:</span><span class="n">day</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="p">,</span><span class="w"> </span><span class="n">arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">prop_delay</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># which plane (tailnum) has the worst on-time record?</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">tailnum</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">(),</span><span class="w">
+            </span><span class="n">on_time_prop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">arr_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">on_time_prop</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">25</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># what time of the day should you fly to avoid delays?</span><span class="w">
+</span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">dep_time</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">avg_dep_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">dep_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">),</span><span class="w">
+            </span><span class="n">avg_arr_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">),</span><span class="w">
+            </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avg_dep_delay</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hour</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avg_arr_delay</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+  
+</span><span class="c1"># compute total minutes of delay for each destination</span><span class="w">
+</span><span class="c1"># compute proportion of total delay for the destination from each flight</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">total_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">[</span><span class="n">arr_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">]))</span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">total_delay</span><span class="p">))</span><span class="w">
+
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">arr_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">tailnum</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total_delay_dest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">tailnum</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">flight_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">arr_delay</span><span class="p">),</span><span class="w">
+            </span><span class="n">prop_of_delay_by_dest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flight_delay</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">total_delay_dest</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># explore how flight delay is related to the delay of the immediately preceding flight</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">day</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"LGA"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># only looking at 1/1 in LGA</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">dep_time</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">prev_flight_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lag</span><span class="p">(</span><span class="n">dep_delay</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delay_lag</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dep_delay</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prev_flight_delay</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># find flights that are suspiciously fast</span><span class="w">
+</span><span class="c1"># compute air time of a flight relative to the shortest flight to that dest</span><span class="w">
+</span><span class="c1"># which flights were most delayed in the air?</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">year</span><span class="o">:</span><span class="n">day</span><span class="p">,</span><span class="w"> </span><span class="n">air_time</span><span class="p">,</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">air_time</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">()</span><span class="w">
+
+</span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">air_time</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">distance</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># computed air time relative to distance</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">speed</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">min_rank</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">speed</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># top 10 most in air delay</span><span class="w">
+
+</span><span class="c1"># find all destinations flown by at least two carriers, then rank the carriers </span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">num_carriers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_distinct</span><span class="p">(</span><span class="n">carrier</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">num_carriers</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">num_carriers</span><span class="p">))</span><span class="w">
+
+</span><span class="n">flights</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">n_distinct</span><span class="p">(</span><span class="n">carrier</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">carrier</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_distinct</span><span class="p">(</span><span class="n">dest</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># for each plane, count the number of flights before the first delay of &gt;1 hour</span><span class="w">
+</span><span class="n">not_cancelled</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">tailnum</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">tailnum</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="n">day</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarize</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">(),</span><span class="w">
+            </span><span class="n">long_delay_happened</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">dep_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">60</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1</span><span class="p">))</span></code></pre></figure>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>This post is meant for a person who is looking for a refresher on the very basics of the dplyr package (i.e., me when I inevitably forget how to summarize data). The content in this post is based on chapter five of <a href="https://r4ds.had.co.nz/index.html" target="blank">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund, which I would recommend reading for a more thorough explanation. <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Basic+Data+Transformation+in+R%20-%20anthonypan.com/posts/data-transformation-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/data-transformation-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

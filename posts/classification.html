@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Classification</title>
+  <meta name="description" content="Classification models are used to predict a categorical response. ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Classification">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/classification">
+  <meta property="og:description" content="Classification models are used to predict a categorical response. ">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/classification">
+  <meta name="twitter:title" content="Classification">
+  <meta name="twitter:description" content="Classification models are used to predict a categorical response. ">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Classification</h1>
+            <p>Classification models are used to predict a categorical response. </p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    April 24, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      12 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <div class="toc">
+  <h3 id="contents">Contents</h3>
+
+  <ul>
+    <li><a href="#i-k-nearest-neighbors">I. K-Nearest Neighbors</a></li>
+    <li><a href="#ii-logistic-regression">II. Logistic Regression</a></li>
+    <li><a href="#iii-linear-discriminant-analysis">III. Linear Discriminant Analysis</a></li>
+    <li><a href="#iv-quadratic-discriminant-analysis">IV. Quadratic Discriminant Analysis</a></li>
+    <li><a href="#v-comparison-of-classification-methods">V. Comparison of Classification Methods</a></li>
+    <li><a href="#vi-applications-in-r">VI. Applications in R</a></li>
+  </ul>
+
+</div>
+
+<h3 id="i-k-nearest-neighbors">I. K-Nearest Neighbors</h3>
+
+<p>Given a positive integer <script type="math/tex">K</script> and a test observation <script type="math/tex">x_0</script>, the K-nearest neighbors (KNN) classifier identifies the <script type="math/tex">K</script> points in the training data closest to <script type="math/tex">x_0</script>, represented by <script type="math/tex">\eta_0</script>, and then estimates the conditional probability for class <script type="math/tex">j</script> as the fraction of points in <script type="math/tex">\eta_0</script> whose response values equal <script type="math/tex">j</script>:</p>
+
+<script type="math/tex; mode=display">Pr(Y = j \vert X = x_i) = \frac{1}{K} \sum_{i \in \eta_0} I(y_i = j)</script>
+
+<p>KNN has high bias and low variance when <script type="math/tex">K</script> is large, and vice versa when <script type="math/tex">K</script> is small. While the training error rate will always decrease as <script type="math/tex">K</script> decreases, the test error will take on a characteristic U-shape due to overfitting.</p>
+
+<hr />
+<hr />
+<hr />
+<h3 id="ii-logistic-regression">II. Logistic Regression</h3>
+
+<p><span class="boxheader">Logistic Regression with One Predictor</span></p>
+
+<p>Logistic regression models the probability that <script type="math/tex">Y</script> belongs to a particular category.</p>
+
+<script type="math/tex; mode=display">p(X) = Pr(Y = 1 \vert X) = \frac {e^{\beta_0 + \beta_1 X}} {1 + e^{\beta_0 + \beta_1 X}}</script>
+
+<p>We can re-write this equation to represent the odds <script type="math/tex">\Bigl[ \frac {p} {1 - p} \Bigr]</script>, and log-odds/logit <script type="math/tex">\Bigl[ \log \bigl( \frac{p(X)} {1 - p(X)} \bigr) \Bigr]</script> of <script type="math/tex">(Y=1 \vert X)</script>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\frac{p(X)} {1 - p(X)} & = e^{\beta_0 + \beta_1 X} \\
+\Rightarrow \log \Biggl( \frac{p(X)} {1 - p(X)} \Biggr) & = \beta_0 + \beta_1 X 
+\end{align} %]]></script>
+
+<ul>
+  <li>Note that because logistic regression takes an <script type="math/tex">S</script> shape, the effect of one-unit increase in <script type="math/tex">X</script> on <script type="math/tex">p(X)</script> depends on the current value of <script type="math/tex">X</script>.</li>
+</ul>
+
+<p>We estimate the coefficients <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script> using estimates that maximize the likehood that the logistic model produced the observed data; in other words, plugging the coefficients into the logistic model should result in a number close to 1 for all observations with <script type="math/tex">Y=1</script>, and close to 0 for all observations with <script type="math/tex">Y=0</script>. This is accomplished by maximizing the likelihood function, <script type="math/tex">l(\beta_0, \beta_1)</script>:</p>
+
+<script type="math/tex; mode=display">l(\beta_0, \beta_1) = \Pi_{i : y_i = 1} p(x_i) \Pi_{i' : y'_i = 1} (1 - p(x_i))</script>
+
+<p>We can conduct a hypothesis test to test if the probability of <script type="math/tex">Y</script> does not depend on <script type="math/tex">X</script> with null hypothesis <script type="math/tex">H_0: \beta_1 = 0</script>, by using a <script type="math/tex">z</script>-statistic, <script type="math/tex">\hat \beta_1 / SE(\hat \beta_1)</script></p>
+
+<p><span class="boxheader">Multiple Logistic Regression</span></p>
+
+<p>We can extend the basic logistic regession model to include multiple predictors:</p>
+
+<script type="math/tex; mode=display">p(X) = \frac {e^{\beta_0 + \beta_1 X + \beta_2 X_2 + ... + \beta_p X_p}} {1 + e^{\beta_0 + \beta_1 X + \beta_2 X_2 + ... + \beta_p X_p}}</script>
+
+<script type="math/tex; mode=display">log \Biggl( \frac{p(X)} {1 - p(X)} \Biggr) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \beta_p X_p</script>
+
+<p>Be careful of confounding variables! The results obtained using one predictor may be different than those obtained with multiple predictors, especially if predictors are correlated with each other.</p>
+
+<ul>
+  <li>Note: Logistic regression is mostly used when the response variable has two classes. It is possible to use logistic regression for a response variable with more than two classes; however, linear discriminant analysis is much more often used in that scenario.</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iii-linear-discriminant-analysis">III. Linear Discriminant Analysis</h3>
+
+<p>Linear discriminant analysis (LDA) focuses on maximizing the separability among categories by modeling the distributions of the predictors <script type="math/tex">X</script> separately in each response class, <script type="math/tex">Pr(X \vert Y)</script>, then using Bayes’ theorem to flip them into estimates of <script type="math/tex">Pr(Y = k \vert X = x)</script>.</p>
+
+<p><span class="boxheader">Motivation</span></p>
+
+<p>Why use LDA instead of logistic regression?</p>
+<ol>
+  <li>When the classes are well-separated, the parameter estimates for LDA are more stable than for logistic regression.</li>
+  <li>If <script type="math/tex">n</script> is small and the distribution of predictors <script type="math/tex">X</script> is approximately normal in each class, then LDA is more stable than logistic regression.</li>
+</ol>
+
+<p>Let us define the following conditions:</p>
+<ul>
+  <li><script type="math/tex">\pi_k</script> is the prior probability that a random observation comes from the <script type="math/tex">k</script>th class</li>
+  <li><script type="math/tex">f_k(x)</script> is the density function of <script type="math/tex">X</script> for an observation from the <script type="math/tex">k</script>th class</li>
+  <li><script type="math/tex">p_k(x)</script> is the posterior probability that an observation <script type="math/tex">X=x</script> belongs to the <script type="math/tex">k</script>th class</li>
+</ul>
+
+<p>Then Bayes’ theorem states that:</p>
+
+<script type="math/tex; mode=display">p_k(X) = Pr(Y = k \vert X = x) = \frac{\pi_k f_k(x)} {\sum_{l = 1}^K \pi_l f_l(x)}</script>
+
+<p>The goal is to estimate <script type="math/tex">f_k (x)</script> to develop a classifier that estimates the Bayes classifier.</p>
+
+<p><span class="boxheader">LDA for one predictor</span></p>
+
+<p>Assumptions:</p>
+<ol>
+  <li><script type="math/tex">f_k(x)</script> is normal or gaussian, and its density takes the form <script type="math/tex">\frac{1} {\sqrt {2\pi} \sigma_k} \exp \Bigl( \frac{-1}{2 \sigma_k^2} (x -\mu_k)^2 \Bigr)</script></li>
+  <li>Variance is constant within each class; <script type="math/tex">\sigma_1^2 = ... = \sigma_k^2</script></li>
+</ol>
+
+<p>We assign each observation to the class that maximizes the discriminant function, which we obtain by plugging the <script type="math/tex">f_k(x)</script> into Bayes’ theorem and simplifying:</p>
+
+<script type="math/tex; mode=display">\delta_k(x) = x \frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2 \sigma^2} + \log (\pi_k)</script>
+
+<p>The parameters <script type="math/tex">\mu_k, \pi_k,</script> and <script type="math/tex">\sigma_k</script> are estimated as follows:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\hat \mu_k & = \frac{1} {n_k} \sum_{i: y_i = k} x_i \\
+\hat \sigma_k^2 & = \frac{1}{n-k} \sum_{k = 1}^K \sum_{i: y_k = k} (x_i - \hat \mu_k)^2 \\
+\hat \pi_k & = n_k / n
+\end{align} %]]></script>
+
+<p>Thus, the LDA classifier results are calculated by plugging estimates for each parameter with the observation value into the Bayes classifier.</p>
+
+<ul>
+  <li>Note that for the two-class scenario with <script type="math/tex">\pi_1 = \pi_2</script>, then the Bayes decision boundary correponds to the point where <script type="math/tex">x = \frac{u_1 + u_2}{2}</script>.</li>
+</ul>
+
+<p><span class="boxheader">LDA for multiple predictors</span></p>
+
+<p>Assumption:</p>
+<ol>
+  <li><script type="math/tex">X = (X_1 ... X_p)</script> is drawn from a multivariate gaussian distribution with a class-specific mean vector and common covariance matrix, <script type="math/tex">X \sim N(\mu, \Sigma)</script> with density:</li>
+</ol>
+
+<script type="math/tex; mode=display">f(x) = \frac{1}{(2 \pi)^{p / 2} \vert \Sigma \vert ^{1/2}} \exp { \Biggl( -\frac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) \Biggr) }</script>
+
+<p>If observations in the <script type="math/tex">k</script>th class are drawn from <script type="math/tex">N(\mu_k, \Sigma)</script>, then we can plug in the density function to find that the Bayes classifier assigns an observatino <script type="math/tex">X = x</script> to maximize the discriminant function:</p>
+
+<script type="math/tex; mode=display">\delta_k (x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log \pi_k</script>
+
+<p>The unknown parameters <script type="math/tex">\mu_k, \pi_k, and \sigma_k</script> are estimated with formulas similar to those in the one-dimensional case. To assign a new observation, LDA plugs the parameter estimates into the discriminant function and classifies it to the class for which <script type="math/tex">\hat \delta_k(x)</script> is largest.</p>
+
+<p><span class="boxheader">Considerations when using LDA</span></p>
+
+<ol>
+  <li>The higher the ratio of parameters <script type="math/tex">p</script> to sample size <script type="math/tex">n</script>, the more likely LDA will overfit the data.</li>
+  <li>LDA has low sensitivity (power), because it is based off of the Bayes classifier which <strong>minimizes total error</strong> by assigning observations to categories if <script type="math/tex">P(\text{Category} = \text{Yes} \vert X = x) > .5</script></li>
+</ol>
+
+<p>A confusion matrix is a table that displays predicted vs. actual values, and they can be used to calculate the following important measure for classification and diagnostic testing:</p>
+<ul>
+  <li><strong>Sensitivity</strong> (aka power) = <script type="math/tex">P(\text{True Positive})</script></li>
+  <li><strong>Specificity</strong> = <script type="math/tex">P(\text{True Negative})</script></li>
+  <li><strong>Type I Error</strong> is the false positive rate, also 1 - Specificity</li>
+  <li><strong>Type II Error</strong> is the false negative rate, also 1 - Sensitivity</li>
+  <li>Note: check out <a href="https://en.wikipedia.org/wiki/Confusion_matrix">Wikipedia</a> for a nice visualization of a 2x2 confusion matrix and all of its related statistics.</li>
+</ul>
+
+<p>We can address problem #2 by <strong>setting a new threshold</strong> for assigning an observation to a certain class, based on domain knowledge. Setting a new threshold can be visualized with an <strong>ROC curve</strong> (receiver operating characteristics). An example is shown below.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<center><a href="/assets/04-24-roc-4f41820919579af2da59149400e6c71486202bb5b81d173fa910f099aaa968b7.png">
+  <img src="/assets/04-24-roc-4f41820919579af2da59149400e6c71486202bb5b81d173fa910f099aaa968b7.png" alt="ROC" class="zooming" data-rjs="/assets/04-24-roc-4f41820919579af2da59149400e6c71486202bb5b81d173fa910f099aaa968b7.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>The ROC curve graphs False Positive Rate (Type I Error) against the True Positive Rate (Power/Sensitivity). Ideally, it should hug the top left corner of the plot. Increasing the threshold will move results to the lower left along the ROC curve, and decreasing the threshold will move results to the upper right.</p>
+
+<p><strong>AUC</strong> is the area under the ROC curve, and it tells us how much the model is able to distinguish between classes. The higher the AUC value, the better the model, with a max value = 1.</p>
+<ul>
+  <li>High AUC: model classifies observations well</li>
+  <li>Close to .5: model has no separation ability</li>
+  <li>Low AUC: model classifies the opposite way</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iv-quadratic-discriminant-analysis">IV. Quadratic Discriminant Analysis</h3>
+
+<p>Quadratic distriminant analysis (QDA) assumes that each class has its own covariance matrix, so an observation in the <script type="math/tex">k</script>th class is given by <script type="math/tex">X \sim N(\mu_k, \Sigma_k)</script>.</p>
+
+<p>We assign an observation <script type="math/tex">X = x</script> to the class where <script type="math/tex">\delta_k(x)</script> is largest. Note that <script type="math/tex">\delta_k(x)</script> is a quadratic function of <script type="math/tex">x</script>, as opposed to a linear function.</p>
+
+<script type="math/tex; mode=display">\delta_k (x) = - \frac{1}{2} x^T \Sigma^{-1}_k x + x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k - \frac{1}{2} \log \vert \Sigma_k \vert + \log \pi_k</script>
+
+<p>Comparing LDA and QDA:</p>
+<ul>
+  <li>when there are p predictors, assuming a separate covariance matrices with QDA means estimating <script type="math/tex">K * \frac{p(p+1)}{2}</script> parameters. However, LDA only requires estimates <script type="math/tex">Kp</script> linear coefficients by assuming a common covariance matrix.
+    <ul>
+      <li>LDA has higher bias and lower variance</li>
+      <li>QDA has lower bias and higher variance</li>
+    </ul>
+  </li>
+  <li>LDA: useful when there are fewer training observations, when reducing variance is important</li>
+  <li>QDA: useful when the training set is ver large, or if you can’t assume a common covariance matrix</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="v-comparison-of-classification-methods">V. Comparison of Classification Methods</h3>
+
+<p>Logistic regression and LDA produce linear decision boundaries. While logistic regression estimates parameters with maximum likelihood, LDA estimates parameters with the estimated <script type="math/tex">\mu</script> and <script type="math/tex">\sigma^2</script> from a normal distribution. Therefore, we should use LDA when we can assume that observations are drawn from a gaussian distribution with common covariance matrix, and use logistic regression when those assumptions are not met.</p>
+
+<p>QDA can model a wider range of data than logistic regression and LDA, but it is not as flexible as KNN. However, QDA performs better than KNN with limited training observations.</p>
+
+<p>KNN dominates when the true decision boundary is non-linear, but it suffers a major drawback that it doesn’t show which predictors are important in obtaining the result.</p>
+
+<p><span class="boxheader">Summary of Each Method</span></p>
+
+<p><strong>Logistic Regression</strong></p>
+<ul>
+  <li>Linear decision boundary</li>
+  <li>Provides interpretability with odds ratios</li>
+  <li>High bias, low variance</li>
+</ul>
+
+<p><strong>Linear Discriminant Analysis</strong></p>
+<ul>
+  <li>Linear decision boundary</li>
+  <li>Provides interpretability with predictor ability to separate variation</li>
+  <li>Assumes all observations are drawn from normal distributions</li>
+  <li>Assumes observations in all classes share a covariance matrix</li>
+  <li>Stable when classes are “well-separated”</li>
+  <li>Stable when sample size is small</li>
+  <li>Commonly used over logistic regression when response is &gt;2 classes</li>
+  <li>Can adjust assignment-probability threshold for a better specificity rate with the ROC curve</li>
+  <li>High bias, low variance</li>
+</ul>
+
+<p><strong>Quadratic Discriminant Analysis</strong></p>
+<ul>
+  <li>Quadratic decision boundary</li>
+  <li>Assumes observations are drawn from a multivariate normal distribution</li>
+  <li>Assumes different covariance matrices for each class</li>
+  <li>Performs well with many training observations compared to LDA</li>
+  <li>Medium bias, medium variance</li>
+</ul>
+
+<p><strong>K-Nearest Neighbors</strong></p>
+<ul>
+  <li>Non-parametric decision boundary</li>
+  <li>No interpretability</li>
+  <li>Requires smart selection of the smoothness <script type="math/tex">K</script></li>
+  <li>Bad when the number of predictors is large, due to the curse of dimensionality</li>
+  <li>Low bias, high variance</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="vi-applications-in-r">VI. Applications in R</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="s2">"MASS"</span><span class="p">)</span><span class="w">     </span><span class="c1"># glm + boston dataset</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"class"</span><span class="p">)</span><span class="w">    </span><span class="c1"># knn </span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"caret"</span><span class="p">)</span><span class="w">    </span><span class="c1"># ML</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Boston data: predict whether a given suburb has a crime rate above or below the median</span><span class="w">
+</span><span class="c1"># 1. transform data</span><span class="w">
+</span><span class="n">boston_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Boston</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">crime_above_median</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">crim</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">median</span><span class="p">(</span><span class="n">crim</span><span class="p">)),</span><span class="w">
+         </span><span class="n">train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">Boston</span><span class="p">)</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="c1"># 1/4 testing, 3/4 training</span><span class="w">
+
+</span><span class="c1"># 2. explore data</span><span class="w">
+</span><span class="n">cor</span><span class="p">(</span><span class="n">boston_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># seems like rad, tax, dis, age, indus may play a role</span><span class="w">
+
+</span><span class="c1"># 3. split train and test</span><span class="w">
+</span><span class="n">train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as_tibble</span><span class="p">(</span><span class="n">subset</span><span class="p">(</span><span class="n">boston_data</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">))</span><span class="w">
+</span><span class="n">test</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as_tibble</span><span class="p">(</span><span class="n">subset</span><span class="p">(</span><span class="n">boston_data</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">train</span><span class="p">))</span><span class="w">
+
+</span><span class="c1">###</span><span class="w">
+</span><span class="c1">### logistic regression ------------------------------</span><span class="w">
+</span><span class="n">logit_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">glm</span><span class="p">(</span><span class="n">crime_above_median</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">rad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">indus</span><span class="p">,</span><span class="w"> 
+                          </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">binomial</span><span class="p">,</span><span class="w"> 
+                          </span><span class="n">train</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># predictions</span><span class="w">
+</span><span class="n">logit_probs_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">logit_model</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"response"</span><span class="p">)</span><span class="w"> 
+</span><span class="n">logit_pred_train</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s2">"FALSE"</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">train</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">))</span><span class="w">
+</span><span class="n">logit_pred_train</span><span class="p">[</span><span class="n">logit_probs_train</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">.5</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"TRUE"</span><span class="w">
+
+</span><span class="n">logit_probs_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">logit_model</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"response"</span><span class="p">)</span><span class="w"> 
+</span><span class="n">logit_pred_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s2">"FALSE"</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">))</span><span class="w">
+</span><span class="n">logit_pred_test</span><span class="p">[</span><span class="n">logit_probs_test</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">.5</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"TRUE"</span><span class="w">
+
+</span><span class="c1"># confusion matrices; train and test</span><span class="w">
+</span><span class="p">(</span><span class="n">matrix_logit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">logit_pred_train</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w"> 
+</span><span class="p">(</span><span class="n">matrix_logit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">logit_pred_test</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w">
+
+</span><span class="c1">###</span><span class="w">
+</span><span class="c1">### linear discrimination analysis ------------------------------</span><span class="w">
+</span><span class="n">lda_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lda</span><span class="p">(</span><span class="n">crime_above_median</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">rad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">indus</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># predictions</span><span class="w">
+</span><span class="n">lda_pred_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">lda_model</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">)</span><span class="w">
+</span><span class="n">lda_pred_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">lda_model</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># confusion matrices; train and test</span><span class="w">
+</span><span class="p">(</span><span class="n">matrix_lda</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">lda_pred_train</span><span class="o">$</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w">
+</span><span class="p">(</span><span class="n">matrix_lda</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">lda_pred_test</span><span class="o">$</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w"> 
+
+</span><span class="c1">###</span><span class="w">
+</span><span class="c1">### quadratic discrimination analysis ------------------------------</span><span class="w">
+</span><span class="n">qda_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qda</span><span class="p">(</span><span class="n">crime_above_median</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">rad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tax</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">indus</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># predictions</span><span class="w">
+</span><span class="n">qda_pred_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">qda_model</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="p">)</span><span class="w">
+</span><span class="n">qda_pred_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">qda_model</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># confusion matrices; train and test</span><span class="w">
+</span><span class="p">(</span><span class="n">matrix_qda</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">qda_pred_train</span><span class="o">$</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w"> 
+</span><span class="p">(</span><span class="n">matrix_qda</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">qda_pred_test</span><span class="o">$</span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span><span class="w">
+
+</span><span class="c1">###</span><span class="w">
+</span><span class="c1">### k-nearest neighbors ------------------------------</span><span class="w">
+</span><span class="n">knn_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="n">rad</span><span class="p">,</span><span class="w"> </span><span class="n">tax</span><span class="p">,</span><span class="w"> </span><span class="n">dis</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">indus</span><span class="p">))</span><span class="w">
+</span><span class="n">knn_test</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="n">rad</span><span class="p">,</span><span class="w"> </span><span class="n">tax</span><span class="p">,</span><span class="w"> </span><span class="n">dis</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">indus</span><span class="p">))</span><span class="w">
+</span><span class="n">knn_train_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="o">$</span><span class="n">crime_above_median</span><span class="w">
+
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">knn_pred</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">knn</span><span class="p">(</span><span class="n">knn_train</span><span class="p">,</span><span class="w"> </span><span class="n">knn_test</span><span class="p">,</span><span class="w"> </span><span class="n">knn_train_class</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># confusion matrix</span><span class="w">
+</span><span class="p">(</span><span class="n">matrix_knn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">confusionMatrix</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">knn_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">crime_above_median</span><span class="p">)))</span></code></pre></figure>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Image source: James et. al, <em>Introduction to Statistical Learning, 7th Ed.</em>, pg. 148 <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Classification%20-%20anthonypan.com/posts/classification" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/classification" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

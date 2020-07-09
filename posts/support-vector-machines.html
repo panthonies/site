@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Support Vector Machines</title>
+  <meta name="description" content="Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Support Vector Machines">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/support-vector-machines">
+  <meta property="og:description" content="Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/support-vector-machines">
+  <meta name="twitter:title" content="Support Vector Machines">
+  <meta name="twitter:description" content="Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Support Vector Machines</h1>
+            <p>Support vector machines (SVMs) are often considered one of the best 'out of the box' classifiers. The simple maximal margin classifier can be generalized to the support vector classifier, which can be further generalized to the support vector machine.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    May 2, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      13 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <div class="toc">
+  <h3 id="contents">Contents</h3>
+
+  <ul>
+    <li><a href="#i-maximal-margin-classifier">I. Maximal Margin Classifiers</a></li>
+    <li><a href="#ii-support-vector-classifier">II. Support Vector Classifiers</a></li>
+    <li><a href="#iii-support-vector-machines">III. Support Vector Machines</a></li>
+    <li><a href="#iv-applications-in-r">IV. Applications in R</a></li>
+  </ul>
+
+</div>
+
+<h3 id="i-maximal-margin-classifiers">I. Maximal Margin Classifiers</h3>
+
+<p>The maximal margin classifier, or the <strong>optimal separating hyperplane</strong>, is the separating hyperplane<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> that is farthest away from the training observations. This classifier depends directly on only a small subset of the training observations, called <strong>support vectors</strong>.</p>
+
+<p>The maximal margin hyperplane is the solution to the optimization problem:</p>
+
+<script type="math/tex; mode=display">\max_{\beta_0, \beta_1, ..., \beta_p, M} M \text{ subject to } 
+\begin{cases} 
+\sum_{j = 1}^p \beta_j^2 = 1 \\
+y_i (\beta_0 + \beta_1x_{i1} + ... + \beta_p x_{ip}) \geq M, \forall i = 1, ..., n
+\end{cases}</script>
+
+<p>Where:</p>
+<ul>
+  <li><script type="math/tex">M</script> is the <strong>margin</strong>, the minimal orthogonal distance from the training observations to the hyperplane</li>
+  <li>The first condition guarantees a unique solution where the orthogonal distance from the <script type="math/tex">i</script>th observation to the hyperplane fulfills the second condition.</li>
+  <li>The second condition guarantees that each observation is on the correct side of the hyperplane.</li>
+</ul>
+
+<p>We then classify each observation based on where it lies in relation to the hyperplane derived from <script type="math/tex">\beta_0, \beta_1, ..., \beta_p</script> from the optimization problem above.</p>
+
+<hr />
+<hr />
+<hr />
+<h3 id="ii-support-vector-classifiers">II. Support Vector Classifiers</h3>
+
+<p>If no separating hyperplane exists, then there is no maximal margin classifier. In the non-separable case, the generalization of the maximal margin classifier is called the support vector classifier.</p>
+
+<p>The support vector classifier, or the <strong>soft margin classifier</strong>, provides greater robustness to individual observations, and better classification of most of the training observations than the maximal margin classifier.</p>
+
+<script type="math/tex; mode=display">\max_{\beta_0 , ... , \beta_p, \epsilon_1, \epsilon_n, M} M \text{ subject to } 
+
+\begin{cases} 
+\sum_{j = 1}^p \beta_j^2 = 1 \\
+y_i (\beta_0 + \beta_1x_{i1} + ... + \beta_p x_{ip}) \geq M (1 - \epsilon_i) \\
+\epsilon_i \geq 0, \sum_{i = 1}^n \epsilon_i \leq C
+\end{cases}</script>
+
+<p>Where:</p>
+<ul>
+  <li>Where <script type="math/tex">\epsilon_i</script> are the slack variables whose sum is less than or equal to the tuning parameter <script type="math/tex">C</script>.
+    <ul>
+      <li>If <script type="math/tex">\epsilon_i = 0</script>, then the <script type="math/tex">i</script>th observation is on the correct side of the margin</li>
+      <li>If <script type="math/tex">\epsilon_i > 0</script>, then the <script type="math/tex">i</script>th observation is on the wrong side of the margin</li>
+      <li>If <script type="math/tex">\epsilon_i > 1</script>, then the <script type="math/tex">i</script>th observation is on the wrong side of the hyperplane</li>
+    </ul>
+  </li>
+  <li><script type="math/tex">C</script> is a “budget” for how much the margin can be violated. No more than <script type="math/tex">C</script> observations can violate the hyperplane at once.
+    <ul>
+      <li>Choose with cross validation.</li>
+      <li>A higher <script type="math/tex">C</script> means the model is more tolerant of margin violations.</li>
+      <li>If <script type="math/tex">C = 0</script>, then the solution is equivalent to that of the maximal margin classifier.</li>
+      <li>A smaller <script type="math/tex">C</script> corresponds with high variance and low bias; a larger <script type="math/tex">C</script> corresponds with high bias and low variance.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The support vectors in this model (the only observations that affect the hyperplane) are the observations that are on the margin or that violate the margin. Support vector classifiers are robust to observations far away from the hypersplane, unlike methods such as linear discriminant analysis.</p>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iii-support-vector-machines">III. Support Vector Machines</h3>
+
+<p>In non-linear decision boundaries, we can modify the <script type="math/tex">y_i \bigl( f(x) \bigr) \geq M (1 - \epsilon_i)</script> condition in the support vector classifier to include non-linear functions.</p>
+
+<p>The solution to the linear support vector classifier involves only the inner products of the observations, <script type="math/tex">\langle x, x_i \rangle = \sum_{j = 1}^p x_{ij} x_{i'j}</script>. It can be shown that the linear support vector classifier can be represented by:</p>
+
+<script type="math/tex; mode=display">f(x) = \beta_0 + \sum_{i \in S}^n \alpha_i \langle x, x_i \rangle</script>
+
+<p>Where:</p>
+<ul>
+  <li>There are <script type="math/tex">n \choose 2</script> inner products between all pairs of training observations needed to estimate the parameters <script type="math/tex">\alpha_1, ..., \alpha_n, \beta_0</script>.</li>
+  <li><script type="math/tex">S</script> is the collection of indices of support points, since <script type="math/tex">\alpha_i</script> is only non-zero for support vectors.</li>
+</ul>
+
+<p>We can generalize the support vector classifier with a kernel, <script type="math/tex">K(x_i, x_{i'})</script>, a function that quantifies the similarity of two observations, instead of the inner product (linear kernel).</p>
+
+<p><strong>Support vector machines use the support vector classifier with a non-linear kernel:</strong></p>
+
+<script type="math/tex; mode=display">f(x) = \beta_0 + \sum_{i \in S} \alpha_i K(x, x_i)</script>
+
+<p>Examples of different kernels:</p>
+
+<ul>
+  <li>Linear Kernel (inner product):</li>
+</ul>
+
+<script type="math/tex; mode=display">K(x_i, x_{i'}) = \sum_{j = 1}^p x_{ij} x_{i'j}</script>
+
+<ul>
+  <li>Polynomial Kernel of degree d</li>
+</ul>
+
+<script type="math/tex; mode=display">K(x_i, x_{i'}) = \biggl( 1 + \sum_{j = 1}^p x_{ij} x_{i'j} \biggr)^d</script>
+
+<ul>
+  <li>Radial Kernel (very local behavior)</li>
+</ul>
+
+<script type="math/tex; mode=display">K(x_i, x_{i'}) = \exp \biggl( - \gamma \sum_{j = 1}^p (x_{ij} x_{i'j})^2 \biggr)</script>
+
+<p>SVMs are computational nice, since they only need to calculate <script type="math/tex">K(x_i, x_{i'})</script> for <script type="math/tex">n \choose 2</script> distinct pairs <script type="math/tex">i, i'</script>. This can be done without explicitly working in an enlarged feature space. The radial kernel feature space is implicit and infinite-dimensional, so we need a kernel to use it.</p>
+
+<p><strong>An ROC curve</strong> of the false positive rate against the true positive rate can help graphically compare the performance of SVMs.</p>
+
+<p><span class="boxheader">Extension to more than two classes</span></p>
+
+<p>One-versus-one classification</p>
+<ul>
+  <li>Constructs <script type="math/tex">k \choose 2</script> SVMs, each of which compares a pair of classes.</li>
+  <li>Classify a test observation into each of the <script type="math/tex">k \choose 2</script> pairs, tally the number of times it’s classified into each of those <script type="math/tex">K</script> classes, and assign it to the class for which it was the most frequently assigned.</li>
+</ul>
+
+<p>One-versus-all classification</p>
+<ul>
+  <li>Fit <script type="math/tex">K</script> SVMs. For each fit, compare one of the <script type="math/tex">K</script> classes to the other <script type="math/tex">K - 1</script> classes.</li>
+  <li>Assign observations to the class for which <script type="math/tex">\beta_{0k} + \beta_{1k}x_1^* + ... + \beta_{pk} x_p^*</script> is largest.</li>
+</ul>
+
+<p>Note: Support vector regression also exists.</p>
+
+<p><span class="boxheader">Relationship to logistic regression</span></p>
+
+<p>The loss + penalty function of SVMs, shown below, is very similar to the loss function of logistic regression.</p>
+
+<script type="math/tex; mode=display">\min_{\beta_0, ..., \beta_p} \Biggl\{ \sum_{i = 1}^n \max [0, 1 - y_i f(x_i)] + \lambda \sum_{j = 1}^p \beta_j ^ 2 \Biggr\}</script>
+
+<p><script type="math/tex">\lambda</script> is a nonnegative tuning parameter. When <script type="math/tex">\lambda</script> is large, then the coefficients are small and more violations to the margin are tolerated for lower variance and higher bias. This equation takes the “Loss + Penalty” form that many other models take, and the loss function of an SVM is known as “hinge loss.”</p>
+
+<p>SVMs perform better when classes are well-separated, while logistic regression performs better with overlapping classes.</p>
+
+<p>A graphical comparison of SVM loss vs. logistic regression loss is shown below.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+
+<center><a href="/assets/05-01-svm-logit-94b1b2063eff30f80664ffd74ab823860c1b6e60d66eb26a5ca50f5e5e8dfe73.png">
+  <img src="/assets/05-01-svm-logit-94b1b2063eff30f80664ffd74ab823860c1b6e60d66eb26a5ca50f5e5e8dfe73.png" alt="SVM Loss vs Logit Loss" class="zooming" data-rjs="/assets/05-01-svm-logit-94b1b2063eff30f80664ffd74ab823860c1b6e60d66eb26a5ca50f5e5e8dfe73.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iv-applications-in-r">IV. Applications in R</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="s2">"ISLR"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"e1071"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">### support vector classifier</span><span class="w">
+</span><span class="c1"># generate variables</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="m">20</span><span class="o">*</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># fit svm with svm()</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">
+</span><span class="n">fit_svm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"linear"</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">)</span><span class="w">
+</span><span class="n">fit_svm</span><span class="o">$</span><span class="n">index</span><span class="w"> </span><span class="c1"># view the support vectors</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># cross validation with tune()</span><span class="w">
+</span><span class="n">svm_cv</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tune</span><span class="p">(</span><span class="n">svm</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"linear"</span><span class="p">,</span><span class="w">
+               </span><span class="n">ranges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.001</span><span class="p">,</span><span class="w"> </span><span class="m">.01</span><span class="p">,</span><span class="w"> </span><span class="m">.1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)))</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">svm_cv</span><span class="p">)</span><span class="w">
+</span><span class="n">svm_best_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm_cv</span><span class="o">$</span><span class="n">best.model</span><span class="w">
+
+</span><span class="c1"># generate test data set</span><span class="w">
+</span><span class="n">xtest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="m">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">ytest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">xtest</span><span class="p">[</span><span class="n">ytest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">xtest</span><span class="p">[</span><span class="n">ytest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="n">data_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xtest</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">ytest</span><span class="p">))</span><span class="w">
+
+</span><span class="n">ypred</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">svm_best_model</span><span class="p">,</span><span class="w"> </span><span class="n">data_test</span><span class="p">)</span><span class="w">
+</span><span class="n">table</span><span class="p">(</span><span class="n">predict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ypred</span><span class="p">,</span><span class="w"> </span><span class="n">truth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_test</span><span class="o">$</span><span class="n">y</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">### support vector machine</span><span class="w">
+</span><span class="c1"># generate data</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="m">200</span><span class="o">*</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">,]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">,]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="n">x</span><span class="p">[</span><span class="m">101</span><span class="o">:</span><span class="m">150</span><span class="p">,]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">101</span><span class="o">:</span><span class="m">150</span><span class="p">,]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">150</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">))</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">
+
+</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># split into training and testing and run svm</span><span class="w">
+</span><span class="n">train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w">
+</span><span class="n">fit_svm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,],</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,])</span><span class="w">
+
+</span><span class="n">summary</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">)</span><span class="w">
+
+</span><span class="n">fit_svm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,],</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100000</span><span class="p">)</span><span class="w"> 
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,])</span><span class="w"> </span><span class="c1"># note: higher cost -&gt; more irregular boundary</span><span class="w">
+
+</span><span class="c1"># cross validation using tune()</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">svm_cv</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tune</span><span class="p">(</span><span class="n">svm</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,],</span><span class="w"> 
+               </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">ranges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">),</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)))</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">svm_cv</span><span class="p">)</span><span class="w"> </span><span class="c1"># best = cost 1, gamma .5</span><span class="w">
+
+</span><span class="n">table</span><span class="p">(</span><span class="n">true</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="s2">"y"</span><span class="p">],</span><span class="w"> 
+      </span><span class="n">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">svm_cv</span><span class="o">$</span><span class="n">best.model</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,]))</span><span class="w">
+
+</span><span class="c1"># predict with best model</span><span class="w">
+</span><span class="n">table</span><span class="p">(</span><span class="n">true</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="s2">"y"</span><span class="p">],</span><span class="w"> 
+      </span><span class="n">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">svm_cv</span><span class="o">$</span><span class="n">best.model</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train</span><span class="p">,]))</span><span class="w">
+
+
+</span><span class="c1">### ROC curves with the ROCR package</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ROCR</span><span class="p">)</span><span class="w">
+
+</span><span class="n">rocplot</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="w"> </span><span class="n">truth</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">predob</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prediction</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span><span class="w"> </span><span class="n">truth</span><span class="p">)</span><span class="w">
+  </span><span class="n">perf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">performance</span><span class="p">(</span><span class="n">predob</span><span class="p">,</span><span class="w"> </span><span class="s2">"tpr"</span><span class="p">,</span><span class="w"> </span><span class="s2">"fpr"</span><span class="p">)</span><span class="w">
+  </span><span class="n">plot</span><span class="p">(</span><span class="n">perf</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># for some reason we have to order the train/test by Y in order to get correct ROC curve (instead of reverse ROC)</span><span class="w">
+</span><span class="n">trainz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,]</span><span class="w">
+</span><span class="n">trainz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trainz</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">trainz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),]</span><span class="w">
+
+</span><span class="n">testz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train</span><span class="p">,]</span><span class="w">
+</span><span class="n">testz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">testz</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">testz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),]</span><span class="w">
+
+</span><span class="n">fit_svm_opt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainz</span><span class="p">,</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.5</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="n">pred_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">fit_svm_opt</span><span class="p">,</span><span class="w"> </span><span class="n">trainz</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="o">$</span><span class="n">decision.values</span><span class="w">
+</span><span class="n">rocplot</span><span class="p">(</span><span class="n">pred_values</span><span class="p">,</span><span class="w"> </span><span class="n">trainz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Training Data"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">fit_svm_flex</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trainz</span><span class="p">,</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="n">pred_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">fit_svm_flex</span><span class="p">,</span><span class="w"> </span><span class="n">trainz</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="o">$</span><span class="n">decision.values</span><span class="w">
+</span><span class="n">rocplot</span><span class="p">(</span><span class="n">pred_values</span><span class="p">,</span><span class="w"> </span><span class="n">trainz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">pred_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">fit_svm_opt</span><span class="p">,</span><span class="w"> </span><span class="n">testz</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="o">$</span><span class="n">decision.values</span><span class="w">
+</span><span class="n">rocplot</span><span class="p">(</span><span class="n">pred_values</span><span class="p">,</span><span class="w"> </span><span class="n">testz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Test Data"</span><span class="p">)</span><span class="w">
+</span><span class="n">pred_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">fit_svm_flex</span><span class="p">,</span><span class="w"> </span><span class="n">testz</span><span class="p">,</span><span class="w"> </span><span class="n">decision.values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="o">$</span><span class="n">decision.values</span><span class="w">
+</span><span class="n">rocplot</span><span class="p">(</span><span class="n">pred_values</span><span class="p">,</span><span class="w"> </span><span class="n">testz</span><span class="o">$</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1">### SVM with multiple classes - one versus one approach</span><span class="w">
+</span><span class="c1"># generate data</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="m">50</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">))</span><span class="w"> </span><span class="c1"># based on previous y</span><span class="w">
+</span><span class="n">x</span><span class="p">[</span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="w">
+
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># fit svm</span><span class="w">
+</span><span class="n">fit_svm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">svm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radial"</span><span class="p">,</span><span class="w"> </span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">gamma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fit_svm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span></code></pre></figure>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>A hyperplane in <script type="math/tex">p</script>-dimensional space is a flat affine subspace of dimension <script type="math/tex">p - 1</script>, and is defined by <script type="math/tex">\beta_0 + \beta_1 X_1 + ... + \beta_p X_p = 0</script>. <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Source: James et. al, <em>Intro to Statistical Learning 7th edition</em>, pg. 358 <a href="#fnref:2" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Support+Vector+Machines%20-%20anthonypan.com/posts/support-vector-machines" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/support-vector-machines" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

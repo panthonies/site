@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Unsupervised Learning</title>
+  <meta name="description" content="In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Unsupervised Learning">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/unsupervised-learning">
+  <meta property="og:description" content="In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/unsupervised-learning">
+  <meta name="twitter:title" content="Unsupervised Learning">
+  <meta name="twitter:description" content="In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Unsupervised Learning</h1>
+            <p>In unsupervised learning, there is no response variable. Instead, we're looking to find subgroups among variables or observations, discover interesting things about the measurements, or visualize the data informatively. Two common methods are principal components analysis (for data visualization/pre-processing) and clustering (for discovering unknown subgroups).</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    May 4, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      13 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <div class="toc">
+  <h3 id="contents">Contents</h3>
+
+  <ul>
+    <li><a href="#i-principle-components-analysis">I. Principle Components Analysis</a></li>
+    <li><a href="#ii-k-means-clustering">II. K-Means Clustering</a></li>
+    <li><a href="#iii-hierarchical-clustering">III. Hierarchical Clustering</a></li>
+    <li><a href="#practical-issues-with-clustering">IV. Practical Issues with Clustering</a></li>
+    <li><a href="#v-applications-in-r">V. Applications in R</a></li>
+  </ul>
+
+</div>
+
+<h3 id="i-principle-components-analysis">I. Principle Components Analysis</h3>
+
+<p>Principle Components Analysis (PCA) is not only useful as a <a href="linear-model-selection-regularization#iv-dimension-reduction-techniques">dimension reduction technique</a> before applying other regression or classification methods for prediction, but it can also be used to explore data, but it also serves as a tool for data visualization and unsupervised learning.</p>
+
+<p>In this section, we’ll discuss PCA in greater detail, focusing on its use with unsupervised data.</p>
+
+<p>The first principle component of a set of features <script type="math/tex">X_1, ..., X_p</script> is the normalized <script type="math/tex">\bigl( \sum_{j = 1}^p \phi_{j1}^2 = 1 \bigr)</script> linear combination of <script type="math/tex">Z_1 = \phi_{11}X_1 + \phi_{21}X_2 + ... + \phi_{p1}X_p</script> with the largest variance.</p>
+
+<p>We then look for the linear combination of the sample feature values (observed data), <script type="math/tex">z_{i1} = \phi_{11} x_{i1}  + \phi_{21} x_{i2} + ... + \phi_{p1} x_{ip}</script>, that has the largest sample variance.</p>
+
+<p>In other words, the first principle component is calculating by maximizing:</p>
+
+<script type="math/tex; mode=display">\max_{\phi_{11}, ..., \phi_{p1}} \Biggl\{ \frac{1}{n} \sum_{i = 1}^n \Bigl( \sum_{j = 1}^p \phi_{j1} x_{ij} \Bigr) ^ 2 \Biggr\} \text{ subject to } \sum_{j = 1}^p \phi_{j1}^2 = 1</script>
+
+<ul>
+  <li>Note that the objective in the equation above can be written as <script type="math/tex">\frac{1}{n} \sum_{i = 1}^n z_{i1}^2</script></li>
+  <li><script type="math/tex">z_{11}, ..., z_{n1}</script> are called the scores of the 1st principle component and average to zero</li>
+  <li><script type="math/tex">\phi_1, ..., \phi_p</script> are called loadings, and make up the loading vector <script type="math/tex">\phi_1 = (\phi_{11}, \phi_{12}, \phi_{p1})^T</script></li>
+</ul>
+
+<p>The second principle component <script type="math/tex">Z_2</script> is calculated in a similar way, with the constraint that it must be uncorrelated with <script type="math/tex">Z_1</script>. It follows that the direction <script type="math/tex">\phi_2</script> is orthogonal to <script type="math/tex">\phi_1</script>. The second principle component scores <script type="math/tex">z_{12}, z_{22}, ..., z_{n2}</script> take the form <script type="math/tex">z_{i2} = \phi_{12} x_{i1} + \phi_{22} x_{i2} + ... + \phi_{p2} x_{ip}</script>.</p>
+
+<p><strong>Interpretations:</strong></p>
+<ol>
+  <li>Principle component loading vectors are the directions within the feature space which the data vary the most.</li>
+  <li>Principle components provide low-dimension linear surfaces that are closest to the observations.
+    <ul>
+      <li>The first <script type="math/tex">M</script> principle component loading vectors and and score vectors provide the best <script type="math/tex">M</script>-dimensional approximation to the <script type="math/tex">i</script>th observation <script type="math/tex">x_{ij}</script>, where <script type="math/tex">x_{ij} \approx \sum_{m = 1}^M z_{im} \phi_{jm}</script></li>
+      <li>Note that when <script type="math/tex">M = \min (n - 1, p)</script>, then the the equation above is exact</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Scaling Variables</strong></p>
+<ul>
+  <li>Variables are typically scaled to mean 0 and standard deviation 1, since both these measures affect the final model.</li>
+  <li>Make exceptions as necessary. For example, if all variables have the same units, you may not want to scale standard deviation.</li>
+</ul>
+
+<p><strong>Uniqueness</strong></p>
+<ul>
+  <li>Each principle components vector is unique up to a sign flip. The signs may differ if running PCA in different software packages because each principal component loading vector specifies a direction in <script type="math/tex">p</script>-dimensional space, and flipping the sign has no effect on the direction.</li>
+</ul>
+
+<p><strong>Proportion of Variance Explained (PVE)</strong></p>
+<ul>
+  <li>Total variance is given by <script type="math/tex">\sum_{j = 1}^p Var(x_j) = \sum_{j = 1}^p \frac{1}{n} \sum_{i = 1}^n x_{ij} ^ 2</script></li>
+  <li>The variance explained by the <script type="math/tex">m</script>th components is given by <script type="math/tex">\frac{1}{n} \sum_{i = 1}^n \Bigl( \sum_{j = 1}^p \phi_{jm} x_{ij} \Bigr) ^ 2</script></li>
+  <li>The PVE of the <script type="math/tex">m</script>th principle component is the variance of explained by the <script type="math/tex">m</script>th component divided by the total variance. There are a total of <script type="math/tex">\min (n - 1, p)</script> principle components, and their PVEs sum to 1.</li>
+</ul>
+
+<script type="math/tex; mode=display">\text{PVE} = \frac{ \sum_{i = 1}^n \Bigl( \sum_{j = 1}^p \phi_{jm} x_{ij} \Bigr) ^ 2} {\sum_{j = 1}^p \sum_{i = 1}^n x_{ij} ^ 2}</script>
+
+<p><strong>Deciding how many principle components to use</strong></p>
+<ul>
+  <li>Generally, look for an “elbow” in the “scree plot” of principle components and the proportion of variance that they each explain. An example image is shown below.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></li>
+  <li>For unsupervised learning, this is subjective; for supervised learning, use cross validation.</li>
+</ul>
+
+<center><a href="/assets/05-04-scree-plot-c66938be52b0e825c541dc918e191e963349b1cecac4327fe8bb606078e3fb12.png">
+  <img src="/assets/05-04-scree-plot-c66938be52b0e825c541dc918e191e963349b1cecac4327fe8bb606078e3fb12.png" alt="Scree Plot Example" class="zooming" data-rjs="/assets/05-04-scree-plot-c66938be52b0e825c541dc918e191e963349b1cecac4327fe8bb606078e3fb12.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<hr />
+<hr />
+<hr />
+<h3 id="ii-k-means-clustering">II. K-Means Clustering</h3>
+
+<p>Clustering looks to find homogenous subgroups among observations, while PCA looks to find a low-dimensional representation of observations that explain its variance. For example, you may want to perform clustering if you’re examining gene expression measurements to find heterogeneity to identify breast cancer subtypes, or if you’re performing market segmentation by identifying subgroups of a population.</p>
+
+<p>Note that we can cluster observations based on features, or features based on observations by transposing the data matrix. For simplicity, this post will focus on clustering observations based on features.</p>
+
+<p>K-Means Clustering partitions a data set into <script type="math/tex">K</script> distinct, non-overlapping clusters. Let <script type="math/tex">C_1, ..., C_k</script> denote sets containing the indices of the observations in each cluster.</p>
+
+<ol>
+  <li>Each observation belongs to one of the <script type="math/tex">K</script> clusters: <script type="math/tex">C_1 \cup C_2 \cup ... \cup C_k = \{1, ..., n\}</script>.</li>
+  <li>No observation belongs to more than one cluster: <script type="math/tex">C_k \cap C_{k'} = 0 \text{ for all } k \neq k'</script>.</li>
+  <li>We want to minimize the within-cluster variation, <script type="math/tex">W(C_k)</script> so observations within each cluster are similar.</li>
+</ol>
+
+<script type="math/tex; mode=display">\min_{C_1 ... C_k} \Biggl\{ \sum_{k = 1}^K W(C_K) \Biggr\}</script>
+
+<p>The most common way to define within-cluster variation is with <strong>Euclidian distance</strong>:</p>
+
+<script type="math/tex; mode=display">W(C_K) = \frac{1}{\vert C_K \vert} \sum_{i, i' \in C_K} \sum_{j = 1}^p (x_{ij} - x_{i'j}) ^ 2</script>
+
+<ul>
+  <li><script type="math/tex">\vert C_K \vert</script> represents the number of observations in the <script type="math/tex">k</script>th cluster.</li>
+</ul>
+
+<p><span class="boxheader">Algorithm for a local optimum:</span></p>
+<ol>
+  <li>Randomly assign a number from 1 to <script type="math/tex">K</script> to each observation as the initial cluster assignments.</li>
+  <li>Iterate until the cluster assignments stop changing:
+    <ul>
+      <li>For each cluster, compute the centroid [a vector of <script type="math/tex">p</script> feature means].</li>
+      <li>Assign each observation to the cluster whose centroid is closest, by Euclidian distance.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The results of this algorithm depend on the inintial cluster assignment. We should run the algorithm multiple times with different initial assignments, then select the one for which <script type="math/tex">W(C_K)</script> is smallest.</p>
+
+<p>The algorithm is guaranteed to decrease the within-cluster variation. This is because within-cluster variation can be rewritten as <script type="math/tex">2 \sum_{i \in C_k} \sum_{j = 1}^p (x_ij - \bar x_{kj}) ^ 2</script>, where <script type="math/tex">\bar x_{kj} = \frac{1}{C_k} \sum_{i \in C_k} x_{ij}</script> is the mean for feature <script type="math/tex">j</script> in cluster <script type="math/tex">C_k</script>. Reallocating the observations from their previous cluster assignment can only improve this equation.</p>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iii-hierarchical-clustering">III. Hierarchical Clustering</h3>
+
+<p>Hierarchical clustering creates a tree-based representation of observations called a <strong>dendrogram</strong>, and it does not require a choice of <script type="math/tex">K</script> at the beginnning. The most common type of hierarchical clustering is bottom-up, or agglomerative clustering that is built from the bottom (leaves) up to the top (trunk).</p>
+
+<p><strong>Interpreting Dendrograms</strong></p>
+
+<p>A dendrogram is created as the result of hierarchical clustering. The earlier (lower on tree) fusions occur, the more similar the groups of observations are, and the height of the fusion indicates how different the two observations are. An example is shown below.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+
+<center><a href="/assets/05-04-dendrogram-20b84d657703b6d0cf541b59caf299c8f9e221c10e03d05bf86a103d01854440.png">
+  <img src="/assets/05-04-dendrogram-20b84d657703b6d0cf541b59caf299c8f9e221c10e03d05bf86a103d01854440.png" alt="Dendrogram Example" class="zooming" data-rjs="/assets/05-04-dendrogram-20b84d657703b6d0cf541b59caf299c8f9e221c10e03d05bf86a103d01854440.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>Notes:</p>
+<ul>
+  <li>There are <script type="math/tex">2^{n - 1}</script> possible re-orderings of the dendrogram</li>
+  <li>Only the vertical axis matters. We cannot draw conclusions about two observations based on horizontal proximity.</li>
+  <li>Clusters are created by making a horizontal cut across the dendrogram</li>
+  <li>In practice, cuts are often created subjectively just by looking at the dendrogram</li>
+  <li>Drawback: if the data is not hierarchical (i.e. the true clusters are not nested), then the model will not be good</li>
+</ul>
+
+<p><span class="boxheader">Algorithm:</span></p>
+<ol>
+  <li>Begin with <script type="math/tex">n</script> observations and a measure (i.e. Euclidian distance) of all <script type="math/tex">n \choose 2 = \frac{n(n-1)}{2}</script> pairwise dissimilarities. Treat each observation as its own cluster.</li>
+  <li>For <script type="math/tex">i = n, n - 1, ..., 2</script>:
+    <ul>
+      <li>Examine all pairwise inter-cluster dissimilarities among the other <script type="math/tex">i</script> clusters</li>
+      <li>Identify the pair of clusters that are least dissimilar and fuse them together</li>
+      <li>The dissimilarity between the two clusters indicates the height of the fusion on the dendrogram</li>
+    </ul>
+  </li>
+</ol>
+
+<p>We measure dissimilarity between groups with different <strong>types of linkage</strong>:</p>
+<ul>
+  <li>Complete
+    <ul>
+      <li>Maximal intercluster dissimilarity</li>
+      <li>Used often, Preferred for creating a balanced dendrogram</li>
+      <li>Compute all pairwise dissimilarities between observations in clusters A and B, and record the largest of those dissimilarities</li>
+    </ul>
+  </li>
+  <li>Single
+    <ul>
+      <li>Minimal intercluster dissimilarity</li>
+      <li>Used sparingly, since it can cause unbalanced dendrograms with trailing clusters where single observations are fused one at a time</li>
+      <li>Compute all pairwise dissimilarities in A and B, and record the smallest dissimilarity</li>
+    </ul>
+  </li>
+  <li>Average
+    <ul>
+      <li>Mean intercluster dissimilarity</li>
+      <li>Used often, preferred for creating a balanced dendrogram</li>
+      <li>Compute all pairwise dissimilarities in A and B, and record the average of the dissimilarities</li>
+    </ul>
+  </li>
+  <li>Centroid
+    <ul>
+      <li>Least used because it can result in undesirable inversions, where two clusters are fused at a height below eather of the individual clusters in the dendrogram, leading to difficulties in visualizatino and interpretation.</li>
+      <li>Calculated as the dissimilarity between the centroid for cluster A (a mean vector of length <script type="math/tex">p</script>) and the centroid for cluster B.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Choice of dissimilarity measure</strong></p>
+
+<ul>
+  <li>Euclidian distance is most common</li>
+  <li>Correlation-based distance groups objects as close if their features are highly correlated. It focuses on the shape of observation profiles rather than the magnitude.</li>
+  <li>Also consider, based on the application, whether variables be scaled to have a standard deviation of 1. This affects dissimilarity.</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="iv-practical-issues-with-clustering">IV. Practical Issues with Clustering</h3>
+
+<p>Decisions to make:</p>
+<ul>
+  <li>Should observations and features be standardied?</li>
+  <li>For k-means clustering, how many clusters should we look for?</li>
+  <li>For hierarchical clustering, which dissimilarity measure and type of linkage should be used, and where should we cut the dendrogram to obtain clusters?</li>
+</ul>
+
+<p>Considerations:</p>
+<ul>
+  <li>Validating clusters is not very easy. It is possible to assign p-values to clusters, but there is no general consensus (see Hastie et al, 2009).</li>
+  <li>Mixture models can be used if a small subset of observations are different from each other and all other subgroups. Those observations may not belong to any cluster (see Hastie et al, 2009).</li>
+  <li>Clustering is not very robust to perturbations in the data (removing subsets of observations).</li>
+</ul>
+
+<p>Recommendations:</p>
+<ul>
+  <li>Perform clustering with different chocies of parameters and tracking patterms</li>
+  <li>Cluster subsets of the data to judge robustness of clusters</li>
+  <li>Use clustering as a starting point for developing a hypothesis, and further study its results on an independent data set.</li>
+</ul>
+
+<hr />
+<hr />
+<hr />
+<h3 id="v-applications-in-r">V. Applications in R</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="s2">"ISLR"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s2">"tidyverse"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#### PCA</span><span class="w">
+
+</span><span class="n">states</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">row.names</span><span class="p">(</span><span class="n">USArrests</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">USArrests</span><span class="p">)</span><span class="w">
+
+</span><span class="n">map_dbl</span><span class="p">(</span><span class="n">USArrests</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span><span class="w"> </span><span class="c1"># Murder 7.788 Assault 170.76 UrbanPop 65.54  Rape 21.232 </span><span class="w">
+</span><span class="n">map_dbl</span><span class="p">(</span><span class="n">USArrests</span><span class="p">,</span><span class="w"> </span><span class="n">var</span><span class="p">)</span><span class="w"> </span><span class="c1">#  Murder 18.97 Assault 6945.2 UrbanPop 209.52 Rape 87.7</span><span class="w">
+
+</span><span class="n">pca</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prcomp</span><span class="p">(</span><span class="n">USArrests</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">pca</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># basic PCA info</span><span class="w">
+
+</span><span class="n">pca</span><span class="o">$</span><span class="n">center</span><span class="w"> </span><span class="c1"># means</span><span class="w">
+</span><span class="n">pca</span><span class="o">$</span><span class="n">scale</span><span class="w"> </span><span class="c1"># SDs</span><span class="w">
+</span><span class="n">pca</span><span class="o">$</span><span class="n">rotation</span><span class="w"> </span><span class="c1"># principal component loadings</span><span class="w">
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">pca</span><span class="o">$</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="c1"># principal component score vectors</span><span class="w">
+
+</span><span class="n">biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="c1"># graph of PC1 vs PC2</span><span class="w">
+
+</span><span class="c1"># proportion of variance explained</span><span class="w">
+
+</span><span class="n">pca</span><span class="o">$</span><span class="n">sdev</span><span class="w"> </span><span class="c1"># SDs of each principle comp</span><span class="w">
+</span><span class="n">pve</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">pca</span><span class="o">$</span><span class="n">sdev</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">pca</span><span class="o">$</span><span class="n">sdev</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># calculate proportion of variance explained by each comp</span><span class="w">
+
+</span><span class="n">plot</span><span class="p">(</span><span class="n">pve</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s2">"Principal Component"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s2">"Proportion of Variance Explained "</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="n">type</span><span class="o">=</span><span class="s1">'b'</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">pve</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s2">"Principal Component "</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s2">" Cumulative Proportion of Variance Explained "</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s1">'b'</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1">#### Clustering</span><span class="w">
+
+</span><span class="c1">### K-Means Clustering</span><span class="w">
+</span><span class="c1"># kmeans(data, means, nstart = 50)</span><span class="w">
+
+</span><span class="c1">### Hierarchical lustering</span><span class="w">
+</span><span class="c1"># hclust(dist(data), method = "complete")</span><span class="w">
+
+</span><span class="c1">### Unsupervised Learning Application</span><span class="w">
+
+</span><span class="n">nci_labs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">NCI60</span><span class="o">$</span><span class="n">labs</span><span class="w">
+</span><span class="n">nci_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">NCI60</span><span class="o">$</span><span class="n">data</span><span class="w">
+
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">nci_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># 64 x 6830</span><span class="w">
+</span><span class="n">table</span><span class="p">(</span><span class="n">nci_labs</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## PCA</span><span class="w">
+</span><span class="n">pca_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prcomp</span><span class="p">(</span><span class="n">nci_data</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Colors</span><span class="o">=</span><span class="k">function</span><span class="p">(</span><span class="n">vec</span><span class="p">){</span><span class="w">
+  </span><span class="n">cols</span><span class="o">=</span><span class="n">rainbow</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">vec</span><span class="p">)))</span><span class="w">
+  </span><span class="nf">return</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">as.factor</span><span class="p">(</span><span class="n">vec</span><span class="p">))])</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">pca_out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Colors</span><span class="p">(</span><span class="n">nci_labs</span><span class="p">),</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Z1"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Z2"</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">pca_out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)],</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Colors</span><span class="p">(</span><span class="n">nci_labs</span><span class="p">),</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Z1"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Z3"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># -&gt; cell lines from the same cancer type tend to have similar gene expression levels</span><span class="w">
+
+</span><span class="n">summary</span><span class="p">(</span><span class="n">pca_out</span><span class="p">)</span><span class="w"> </span><span class="c1"># gives each comp, sd, and pve</span><span class="w">
+
+</span><span class="n">pve</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pca_out</span><span class="o">$</span><span class="n">sdev</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">pca_out</span><span class="o">$</span><span class="n">sdev</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">pve</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"o"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"PVE"</span><span class="p">,</span><span class="w"> </span><span class="n">slab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Principle Component"</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">pve</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"o"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cumulative PVE"</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Principal Component"</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"brown3"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># -&gt; looks like we should examine 7 principal components</span><span class="w">
+
+
+</span><span class="c1">## Clustering</span><span class="w">
+
+</span><span class="n">sd_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale</span><span class="p">(</span><span class="n">nci_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># scale data</span><span class="w">
+</span><span class="n">data_dist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="n">sd_data</span><span class="p">)</span><span class="w"> </span><span class="c1"># euclidian distance</span><span class="w">
+
+</span><span class="c1"># hierarchical</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">hclust</span><span class="p">(</span><span class="n">data_dist</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Complete Linkage"</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">hclust</span><span class="p">(</span><span class="n">data_dist</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"average"</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Average Linkage"</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">hclust</span><span class="p">(</span><span class="n">data_dist</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"single"</span><span class="p">),</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Single Linkage"</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w">
+
+</span><span class="n">hc_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">hclust</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">sd_data</span><span class="p">))</span><span class="w"> </span><span class="c1"># use complete linkage hierarchical clustering</span><span class="w">
+</span><span class="n">hc_out</span><span class="w">
+</span><span class="n">hc_clusters</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cutree</span><span class="p">(</span><span class="n">hc_out</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">
+</span><span class="n">table</span><span class="p">(</span><span class="n">hc_clusters</span><span class="p">,</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">)</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">hc_out</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">)</span><span class="w">
+</span><span class="n">abline</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">139</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># k-means</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">km_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">kmeans</span><span class="p">(</span><span class="n">sd_data</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">nstart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">)</span><span class="w">
+</span><span class="n">km_clusters</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">km_out</span><span class="o">$</span><span class="n">cluster</span><span class="w">
+
+</span><span class="n">table</span><span class="p">(</span><span class="n">km_clusters</span><span class="p">,</span><span class="w"> </span><span class="n">hc_clusters</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># hierarchical clustering on the first few PC score vectors</span><span class="w">
+</span><span class="n">hc_out_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">hclust</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">pca_out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">]))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">hc_out</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Hier. Clust on First Five Score Vectors"</span><span class="p">)</span><span class="w">
+</span><span class="n">table</span><span class="p">(</span><span class="n">cutree</span><span class="p">(</span><span class="n">hc_out</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">nci_labs</span><span class="p">)</span></code></pre></figure>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Source: James et. al, <em>Intro to Statistical Learning 7th edition</em>, pg. 383 <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Source: James et. al, <em>Intro to Statistical Learning 7th edition</em>, pg. 392 <a href="#fnref:2" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Unsupervised+Learning%20-%20anthonypan.com/posts/unsupervised-learning" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/unsupervised-learning" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

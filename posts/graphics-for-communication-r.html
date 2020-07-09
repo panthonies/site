@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Anthony Pan | Graphing in R for Effective Communication</title>
+  <meta name="description" content="In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Graphing in R for Effective Communication">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="anthonypan.com/posts/graphics-for-communication-r">
+  <meta property="og:description" content="In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.">
+  <meta property="og:site_name" content="Anthony Pan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="anthonypan.com/posts/graphics-for-communication-r">
+  <meta name="twitter:title" content="Graphing in R for Effective Communication">
+  <meta name="twitter:description" content="In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.">
+
+  
+    <meta property="og:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+    <meta name="twitter:image" content="anthonypan.com/assets/anthony-pan-8360313f1fe7e4685c1a12403f392eb92d3b49dbd4ccfa196dbebf0ddb4ba974.jpg">
+  
+
+  <link href="anthonypan.com/feed.xml" type="application/rss+xml" rel="alternate" title="Anthony Pan Last 10 blog posts" />
+
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-a98c41efc5ed9fcc06ac664c9e2f7a9b3c3b2e0a52357d221fe382f6f4abc8fc.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-87d1f2a3a19b1500e5c1626a0492025ca5f7f97d24540dc5900288e92112925a.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-3ebe45100a3d97f8ac94857224f3fde7193d453226ebbb900022771bfa032719.css">
+    
+
+  
+
+</head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav ">
+  <a href="/" class="header-logo" title="Anthony Pan">Anthony Pan</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/posts/index" title="Blog">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-writing">
+  <use href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing" xlink:href="/assets/writing-b6140719fc6ec0b803300a902e95d85fe15bbc322fb150e13e61ff0be4439d3b.svg#icon-writing"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article ">
+          <header class="article-header">
+            <h1>Graphing in R for Effective Communication</h1>
+            <p>In which we review graphing options in ggplot2 that allow you to communicate results effectively, including labels, annotations, scales, zooming, and themes.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    March 5, 2020
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      9 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/academic" title="See all posts with tag 'academic'">academic</a>
+    
+      
+      <a href="/tag/r" title="See all posts with tag 'r'">r</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <p>The tools covered in this post are important for communicating information to an audience that may not be as familiar with the data that you are working with.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> I’ll first give a short overview of the most common functions used with graphs before diving into examples of each.</p>
+
+<p><strong>Resources:</strong></p>
+<ul>
+  <li><a href="/pdf/r-cheat-sheet-data-visualization.pdf" target="blank">RStudio ggplot2 Cheat Sheet</a></li>
+  <li><a href="http://www.cookbook-r.com/Graphs/" target="blank">Cookbook for R</a> has solutions to common problems.</li>
+</ul>
+
+<h4 id="overview-of-tools">Overview of Tools:</h4>
+
+<ul>
+  <li>Add labels with <code class="highlighter-rouge">labs(title = "...", subtitle = "...", caption = "...", x = "...", y = "...")</code></li>
+  <li>Add annotations with <code class="highlighter-rouge">geom_text()</code>, <code class="highlighter-rouge">geom_label</code>, or  <code class="highlighter-rouge">ggrepel::geom_label_repel</code></li>
+  <li>Add a reference line with <code class="highlighter-rouge">geom_hline(size = 2, color = white)</code> or <code class="highlighter-rouge">geom_vline()</code></li>
+  <li>Add a reference rectangle with <code class="highlighter-rouge">geom_rect()</code></li>
+  <li>Add a reference arrow with <code class="highlighter-rouge">geom_segment()</code> and the <code class="highlighter-rouge">arrow</code> argument</li>
+  <li>Override or replace default scales with <code class="highlighter-rouge">scale_x_continuous()</code> or <code class="highlighter-rouge">scale_x_discrete</code></li>
+  <li>Change the legend position with <code class="highlighter-rouge">theme(legend.position = "...")</code></li>
+  <li>Change the legend display using <code class="highlighter-rouge">guides()</code> with <code class="highlighter-rouge">guide_legend()</code> or <code class="highlighter-rouge">guide_colorbar()</code></li>
+  <li>Customize color scales with <code class="highlighter-rouge">scale_color_brewer(palette = "...")</code> or <code class="highlighter-rouge">scale_color_manual(values = ...))</code></li>
+  <li>Zoom in on a region of the plot by setting <code class="highlighter-rouge">xlim</code> and <code class="highlighter-rouge">ylim</code> in <code class="highlighter-rouge">coord_cartesian()</code></li>
+  <li>Save plots with <code class="highlighter-rouge">ggsave()</code>, or with <code class="highlighter-rouge">knitr</code> in R Markdown</li>
+</ul>
+
+<h3 id="labels---title-caption-x-and-y-axes">Labels - Title, Caption, X, and Y Axes</h3>
+
+<p>Add labels with <code class="highlighter-rouge">labs()</code>:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># graph of fuel efficiency vs engine size with labels</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">labs</span><span class="p">(</span><span class="w">
+    </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Fuel efficiency generally decreases with engine size"</span><span class="p">,</span><span class="w">
+    </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Two-seaters (sports cars) are exceptions because of their light weight"</span><span class="p">,</span><span class="w">
+    </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Data from fueleconomy.gov"</span><span class="p">,</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Engine displacement (L)"</span><span class="p">,</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Highway fuel economy (mpg)"</span><span class="p">,</span><span class="w">
+    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Car type"</span><span class="w">
+  </span><span class="p">)</span></code></pre></figure>
+
+<center><a href="/assets/03-05-labs_plot-a03b1536f3a341aa314a9af1f87e7690ef0368ef8bffa9394eb541680efdd6ab.png">
+  <img src="/assets/03-05-labs_plot-a03b1536f3a341aa314a9af1f87e7690ef0368ef8bffa9394eb541680efdd6ab.png" alt="Labels Plot" class="zooming" data-rjs="/assets/03-05-labs_plot-a03b1536f3a341aa314a9af1f87e7690ef0368ef8bffa9394eb541680efdd6ab.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p><strong>Note:</strong> it’s possible to use mathematical notation in your labels by
+swapping out <code class="highlighter-rouge">""</code> for <code class="highlighter-rouge">quote()</code> (see <code class="highlighter-rouge">?plotmath</code> for details)</p>
+
+<h3 id="annotations---writing-information-directly-onto-the-plot">Annotations - Writing information directly onto the plot</h3>
+
+<p>Add annotations with <code class="highlighter-rouge">ggrepel::geom_label_repel</code> to notate certain points on a plot using labels that are guaranteed not to overlap with each other:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># create data frame for labels</span><span class="w">
+</span><span class="n">best_in_class</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">class</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">row_number</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># graph with labels and make sure they're not touching each other; </span><span class="w">
+</span><span class="c1"># also add point outlines for emphasis</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_in_class</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggrepel</span><span class="o">::</span><span class="n">geom_label_repel</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_in_class</span><span class="p">)</span></code></pre></figure>
+
+<center><a href="/assets/03-05-annotations_plot-34c842be1ded35cd6ae01a97baf10ca419c30e0054d7347ac82efc0ecf3780d5.png">
+  <img src="/assets/03-05-annotations_plot-34c842be1ded35cd6ae01a97baf10ca419c30e0054d7347ac82efc0ecf3780d5.png" alt="Annotations Plot" class="zooming" data-rjs="/assets/03-05-annotations_plot-34c842be1ded35cd6ae01a97baf10ca419c30e0054d7347ac82efc0ecf3780d5.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>Add a single label to the graph by manually specifying the label text and location in a data frame, and specifying text alignment with <code class="highlighter-rouge">vjust</code> and <code class="highlighter-rouge">hjust</code>:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># add a descriptive label to upper right</span><span class="w">
+</span><span class="n">label</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="w">
+    </span><span class="n">displ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">displ</span><span class="p">),</span><span class="w">
+    </span><span class="n">hwy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">hwy</span><span class="p">),</span><span class="w">
+    </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Increasing engine size is \nrelated to decreasing fuel economy."</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="c1"># another option is to use str_wrap() to automatically add line breaks</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"right"</span><span class="p">)</span></code></pre></figure>
+
+<center><a href="/assets/03-05-annotations_plot_2-098e6a7531472407882962686b01fe92440364f06e9f335113fd7549775a4c8c.png">
+  <img src="/assets/03-05-annotations_plot_2-098e6a7531472407882962686b01fe92440364f06e9f335113fd7549775a4c8c.png" alt="Annotations Plot 2" class="zooming" data-rjs="/assets/03-05-annotations_plot_2-098e6a7531472407882962686b01fe92440364f06e9f335113fd7549775a4c8c.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p><strong>Reference:</strong> For label alignment with <code class="highlighter-rouge">hjust</code> and <code class="highlighter-rouge">vjust</code>, see below.</p>
+
+<center><img src="../pdf/03-05-lab-alignment.png" width="50%" /></center>
+
+<p>Additional annotation options include:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">geom_hline(size = 2, color = white)</code> and <code class="highlighter-rouge">geom_vline()</code> add reference lines</li>
+  <li><code class="highlighter-rouge">geom_rect()</code> draws a rectangle around points of interest, with boundaries defined by aes: <code class="highlighter-rouge">xmin, xmax, ymin, ymax</code></li>
+  <li><code class="highlighter-rouge">geom_segment()</code> with <code class="highlighter-rouge">arrow</code> argument to draw an arrow, and define locations with aes: <code class="highlighter-rouge">x, y, xend, yend</code></li>
+</ul>
+
+<h3 id="scales---axis-ticks-and-legend-formatting">Scales - Axis ticks and Legend Formatting</h3>
+
+<p>Scales are added by default for each mapping function, but you might
+want to override defaults to tweak parameters such as the breaks on axes
+or labels on the legend, or replace the scale altogether and use a
+different algorithm.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># plot fuel efficiency vs engine size with edited labels</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1"># count labels by 2</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="c1"># suppress labels</span></code></pre></figure>
+
+<center><a href="/assets/03-05-scales_plot-546179b41e5f1cde60159ebfaba836b81fe32d98417ec7b967b51b95792544f2.png">
+  <img src="/assets/03-05-scales_plot-546179b41e5f1cde60159ebfaba836b81fe32d98417ec7b967b51b95792544f2.png" alt="Scales Plot" class="zooming" data-rjs="/assets/03-05-scales_plot-546179b41e5f1cde60159ebfaba836b81fe32d98417ec7b967b51b95792544f2.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>If you want to only highlight exactly where observations occur, set the
+breaks as a variable in the data. For example, the code and graph of U.S. presidents’ serving terms below only displays the years signifying the start of a new presidential term.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># plot the years that each U.S. president served in office</span><span class="w">
+</span><span class="n">presidential</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">33</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">row_number</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_segment</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">xend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">yend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">scale_x_date</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">presidential</span><span class="o">$</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">date_labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"'%y"</span><span class="p">)</span></code></pre></figure>
+
+<center><a href="/assets/03-05-scales_plot_2-e3e5fdc3379ee273aeb324afa3bedec85de6f1ba7729e664ababa47f0d3f818a.png">
+  <img src="/assets/03-05-scales_plot_2-e3e5fdc3379ee273aeb324afa3bedec85de6f1ba7729e664ababa47f0d3f818a.png" alt="Scales Plot 2" class="zooming" data-rjs="/assets/03-05-scales_plot_2-e3e5fdc3379ee273aeb324afa3bedec85de6f1ba7729e664ababa47f0d3f818a.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>Legends:</p>
+
+<ul>
+  <li>Change position of legend using <code class="highlighter-rouge">theme(legend.position = "...")</code>;
+options include <code class="highlighter-rouge">"left", "top", "bottom", "right", "none"</code>.</li>
+  <li>Change display of legend using <code class="highlighter-rouge">guides()</code> with <code class="highlighter-rouge">guide_legend()</code> or
+<code class="highlighter-rouge">guide_colorbar()</code></li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># move legend to bottom and increase size of legend points</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)))</span></code></pre></figure>
+
+<center><a href="/assets/03-05-scales_plot_3-86f06a25ced1075547ec0ad973003570a9d369e38d3cb42fec1e7643fc9706f3.png">
+  <img src="/assets/03-05-scales_plot_3-86f06a25ced1075547ec0ad973003570a9d369e38d3cb42fec1e7643fc9706f3.png" alt="Scales Plot 3" class="zooming" data-rjs="/assets/03-05-scales_plot_3-86f06a25ced1075547ec0ad973003570a9d369e38d3cb42fec1e7643fc9706f3.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>Customizing color scales:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">scale_color_brewer(palette = "Set1")</code> changes discrete colors to
+the <a href="http://colorbrewer2.org/">ColorBrewer scales</a> for
+colorblindness.</li>
+  <li><code class="highlighter-rouge">scale_color_manual(values = c(Republican = "red", Democratic = "blue"))</code>
+manually maps values and colors.</li>
+  <li>For continuous colors, use <code class="highlighter-rouge">scale_color_gradient()</code>,
+<code class="highlighter-rouge">scale_color_gradient_2()</code> (for a diverging scale),
+<code class="highlighter-rouge">scale_fill_gradient()</code>, or <code class="highlighter-rouge">scale_color_viridis()</code> (continuous
+analog to ColorBrewer scales).</li>
+</ul>
+
+<h3 id="zooming-a-closer-look-at-the-data">Zooming: A closer look at the data</h3>
+
+<p>To zoom in on a region of the plot, set <code class="highlighter-rouge">xlim</code> and <code class="highlighter-rouge">ylim</code> in the
+<code class="highlighter-rouge">coord_cartesian()</code> function.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># zoom in on x values from 5 to 7 and y values from 10 to 30</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_cartesian</span><span class="p">(</span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">))</span></code></pre></figure>
+
+<center><a href="/assets/03-05-zoom_plot-1-14be66b53304c4e1a4533053b7ed2383876aabafbb7626efc61ce3981e519111.png">
+  <img src="/assets/03-05-zoom_plot-1-14be66b53304c4e1a4533053b7ed2383876aabafbb7626efc61ce3981e519111.png" alt="Zoom Plot" class="zooming" data-rjs="/assets/03-05-zoom_plot-1-14be66b53304c4e1a4533053b7ed2383876aabafbb7626efc61ce3981e519111.png" data-zooming-width="" data-zooming-height="" />
+</a>
+</center>
+
+<p>Another useful tool is to match limits across multiple subplots using
+the limits of the entire datset. This way, you can more easily compare
+different subsets of the data.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># split car data into two parts: suv and compact cars</span><span class="w">
+</span><span class="n">suv</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"suv"</span><span class="p">)</span><span class="w">
+</span><span class="n">compact</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"compact"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">x_scale</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">mpg</span><span class="o">$</span><span class="n">displ</span><span class="p">))</span><span class="w">
+</span><span class="n">y_scale</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">mpg</span><span class="o">$</span><span class="n">hwy</span><span class="p">))</span><span class="w">
+</span><span class="n">col_scale</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">scale_colour_discrete</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unique</span><span class="p">(</span><span class="n">mpg</span><span class="o">$</span><span class="n">drv</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># graph cars that are suvs</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">suv</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">x_scale</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">y_scale</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">col_scale</span><span class="w">
+
+</span><span class="c1"># graph cars that are compact</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">compact</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">x_scale</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">y_scale</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">col_scale</span></code></pre></figure>
+
+<p><a href="/assets/03-05-zoom_plot_3-a706313e5c5b59d1fddf627178d19a2b1839d690a09c069eb232bdd43e92a0d2.png">
+  <img src="/assets/03-05-zoom_plot_3-a706313e5c5b59d1fddf627178d19a2b1839d690a09c069eb232bdd43e92a0d2.png" alt="Zoom Plot 3" class="zooming" data-rjs="/assets/03-05-zoom_plot_3-a706313e5c5b59d1fddf627178d19a2b1839d690a09c069eb232bdd43e92a0d2.png" data-zooming-width="" data-zooming-height="" />
+</a></p>
+
+<h3 id="themes-alter-the-look-of-the-plot">Themes: Alter the look of the plot</h3>
+
+<p>Themes change the way that the non-data elements of your graph looks. R has 8 default themes, shown below, and more in add-on packages like <a href="https://github.com/jrnold/ggthemes"><code class="highlighter-rouge">ggthemes</code></a>.</p>
+
+<center><img src="../pdf/03-05-ggplot2-themes.png" width="75%" /></center>
+
+<h3 id="saving-plots">Saving Plots</h3>
+
+<p>Save plots with <code class="highlighter-rouge">ggsave()</code>, or with <code class="highlighter-rouge">knitr</code> in R Markdown. In R Markdown, you can control figure sizing in the folowing ways:</p>
+
+<ul>
+  <li>Make plots a consistent width by setting <code class="highlighter-rouge">fig.width = 6</code> and
+<code class="highlighter-rouge">fig.asp = 0.618</code> (golden ratio) in defaults, and only adjusting
+<code class="highlighter-rouge">fig.asp</code> in individual chunks.</li>
+  <li>Specify output size with <code class="highlighter-rouge">out.width</code>. A nice default is
+<code class="highlighter-rouge">out.width = "70%"</code> and <code class="highlighter-rouge">fig.align = "center"</code>.</li>
+  <li>For multiple plots, set <code class="highlighter-rouge">out.width</code> and <code class="highlighter-rouge">fig.align = "default</code>. To
+ensure that font size is consistent, every time you adjust
+<code class="highlighter-rouge">out.width</code>, you also need to adjust <code class="highlighter-rouge">fig.width</code> to maintain the
+same ratio with the default <code class="highlighter-rouge">out.width</code></li>
+  <li>To add captions, use <code class="highlighter-rouge">fig.cap</code>. This will also change the igure from
+inline to “floating”</li>
+  <li>If producing PDF output with very large plots, set
+<code class="highlighter-rouge">dev = "png"</code> to force using PNGs for speed and size.</li>
+  <li>The name of chunks is used to generate the file name of the graphic
+on disk.</li>
+</ul>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>This post is meant for a person who is looking for a refresher on formatting ggplot2 plots. The content in this post is based on chapter twenty-eight of <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham &amp; Garrett Grolemund. <a href="#fnref:1" class="reversefootnote">⤴</a></p>
+    </li>
+  </ol>
+</div>
+
+          </div>
+          <!--
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Graphing+in+R+for+Effective+Communication%20-%20anthonypan.com/posts/graphics-for-communication-r" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=anthonypan.com/posts/graphics-for-communication-r" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+          -->
+          <span class="backbutton"><a href="/posts/index">←Index</a></span>
+          
+        </article>
+        <footer class="footer ">
+
+<small class="pull-left"> &copy;2020 All rights reserved. 
+
+<a href="https://github.com/nielsenramon/chalk" target="_blank">Chalk</a> theme by Nielson Ramon.
+
+</small>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160038909-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-160038909-1');
+  </script>
+
+
+<script src="/assets/vendor-2c224c53eb697c739f9490c38819a72184f09472739fd9e492272ef174090428.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-96493456d319d1bf419afdf8701552d4d486fee6afd304897d4fd81eb4e0cc0b.js" type="text/javascript"></script>
+
+
+
+
+<script src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js" type="text/javascript"></script>
+
+
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: [
+       "MathMenu.js",
+       "MathZoom.js",
+       "AssistiveMML.js",
+       "a11y/accessibility-menu.js"
+     ],
+     jax: ["input/TeX", "output/CommonHTML"],
+     TeX: {
+       extensions: [
+         "AMSmath.js",
+         "AMSsymbols.js",
+         "noErrors.js",
+         "noUndefined.js",
+       ]
+     }
+   });
+   MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+     var TEX = MathJax.InputJax.TeX;
+     var COLS = function (W) {
+       var WW = [];
+       for (var i = 0, m = W.length; i < m; i++)
+         {WW[i] = TEX.Parse.prototype.Em(W[i])}
+       return WW.join(" ");
+     };
+     TEX.Definitions.Add({
+       environment: {
+         psmallmatrix: ['Array',null,'(',')','c',COLS([1/3]),".2em",'S',1],
+       }
+     });
+   });
+ </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
